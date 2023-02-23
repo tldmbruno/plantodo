@@ -1,0 +1,93 @@
+html {
+	--color-primary: #2a7;
+	--color-secondary: #246;
+	--color-error: #e25;
+	--color-light: #fff;
+	--color-dark: #112;
+
+	--line-weight: 2px;
+	--radius: .5em;
+
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.dark > body {
+	background-color: var(--color-dark);
+	color: var(--color-light);
+	}
+
+body {
+	background-color: var(--color-light);
+	color: var(--color-dark);
+
+	background-image: url('/public/plant.png');
+	background-size: auto;
+  background-position: 110% 140%;
+  background-repeat: no-repeat;
+
+	margin: 0px;
+
+	transition: background-color 1s;
+}
+
+button {
+	background-color: var(--color-primary);
+	color: var(--color-light);
+
+	border: none;
+	border-radius: var(--radius);
+
+	box-shadow: 0 0 var(--line-weight) var(--color-dark);
+
+	height: 2.5em;
+	margin: .1em;
+	}
+
+	button:hover {
+		outline: var(--line-weight) solid var(--color-light);
+	}
+
+	.list button {
+		background-color: var(--color-light);
+		color: var(--color-dark);
+	}
+
+	.round button {
+		width: 2em;
+		height: 2em;
+	}
+
+.round {
+	border-radius: 50%;
+}
+
+input {
+	background-color: var(--color-light);
+	color: var(--color-dark);
+
+	border: none;
+	box-shadow: 0 0 var(--line-weight) var(--color-dark);
+	border-radius: var(--radius);
+
+	height: 2.5em;
+	min-width: 2.5em;
+	margin: .1em;
+}
+
+.main {
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: row;
+
+	height: 100vh;
+	}
+	.main > .margin {
+		flex: .1 0%;
+	}
+	.main > div {
+		flex: 1 0%;
+	}
+
+main {
+	margin-top: 3em;
+}

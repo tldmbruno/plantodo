@@ -1,0 +1,22 @@
+.list {
+	list-style: none;
+	padding: 0;
+	}
+
+	.list > li {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-direction: row;
+		flex: auto;
+
+		width: 100%;
+		padding: .3em;
+		border-radius: var(--radius);
+
+		cursor: pointer;
+		}
+
+		.list > li:hover {
+			box-shadow: 0 0 var(--line-weight) var(--color-dark);
+		}
