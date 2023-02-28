@@ -8,9 +8,26 @@
 }
 
 .categories {
-	width: 40%;
+	width: 20em;
 
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
+
+.logo {
+	display: flex;
+	align-items: center;
+}
+
+a,
+	a:visited {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: var(--color-primary);
+		border-bottom: var(--line-weight) solid var(--color-primary);
+	}
+
