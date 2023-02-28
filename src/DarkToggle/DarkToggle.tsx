@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
+import './DarkToggle.css';
+
 export default function DarkToggle() {
 	const [ isDarkTheme, setDarkTheme ] = useState(false);
 
@@ -9,6 +11,6 @@ export default function DarkToggle() {
 	}
 
 	return (
-		<input type='checkbox' checked={isDarkTheme} onChange={e => onToggle(e)}></input>
+		<input className='toggle' type='checkbox' checked={isDarkTheme} onChange={e => onToggle(e)}></input>
 	);
 }
