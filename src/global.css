@@ -3,6 +3,7 @@ html {
 	--color-secondary: #246;
 	--color-error: #e25;
 	--color-light: #fff;
+	--color-middle: #889;
 	--color-dark: #112;
 
 	--line-weight: 2px;
@@ -36,30 +37,23 @@ button {
 
 	border: none;
 	border-radius: var(--radius);
-
-	box-shadow: 0 0 var(--line-weight) var(--color-dark);
-
+	user-select: none;
+	
 	height: 2.5em;
 	margin: .1em;
-	}
-
-	button:hover {
-		outline: var(--line-weight) solid var(--color-light);
-	}
-
-	.list button {
-		background-color: var(--color-light);
-		color: var(--color-dark);
-	}
-
-	.round button {
-		width: 2em;
-		height: 2em;
-	}
-
-.round {
-	border-radius: 50%;
 }
+
+button:hover {
+	outline: var(--line-weight) solid var(--color-primary);
+	background-color: var(--color-primary);
+	color: var(--color-light);
+	}
+
+	button:active {
+		outline: var(--line-weight) solid var(--color-primary);
+		background-color: var(--color-light);
+		color: var(--color-primary);
+	}
 
 input {
 	background-color: var(--color-light);
@@ -69,22 +63,31 @@ input {
 	box-shadow: 0 0 var(--line-weight) var(--color-dark);
 	border-radius: var(--radius);
 
-	height: 2.5em;
+	height: 2.3em;
 	min-width: 2.5em;
 	margin: .1em;
 }
 
-.main {
+.round {
+	border-radius: 50%;
+	}
+
+	.round button {
+		width: 2em;
+		height: 2em;
+}
+
+.columns {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	flex-direction: row;
 
 	height: 100vh;
 	}
-	.main > .margin {
+	.columns > .margin {
 		flex: .1 0%;
 	}
-	.main > div {
+	.columns > div {
 		flex: 1 0%;
 	}
 
