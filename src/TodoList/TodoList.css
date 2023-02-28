@@ -18,5 +18,12 @@
 		}
 
 		.list > li:hover {
-			box-shadow: 0 0 var(--line-weight) var(--color-dark);
-		}
+			box-shadow: 0 0 var(--line-weight) var(--color-middle);
+	}
+
+	.list button {
+		background-color: var(--color-light);
+		color: var(--color-dark);
+
+		box-shadow: 0 0 var(--line-weight) var(--color-dark);
+	}

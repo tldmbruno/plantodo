@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import './App.css';
+
+import './TodoList.css';
 
 interface Item {
   id: number;
@@ -10,16 +11,18 @@ export default function App() {
   const itemInputRef = useRef<HTMLInputElement>(null);
   const [ todoListItems, setTodoListItems ] = useState<Item[]>([]);
 
-  function createListItem() {
-    const newTodoListItem = { id: Date.now(), text: itemInputRef.current?.value ?? '(Blank)' };
+  // Creates a new list item with a particular description
+  function createListItem(description?: string) {
+    const newTodoListItem = { id: Date.now(), text: description ?? '(Blank)' };
     setTodoListItems([...todoListItems, newTodoListItem]);
-
+  
     (document.getElementById('newNoteForm') as HTMLFormElement).reset();
   }
 
-  function listItems() {
+  // Shows all items in a particular list
+  function showItems(itemList: Item[]) {
     return (
-      todoListItems.map(item =>
+      itemList.map(item =>
         <li key={item.id}>
           <div>   
             <span>{item.text}</span>
@@ -32,35 +35,39 @@ export default function App() {
       )
     );
   }
-
+  
+  // Edits an item's content
   function editListItem(item: Item) {
     const itemIndex = todoListItems.findIndex((i) => i.id === item.id);
-
+  
     let newTodoListItems = todoListItems.slice();
-
+  
     newTodoListItems[itemIndex].text = prompt('Enter the new text for the selected item', newTodoListItems[itemIndex].text) ?? newTodoListItems[itemIndex].text;
     setTodoListItems(newTodoListItems);
   }
-
+  
+  // Deletes a particular list item
   function deleteListItem(item: Item) {
     const itemIndex = todoListItems.findIndex((i) => i.id === item.id);
-
+  
     if (itemIndex !== -1) {
       const newTodoListItems = todoListItems.slice();
       newTodoListItems.splice(itemIndex, 1);
-
-      setTodoListItems(newTodoListItems)
+  
+      setTodoListItems(newTodoListItems);
     }
   }
 
   return (
     <>
-      <form id='newNoteForm' onSubmit={e => {e.preventDefault(); createListItem()}}>
+      <form id='newNoteForm' onSubmit={e => {
+          e.preventDefault();
+          createListItem(itemInputRef.current?.value)}}>
         <input type='text' ref={itemInputRef}></input>
         <button type='submit'>New Item</button>
       </form>
       <ul className='list'>
-        {listItems()}
+        {showItems(todoListItems)}
       </ul>
     </>
   );
