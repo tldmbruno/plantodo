@@ -7,15 +7,10 @@ html {
 	--color-dark: #112;
 
 	--line-weight: 2px;
-	--radius: .5em;
+	--radius: .5rem;
 
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-
-.dark > body {
-	background-color: var(--color-dark);
-	color: var(--color-light);
-	}
 
 body {
 	background-color: var(--color-light);
@@ -31,6 +26,10 @@ body {
 	transition: background-color 1s;
 }
 
+main {
+	margin-top: 3rem;
+}
+
 button {
 	background-color: var(--color-primary);
 	color: var(--color-light);
@@ -39,8 +38,8 @@ button {
 	border-radius: var(--radius);
 	user-select: none;
 	
-	height: 2.5em;
-	margin: .1em;
+	height: 2.5rem;
+	margin: .1rem;
 }
 
 button:hover {
@@ -53,7 +52,7 @@ button:hover {
 		outline: var(--line-weight) solid var(--color-primary);
 		background-color: var(--color-light);
 		color: var(--color-primary);
-	}
+}
 
 input {
 	background-color: var(--color-light);
@@ -63,9 +62,14 @@ input {
 	box-shadow: 0 0 var(--line-weight) var(--color-dark);
 	border-radius: var(--radius);
 
-	height: 2.3em;
-	min-width: 2.5em;
-	margin: .1em;
+	height: 2.3rem;
+	min-width: 2.5rem;
+	margin: .1rem;
+}
+
+.dark > body {
+	background-color: var(--color-dark);
+	color: var(--color-light);
 }
 
 .round {
@@ -73,8 +77,8 @@ input {
 	}
 
 	.round button {
-		width: 2em;
-		height: 2em;
+		width: 2rem;
+		height: 2rem;
 }
 
 .columns {
@@ -89,8 +93,4 @@ input {
 	}
 	.columns > div {
 		flex: 1 0%;
-	}
-
-main {
-	margin-top: 3em;
 }

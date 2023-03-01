@@ -1,6 +1,6 @@
 .list {
 	list-style: none;
-	padding: 0;
+	padding: 0px;
 	}
 
 	.list > li {
@@ -11,19 +11,19 @@
 		flex: auto;
 
 		width: 100%;
-		padding: .3em;
+		padding: .3rem;
 		border-radius: var(--radius);
 
 		cursor: pointer;
 		}
 
 		.list > li:hover {
-			box-shadow: 0 0 var(--line-weight) var(--color-middle);
+			box-shadow: 0px 0px var(--line-weight) var(--color-middle);
 	}
 
 	.list button {
 		background-color: var(--color-light);
 		color: var(--color-dark);
 
-		box-shadow: 0 0 var(--line-weight) var(--color-dark);
+		box-shadow: 0px 0px var(--line-weight) var(--color-dark);
 	}
