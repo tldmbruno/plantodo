@@ -15,25 +15,17 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
 
     <BrowserRouter>
-      <div className='columns'>
+      <div id='window'>
+        <NavBar />
 
-        <div className='margin'></div>
-        <div>
-
-          <NavBar />
-
-          <main>
-            <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/about' element={<AboutPage />} />
-              <Route path='/git' element={<GitPage />} />
-              <Route path='*' element={<MissingPage />}/>
-            </Routes>
-          </main>
-
-        </div>
-        <div className='margin'></div>
-
+        <main>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/about' element={<AboutPage />} />
+            <Route path='/git' element={<GitPage />} />
+            <Route path='*' element={<MissingPage />}/>
+          </Routes>
+        </main>
       </div>
     </BrowserRouter>
 
