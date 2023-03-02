@@ -7,23 +7,23 @@ html {
 	--color-dark: #112;
 
 	--line-weight: 2px;
-	--radius: .5rem;
+	--radius: 4px;
 
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body {
+	height: 100vh;
+	margin: 0px;
+
 	background-color: var(--color-light);
 	color: var(--color-dark);
 
 	background-image: url('/plant.png');
-	background-size: auto;
-  background-position: 110% 140%;
+  background-position: max(10%, 110%) max(10% + 5rem, 110%);
   background-repeat: no-repeat;
 
-	margin: 0px;
-
-	transition: background-color 1s;
+	transition: background-color .5s;
 }
 
 main {
@@ -31,15 +31,17 @@ main {
 }
 
 button {
+	height: 2.5rem;
+	margin: .2rem;
+	padding: 0 1rem 0 1rem;
+	
 	background-color: var(--color-primary);
 	color: var(--color-light);
 
 	border: none;
 	border-radius: var(--radius);
-	user-select: none;
 	
-	height: 2.5rem;
-	margin: .1rem;
+	user-select: none;
 }
 
 button:hover {
@@ -81,16 +83,7 @@ input {
 		height: 2rem;
 }
 
-.columns {
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-
-	height: 100vh;
-	}
-	.columns > .margin {
-		flex: .1 0%;
-	}
-	.columns > div {
-		flex: 1 0%;
+#window {
+	margin: 0px;
+	padding: 1rem min(10rem, 10%) 0px min(10rem, 10%);
 }
