@@ -12,8 +12,12 @@ export default function App() {
   const [ todoListItems, setTodoListItems ] = useState<Item[]>([]);
 
   // Creates a new list item with a particular description
-  function createListItem(description?: string) {
-    const newTodoListItem = { id: Date.now(), text: description ?? '(Blank)' };
+  function createListItem(description: string) {
+    const newTodoListItem = {
+      id: Date.now(),
+      text: description.trim().length === 0 ? 'Empty note' : description
+    };
+      
     setTodoListItems([...todoListItems, newTodoListItem]);
   
     (document.getElementById('newNoteForm') as HTMLFormElement).reset();
@@ -24,6 +28,9 @@ export default function App() {
     return (
       itemList.map(item =>
         <li key={item.id}>
+          <div>
+            <input type='checkbox' />
+          </div>
           <div>   
             <span>{item.text}</span>
           </div>
@@ -62,7 +69,7 @@ export default function App() {
     <>
       <form id='newNoteForm' onSubmit={e => {
           e.preventDefault();
-          createListItem(itemInputRef.current?.value)}}>
+          createListItem(itemInputRef.current?.value ?? '')}}>
         <input type='text' ref={itemInputRef}></input>
         <button type='submit'>New Item</button>
       </form>
