@@ -41,12 +41,12 @@ button {
 	border-radius: var(--radius);
 	
 	user-select: none;
+
+	transition: background-color .1s;
 }
 
 button:hover {
-	outline: var(--line-weight) solid var(--color-primary);
-	background-color: var(--color-primary);
-	color: var(--color-light);
+	outline: var(--line-weight) solid var(--color-secondary);
 	}
 
 	button:active {
@@ -56,16 +56,16 @@ button:hover {
 }
 
 input {
+	padding: 0px;
+	min-width: 2.5rem;
+	height: 2.5rem;
+	margin: .1rem;
+	
 	background-color: var(--color-light);
 	color: var(--color-dark);
-
-	border: none;
 	box-shadow: 0 0 var(--line-weight) var(--color-dark);
 	border-radius: var(--radius);
-
-	height: 2.3rem;
-	min-width: 2.5rem;
-	margin: .1rem;
+	border: none;
 }
 
 .dark > body {
@@ -95,4 +95,8 @@ input {
 
 .s-gap {
 	gap: .2rem;
+}
+
+.no-margin {
+	margin: 0;
 }
