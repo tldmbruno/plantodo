@@ -37,7 +37,7 @@ export default function App() {
           </div>
           <div>
             <button onClick={() => editListItem(item)}>Edit</button>
-            <button onClick={() => deleteListItem(item)}>Delete</button>
+            <button className='danger' onClick={() => deleteListItem(item)}>Delete</button>
           </div>
         </li>
       )
@@ -81,20 +81,20 @@ export default function App() {
 
   // Loads the list as a JSON file
   function loadData() {
-    const data = JSON.parse(localStorage.getItem("data") ?? '');
-    setTodoListItems(data);
+    const data = localStorage.getItem("data");
+
+    if (data) {
+      setTodoListItems(JSON.parse(data));
+    }
   }
 
   return (
     <>
       <div className='flex'>
-        <div className='flex s-gap'>
-          <form id='newNoteForm' onSubmit={onFormSubmit}>
-            <input type='text' ref={itemInputRef}></input>
-          </form>
-
+        <form id='newNoteForm' className='flex s-gap no-margin' onSubmit={onFormSubmit}>
+          <input type='text' ref={itemInputRef}></input>
           <button type='submit'>New Item</button>
-        </div>
+        </form>
 
         <button type='button' onClick={saveData}>Save</button>
       </div>

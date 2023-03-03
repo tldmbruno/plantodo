@@ -35,8 +35,18 @@
 		color: var(--color-dark);
 
 		box-shadow: 0px 0px var(--line-weight) var(--color-dark);
-	}
+		}
+
+		.list button:active {
+			background-color: var(--color-middle);
+			color: var(--color-light);
+		}
 
 	.list input {
 		box-shadow: none;
+}
+
+.danger:hover {
+	background-color: var(--color-error);
+	color: var(--color-light);
 }
