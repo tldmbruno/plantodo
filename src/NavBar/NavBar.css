@@ -20,7 +20,11 @@
 	align-items: center;
 
 	font-weight: bold;
-}
+	}
+
+	.logo:hover ::after{
+		content: '🌱';
+	}
 
 a,
 	a:visited {
