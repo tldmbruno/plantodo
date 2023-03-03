@@ -1,6 +1,8 @@
 .list {
 	list-style: none;
+	margin: 1rem 0px;
 	padding: 0px;
+
 	}
 
 	.list > li {
@@ -9,9 +11,8 @@
 		align-items: center;
 		flex-direction: row;
 		flex: auto;
+		padding: .2rem;
 
-		width: 100%;
-		padding: .3rem;
 		border-radius: var(--radius);
 
 		cursor: pointer;
@@ -21,7 +22,15 @@
 			box-shadow: 0px 0px var(--line-weight) var(--color-middle);
 	}
 
+	.list div {
+		display: flex;
+		align-items: center;
+		gap: .5rem;
+	}
+
 	.list button {
+		margin: 0px;
+
 		background-color: var(--color-light);
 		color: var(--color-dark);
 

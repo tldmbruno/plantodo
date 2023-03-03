@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 
 import './TodoList.css';
 
@@ -11,6 +11,11 @@ export default function App() {
   const itemInputRef = useRef<HTMLInputElement>(null);
   const [ todoListItems, setTodoListItems ] = useState<Item[]>([]);
 
+  // On load: load data
+  useEffect(() => {
+    loadData();
+  },[]);
+
   // Creates a new list item with a particular description
   function createListItem(description: string) {
     const newTodoListItem = {
@@ -19,8 +24,6 @@ export default function App() {
     };
       
     setTodoListItems([...todoListItems, newTodoListItem]);
-  
-    (document.getElementById('newNoteForm') as HTMLFormElement).reset();
   }
 
   // Shows all items in a particular list
@@ -30,9 +33,7 @@ export default function App() {
         <li key={item.id}>
           <div>
             <input type='checkbox' />
-          </div>
-          <div>   
-            <span>{item.text}</span>
+            <label>{item.text}</label>
           </div>
           <div>
             <button onClick={() => editListItem(item)}>Edit</button>
@@ -65,14 +66,39 @@ export default function App() {
     }
   }
 
+  // Function that happens when the form is submitted
+  function onFormSubmit(e: FormEvent) {
+    e.preventDefault();
+    createListItem(itemInputRef.current?.value ?? '');
+    (document.getElementById('newNoteForm') as HTMLFormElement).reset();
+  }
+
+  // Saves the list as a JSON file
+  function saveData() {
+    const data = JSON.stringify(todoListItems);
+    localStorage.setItem("data", data);
+  }
+
+  // Loads the list as a JSON file
+  function loadData() {
+    const data = JSON.parse(localStorage.getItem("data") ?? '');
+    setTodoListItems(data);
+  }
+
   return (
     <>
-      <form id='newNoteForm' onSubmit={e => {
-          e.preventDefault();
-          createListItem(itemInputRef.current?.value ?? '')}}>
-        <input type='text' ref={itemInputRef}></input>
-        <button type='submit'>New Item</button>
-      </form>
+      <div className='flex'>
+        <div className='flex s-gap'>
+          <form id='newNoteForm' onSubmit={onFormSubmit}>
+            <input type='text' ref={itemInputRef}></input>
+          </form>
+
+          <button type='submit'>New Item</button>
+        </div>
+
+        <button type='button' onClick={saveData}>Save</button>
+      </div>
+
       <ul className='list'>
         {showItems(todoListItems)}
       </ul>

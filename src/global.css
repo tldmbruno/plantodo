@@ -32,7 +32,6 @@ main {
 
 button {
 	height: 2.5rem;
-	margin: .2rem;
 	padding: 0 1rem 0 1rem;
 	
 	background-color: var(--color-primary);
@@ -83,7 +82,17 @@ input {
 		height: 2rem;
 }
 
-#window {
+.container {
 	margin: 0px;
 	padding: 1rem min(10rem, 10%) 0px min(10rem, 10%);
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.s-gap {
+	gap: .2rem;
 }
