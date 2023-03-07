@@ -8,26 +8,28 @@ interface Item {
 }
 
 export default function App() {
-  const itemInputRef = useRef<HTMLInputElement>(null);
-  const [ todoListItems, setTodoListItems ] = useState<Item[]>([]);
+  const itemRef = useRef<HTMLInputElement>(null);
+  const [ list, setList ] = useState<Item[]>([]);
 
   // On load: load data
   useEffect(() => {
-    loadData();
+    loadList();
   },[]);
 
   // Creates a new list item with a particular description
-  function createListItem(description: string) {
-    const newTodoListItem = {
+  function addItem(description: string) {
+    // Encapsulates the item object
+    const item = {
       id: Date.now(),
       text: description.trim().length === 0 ? 'Empty note' : description
     };
-      
-    setTodoListItems([...todoListItems, newTodoListItem]);
+    
+    // Adds the item to the end of the list
+    setList([...list, item]);
   }
 
   // Shows all items in a particular list
-  function showItems(itemList: Item[]) {
+  function renderList(itemList: Item[]) {
     return (
       itemList.map(item =>
         <li key={item.id}>
@@ -46,45 +48,45 @@ export default function App() {
   
   // Edits an item's content
   function editListItem(item: Item) {
-    const itemIndex = todoListItems.findIndex((i) => i.id === item.id);
+    const itemIndex = list.findIndex((i) => i.id === item.id);
   
-    let newTodoListItems = todoListItems.slice();
+    let newList = list.slice();
   
-    newTodoListItems[itemIndex].text = prompt('Enter the new text for the selected item', newTodoListItems[itemIndex].text) ?? newTodoListItems[itemIndex].text;
-    setTodoListItems(newTodoListItems);
+    newList[itemIndex].text = prompt('Enter the new text for the selected item', newList[itemIndex].text) ?? newList[itemIndex].text;
+    setList(newList);
   }
   
   // Deletes a particular list item
   function deleteListItem(item: Item) {
-    const itemIndex = todoListItems.findIndex((i) => i.id === item.id);
+    const itemIndex = list.findIndex((i) => i.id === item.id);
   
     if (itemIndex !== -1) {
-      const newTodoListItems = todoListItems.slice();
-      newTodoListItems.splice(itemIndex, 1);
+      const newList = list.slice();
+      newList.splice(itemIndex, 1);
   
-      setTodoListItems(newTodoListItems);
+      setList(newList);
     }
   }
 
   // Function that happens when the form is submitted
   function onFormSubmit(e: FormEvent) {
     e.preventDefault();
-    createListItem(itemInputRef.current?.value ?? '');
+    addItem(itemRef.current?.value ?? '');
     (document.getElementById('newNoteForm') as HTMLFormElement).reset();
   }
 
   // Saves the list as a JSON file
-  function saveData() {
-    const data = JSON.stringify(todoListItems);
+  function saveList() {
+    const data = JSON.stringify(list);
     localStorage.setItem("data", data);
   }
 
   // Loads the list as a JSON file
-  function loadData() {
+  function loadList() {
     const data = localStorage.getItem("data");
 
     if (data) {
-      setTodoListItems(JSON.parse(data));
+      setList(JSON.parse(data));
     }
   }
 
@@ -92,15 +94,15 @@ export default function App() {
     <>
       <div className='flex'>
         <form id='newNoteForm' className='flex s-gap no-margin' onSubmit={onFormSubmit}>
-          <input type='text' ref={itemInputRef}></input>
+          <input type='text' ref={itemRef}></input>
           <button type='submit'>New Item</button>
         </form>
 
-        <button type='button' onClick={saveData}>Save</button>
+        <button type='button' onClick={saveList}>Save</button>
       </div>
 
       <ul className='list'>
-        {showItems(todoListItems)}
+        {renderList(list)}
       </ul>
     </>
   );
