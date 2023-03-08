@@ -1,19 +1,19 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { RenderList, Item } from '../RenderList/RenderList';
+import { loadData, SaveButton } from '../DataHandler/DataHandler';
+import { InputItem } from '../InputItem/InputItem';
 
 import './TodoList.css';
 
-interface Item {
-  id: number;
-  text: string;
-}
-
 export default function App() {
-  const itemRef = useRef<HTMLInputElement>(null);
   const [ list, setList ] = useState<Item[]>([]);
+  const itemRef = useRef<HTMLInputElement>(null);
 
   // On load: load data
   useEffect(() => {
-    loadList();
+    const data = loadData<Item>('todoListData');
+    setList(data);
   },[]);
 
   // Creates a new list item with a particular description
@@ -26,24 +26,6 @@ export default function App() {
     
     // Adds the item to the end of the list
     setList([...list, item]);
-  }
-
-  // Shows all items in a particular list
-  function renderList(itemList: Item[]) {
-    return (
-      itemList.map(item =>
-        <li key={item.id}>
-          <div>
-            <input type='checkbox' />
-            <label>{item.text}</label>
-          </div>
-          <div>
-            <button onClick={() => editListItem(item)}>Edit</button>
-            <button className='danger' onClick={() => deleteListItem(item)}>Delete</button>
-          </div>
-        </li>
-      )
-    );
   }
   
   // Edits an item's content
@@ -68,42 +50,22 @@ export default function App() {
     }
   }
 
-  // Function that happens when the form is submitted
-  function onFormSubmit(e: FormEvent) {
-    e.preventDefault();
-    addItem(itemRef.current?.value ?? '');
-    (document.getElementById('newNoteForm') as HTMLFormElement).reset();
-  }
-
-  // Saves the list as a JSON file
-  function saveList() {
-    const data = JSON.stringify(list);
-    localStorage.setItem("data", data);
-  }
-
-  // Loads the list as a JSON file
-  function loadList() {
-    const data = localStorage.getItem("data");
-
-    if (data) {
-      setList(JSON.parse(data));
-    }
-  }
-
   return (
     <>
       <div className='flex'>
-        <form id='newNoteForm' className='flex s-gap no-margin' onSubmit={onFormSubmit}>
-          <input type='text' ref={itemRef}></input>
-          <button type='submit'>New Item</button>
-        </form>
+        <InputItem
+          itemRef={itemRef}
+          submitFunction={() => addItem(itemRef.current?.value ?? '')}/>
 
-        <button type='button' onClick={saveList}>Save</button>
+        <SaveButton dataName='todoListData' value={list}/>
       </div>
 
-      <ul className='list'>
-        {renderList(list)}
-      </ul>
+      <hr></hr>
+
+      <RenderList
+        editListItem={editListItem}
+        deleteListItem={deleteListItem}
+        itemList={list}/>
     </>
   );
 }
