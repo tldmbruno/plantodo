@@ -5,6 +5,7 @@ import { loadData, SaveButton } from '../DataHandler/DataHandler';
 import { InputItem } from '../InputItem/InputItem';
 
 import './TodoList.css';
+import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
 
 export default function App() {
   const [ list, setList ] = useState<Item[]>([]);
@@ -21,7 +22,8 @@ export default function App() {
     // Encapsulates the item object
     const item = {
       id: Date.now(),
-      text: description.trim().length === 0 ? 'Empty note' : description
+      text: description.trim().length === 0 ? 'Empty note' : description,
+      highlighted: false
     };
     
     // Adds the item to the end of the list
@@ -57,7 +59,10 @@ export default function App() {
           itemRef={itemRef}
           submitFunction={() => addItem(itemRef.current?.value ?? '')}/>
 
-        <SaveButton dataName='todoListData' value={list}/>
+        <div className='flex s-gap'>
+          <ButtonRandomizer itemState={list} setItemState={setList}></ButtonRandomizer>
+          <SaveButton dataName='todoListData' value={list}/>
+        </div>
       </div>
 
       <hr></hr>

@@ -7,6 +7,7 @@ interface PropsRenderList {
 export interface Item {
 	id: number;
 	text: string;
+  highlighted: boolean;
 }
 
 // Shows all items in a particular list
@@ -14,7 +15,7 @@ export function RenderList({editListItem, deleteListItem, itemList}: PropsRender
   return (
     <ul className='list'>
       {itemList.map(item =>
-      <li key={item.id}>
+      <li key={item.id} className={item.highlighted ? 'highlighted' : ''}>
         <div>
           <input type='checkbox' />
           <label>{item.text}</label>
