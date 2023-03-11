@@ -1,16 +1,34 @@
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { loadData, saveData } from '../DataHandler/DataHandler';
 
 import './DarkToggle.css';
 
 export default function DarkToggle() {
-	const [ isDarkTheme, setDarkTheme ] = useState(false);
+	const [ isDarkTheme, setIsDarkTheme ] = useState(loadData<boolean>('darkToggleData') ?? false);
 
-	function onToggle(event: ChangeEvent) {
-		setDarkTheme(!isDarkTheme);
-		document.documentElement.classList.toggle('dark');
+	useEffect(() => {
+		if (isDarkTheme) {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+	},[isDarkTheme]);
+	
+	function toggleDarkMode() {
+		setIsDarkTheme(!isDarkTheme);
+
+		// Saves data
+		//   ?: (Value keeps being inverted because setState only applies the new value
+		// 	  on re-render.)
+		saveData(!isDarkTheme, 'darkToggleData');
 	}
 
 	return (
-		<input className='toggle' type='checkbox' checked={isDarkTheme} onChange={e => onToggle(e)}></input>
+		<button className='' onClick={(() => toggleDarkMode())}>
+			{ isDarkTheme ? 
+				<span>🌙</span>
+				: <span>🌻</span>
+			}
+		</button>
 	);
 }
