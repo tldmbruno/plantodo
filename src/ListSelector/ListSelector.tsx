@@ -13,8 +13,11 @@ export default function ListSelector() {
 
 	// On load: load data
   useEffect(() => {
-    const data = loadData<ListData>('selectorData');
-		setListsData(data);
+    const data = loadData<ListData[]>('selectorData');
+		
+		if (data) {
+			setListsData(data);
+		}
   },[]);
 
 	function createList() {

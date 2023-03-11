@@ -5,14 +5,14 @@ export function saveData(value: any, dataName: string): void {
 }
 
 // Loads the data as a JSON file
-export function loadData<T extends any>(dataName: string) : T[] {
+export function loadData<T extends any>(dataName: string) : T | null{
 	const data = localStorage.getItem(dataName);
 	
 	if (data) {
 		return JSON.parse(data);
 	}
 	
-	return [];
+	return null;
 }
 
 // Save Button to quickly allocate data through localStorage

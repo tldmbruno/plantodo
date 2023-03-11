@@ -13,8 +13,11 @@ export default function App() {
 
   // On load: load data
   useEffect(() => {
-    const data = loadData<Item>('todoListData');
-    setList(data);
+    const data = loadData<Item[]>('todoListData');
+
+    if (data) {
+      setList(data);
+    }
   },[]);
 
   // Creates a new list item with a particular description
