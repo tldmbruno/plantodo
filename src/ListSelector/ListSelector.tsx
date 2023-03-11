@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { loadData, SaveButton } from "../DataHandler/DataHandler";
 import { InputItem } from "../InputItem/InputItem";
+import { Item } from "../RenderList/RenderList";
 
 interface ListData {
 	fetchId: number,
 	title: string,
+	contents: Item[]
 }
 
 export default function ListSelector() {
@@ -23,7 +26,8 @@ export default function ListSelector() {
 	function createList() {
 		const newList: ListData = {
 			fetchId: Date.now(),
-			title: itemRef.current?.value ?? "Unnammed list"
+			title: itemRef.current?.value ?? "Unnammed list",
+			contents: []
 		};
 
 		setListsData([...listsData, newList]);
@@ -56,8 +60,10 @@ export default function ListSelector() {
 			<ul className='list'>
 				{listsData.map(list =>
 					<li key={list.fetchId}>
-						<label>{list.title}</label>
-						<button className='danger' onClick={() => deleteList(list)}>Delete</button>
+						<Link to={'/edit/' + list.fetchId} state={list}>{list.title}</Link>
+						<div>
+							<button className='danger' onClick={() => deleteList(list)}>Delete</button>
+						</div>
 					</li>
 				)}
 			</ul>

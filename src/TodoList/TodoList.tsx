@@ -3,17 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 import { RenderList, Item } from '../RenderList/RenderList';
 import { loadData, SaveButton } from '../DataHandler/DataHandler';
 import { InputItem } from '../InputItem/InputItem';
+import { useLocation } from 'react-router-dom';
+
+import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
 
 import './TodoList.css';
-import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
 
 export default function App() {
   const [ list, setList ] = useState<Item[]>([]);
   const itemRef = useRef<HTMLInputElement>(null);
 
+  const listFile = useLocation();
+  const fileId: number = listFile.state.fetchId;
+
   // On load: load data
   useEffect(() => {
-    const data = loadData<Item[]>('todoListData');
+    const data = loadData<Item[]>('todoListData'+ fileId);
 
     if (data) {
       setList(data);
@@ -64,7 +69,7 @@ export default function App() {
 
         <div className='flex s-gap'>
           <ButtonRandomizer itemState={list} setItemState={setList}></ButtonRandomizer>
-          <SaveButton dataName='todoListData' value={list}/>
+          <SaveButton dataName={'todoListData' + fileId} value={list}/>
         </div>
       </div>
 

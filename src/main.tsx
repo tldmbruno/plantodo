@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <main>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/edit' element={<EditPage />} />
+            <Route path='/edit/*' element={<EditPage />} />
             <Route path='/about' element={<AboutPage />} />
             <Route path='/git' element={<GitPage />} />
             <Route path='*' element={<MissingPage />}/>
