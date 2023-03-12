@@ -50,7 +50,6 @@ export default function ListSelector() {
 					buttonText={'Create new list'}
 					itemRef={itemRef}
 					submitFunction={createList}/>
-				<SaveButton value={listsData} dataName='selectorData'/>
 			</div>
 
 			<hr></hr>

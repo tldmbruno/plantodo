@@ -74,7 +74,6 @@ export default function App() {
 
         <div className='flex s-gap'>
           <ButtonRandomizer itemState={list} setItemState={setList}></ButtonRandomizer>
-          <SaveButton dataName={fileData} value={list}/>
         </div>
       </div>
 
