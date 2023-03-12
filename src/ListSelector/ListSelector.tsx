@@ -28,16 +28,25 @@ export default function ListSelector() {
 			title: itemRef.current?.value ?? "Unnammed list"
 		};
 
+		// Adds to the state array
 		setListsData([...listsData, newList]);
 	}
 
+	// Deletes the list and also the content in it from Local Storage
 	function deleteList(list: ListData) {
-		const listIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
+		const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
+		const todoListFileData = 'todoListData' + listsData[listsDataIndex].fetchId;
   
-    if (listIndex !== -1) {
+		// Checks if the index is valid before deleting anything
+    if (listsDataIndex !== -1) {
+			// Delete the list from the array
       const newList = listsData.slice();
-      newList.splice(listIndex, 1);
+      newList.splice(listsDataIndex, 1);
+
+			// Erase the content from Local Storage
+			localStorage.removeItem(todoListFileData);
   
+			// Apply the modifications
       setListsData(newList);
     }
 	}
