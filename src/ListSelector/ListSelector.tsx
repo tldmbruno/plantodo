@@ -1,33 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { loadData, SaveButton } from "../DataHandler/DataHandler";
+import { loadData, SaveButton, saveData } from "../DataHandler/DataHandler";
 import { InputItem } from "../InputItem/InputItem";
-import { Item } from "../RenderList/RenderList";
 
 interface ListData {
 	fetchId: number,
 	title: string,
-	contents: Item[]
 }
 
 export default function ListSelector() {
-	const [ listsData, setListsData ] = useState<ListData[]>([]);
+	// Declares and loads state data
 	const itemRef = useRef<HTMLInputElement>(null);
+	const [ listsData, setListsData ] = useState(() => {
+		const data = loadData<ListData[]>('selectorData');
+		return data ? data : [];
+	});
+	
+	// Auto save on every change
+	useEffect(() => {
+		saveData(listsData, 'selectorData');
+	},[listsData])
 
-	// On load: load data
-  useEffect(() => {
-    const data = loadData<ListData[]>('selectorData');
-		
-		if (data) {
-			setListsData(data);
-		}
-  },[]);
-
+	// Creates a new list, defaulting to 'Unnammed list'
 	function createList() {
 		const newList: ListData = {
 			fetchId: Date.now(),
-			title: itemRef.current?.value ?? "Unnammed list",
-			contents: []
+			title: itemRef.current?.value ?? "Unnammed list"
 		};
 
 		setListsData([...listsData, newList]);
