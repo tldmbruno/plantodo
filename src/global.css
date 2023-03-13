@@ -1,55 +1,90 @@
 html {
 	--color-primary: #2a7;
-	--color-secondary: #246;
+	--color-secondary: #46c;
 	--color-error: #e25;
-	--color-light: #fff;
-	--color-middle: #889;
-	--color-dark: #112;
+	--color-light: #eeefef;
+	--color-middle: #aaaab044;
+	--color-dark: #111318;
 
 	--line-weight: 2px;
 	--radius: 4px;
 
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 body {
 	height: 100vh;
 	margin: 0px;
 
-	background-color: var(--color-light);
 	color: var(--color-dark);
-
-	background-image: url('/plant.png');
-  background-position: max(10%, 110%) max(10% + 5rem, 110%);
+	
+	background-image: url('/plant-background.jpg');
+	background-position: 50% 50%;
+	background-size: cover;
+	
+	/* background-image: url('/plant.png');
+  background-position: max(10%, 110%) max(10% + 5rem, 110%); */
+	
   background-repeat: no-repeat;
+	
+	/* This makes the magic happen */
+	background-color: #fff;
+	background-blend-mode: difference;
+	transition: background-color ease-in-out 3s, color ease-in-out 1s 1.5s;
+}
 
-	transition: background-color .5s;
+/* Dark mode */
+.dark > body {
+	background-color: #000;
+	color: var(--color-light);
 }
 
 main {
 	margin-top: 3rem;
 }
 
-button {
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-weight: bolder;
+}
+
+h1 {
+	font-size: 2rem;
+	margin-bottom: .4rem;
+}
+
+.button, button {
 	height: 2.5rem;
 	padding: 0 1rem 0 1rem;
 	
-	background-color: var(--color-primary);
-	color: var(--color-light);
+	background-color: inherit;
+	color: inherit;
+
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-weight: bold;
 
 	border: none;
 	border-radius: var(--radius);
 	
 	user-select: none;
-
-	transition: background-color .1s;
+	cursor: pointer;
 }
 
-button:hover {
+.button { /* Class to simulate button's appearance */
+  display: inline-block;
+	
+	text-align: center;
+	text-anchor: middle;
+  text-decoration: none;
+	vertical-align: center;
+}
+
+.button:hover, button:hover {
 	outline: var(--line-weight) solid var(--color-secondary);
+	color: var(--color-secondary)
 	}
 
-	button:active {
+	.button:active, button:active {
 		outline: var(--line-weight) solid var(--color-primary);
 		background-color: var(--color-light);
 		color: var(--color-primary);
@@ -61,16 +96,10 @@ input {
 	height: 2.5rem;
 	margin: .1rem;
 	
-	background-color: var(--color-light);
+	background-color: var(--color-middle);
 	color: var(--color-dark);
-	box-shadow: 0 0 var(--line-weight) var(--color-dark);
 	border-radius: var(--radius);
 	border: none;
-}
-
-.dark > body {
-	background-color: var(--color-dark);
-	color: var(--color-light);
 }
 
 .round {
@@ -84,7 +113,7 @@ input {
 
 .container {
 	margin: 0px;
-	padding: 1rem min(10rem, 10%) 0px min(10rem, 10%);
+	padding: 0px min(10rem, 10%);
 }
 
 .flex {
@@ -93,10 +122,10 @@ input {
 	justify-content: space-between;
 }
 
-.s-gap {
+.gap {
 	gap: .2rem;
 }
 
-.no-margin {
+.noMargin {
 	margin: 0;
 }

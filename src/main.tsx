@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import './reset.css';
 import './global.css';
 
 import NavBar from './NavBar/NavBar';
@@ -22,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <main>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/edit' element={<EditPage />} />
+            <Route path='/edit/*' element={<EditPage />} />
             <Route path='/about' element={<AboutPage />} />
             <Route path='/git' element={<GitPage />} />
             <Route path='*' element={<MissingPage />}/>

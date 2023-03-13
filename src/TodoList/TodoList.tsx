@@ -1,24 +1,32 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { RenderList, Item } from '../RenderList/RenderList';
-import { loadData, SaveButton } from '../DataHandler/DataHandler';
+import { loadData, saveData, SaveButton } from '../DataHandler/DataHandler';
 import { InputItem } from '../InputItem/InputItem';
+import { useLocation } from 'react-router-dom';
 
-import './TodoList.css';
 import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
 
+import './TodoList.css';
+import Divider from '../Divider/Divider';
+
 export default function App() {
-  const [ list, setList ] = useState<Item[]>([]);
+  // LocalStorage identification
+  const listFile = useLocation();
+  const fileId: number = listFile.state.fetchId;
+  const fileData: string = 'todoListData' + fileId;
+  
+  // Declares and loads state data
   const itemRef = useRef<HTMLInputElement>(null);
+  const [ list, setList ] = useState<Item[]>(() => {
+    const data = loadData<Item[]>(fileData);
+		return data ? data : [];
+  });
 
-  // On load: load data
-  useEffect(() => {
-    const data = loadData<Item[]>('todoListData');
-
-    if (data) {
-      setList(data);
-    }
-  },[]);
+  // Auto save on every change
+	useEffect(() => {
+		saveData(list, fileData);
+	},[list])
 
   // Creates a new list item with a particular description
   function addItem(description: string) {
@@ -31,6 +39,7 @@ export default function App() {
     
     // Adds the item to the end of the list
     setList([...list, item]);
+    saveData(list, fileData);
   }
   
   // Edits an item's content
@@ -41,6 +50,7 @@ export default function App() {
   
     newList[itemIndex].text = prompt('Enter the new text for the selected item', newList[itemIndex].text) ?? newList[itemIndex].text;
     setList(newList);
+    saveData(list, fileData);
   }
   
   // Deletes a particular list item
@@ -52,6 +62,7 @@ export default function App() {
       newList.splice(itemIndex, 1);
   
       setList(newList);
+      saveData(list, fileData);
     }
   }
 
@@ -62,13 +73,12 @@ export default function App() {
           itemRef={itemRef}
           submitFunction={() => addItem(itemRef.current?.value ?? '')}/>
 
-        <div className='flex s-gap'>
+        <div className='flex gap'>
           <ButtonRandomizer itemState={list} setItemState={setList}></ButtonRandomizer>
-          <SaveButton dataName='todoListData' value={list}/>
         </div>
       </div>
 
-      <hr></hr>
+      <Divider />
 
       <RenderList
         editListItem={editListItem}
