@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { loadData, SaveButton, saveData } from "../DataHandler/DataHandler";
+import Divider from "../Divider/Divider";
 import { InputItem } from "../InputItem/InputItem";
 
 interface ListData {
@@ -54,14 +55,14 @@ export default function ListSelector() {
 	return (
 		<>
 			<h1>Select a list or create new one</h1>
-			<div className='flex s-gap'>
+			<div className='flex gap'>
 				<InputItem
 					buttonText={'Create new list'}
 					itemRef={itemRef}
 					submitFunction={createList}/>
 			</div>
 
-			<hr></hr>
+			<Divider />
 
 			<ul className='list'>
 				{listsData.map(list =>

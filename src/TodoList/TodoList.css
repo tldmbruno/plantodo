@@ -1,6 +1,5 @@
 .list {
 	list-style: none;
-	margin: 1rem 0px;
 	padding: 0px;
 
 	}
@@ -13,13 +12,17 @@
 		flex: auto;
 		padding: .2rem;
 
+		margin-bottom: .2rem;
+
+		background-color: var(--color-middle);
+
 		border-radius: var(--radius);
 
 		cursor: pointer;
 		}
 
 		.list > li:hover {
-			box-shadow: 0px 0px var(--line-weight) var(--color-middle);
+			outline: var(--line-weight) solid var(--color-secondary);
 	}
 
 	.list div {
@@ -30,11 +33,6 @@
 
 	.list button {
 		margin: 0px;
-
-		background-color: var(--color-light);
-		color: var(--color-dark);
-
-		box-shadow: 0px 0px var(--line-weight) var(--color-dark);
 		}
 
 		.list button:active {
@@ -47,11 +45,11 @@
 }
 
 .danger:hover {
-	background-color: var(--color-error);
-	color: var(--color-light);
+	outline-color: var(--color-error);
+	color: var(--color-error);
 }
 
-.highlighted {
+.list > .highlighted {
+	color: var(--color-white);
 	background-color: var(--color-primary);
-	color: var(--color-light);
 }

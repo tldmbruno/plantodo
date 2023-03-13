@@ -1,19 +1,27 @@
+import Divider from "../Divider/Divider";
+
 export default function About() {
 	return (
 		<>
 			<h1>Git</h1>
-			<div className='flex'>
-				<div className='flex s-gap'>
+			<Divider />
+			<ul>
+				<li>
 					<button onClick={() => window.location.href = 'https://github.com/tldmbruno/plantodo'}>
 						Get the Source code
 					</button>
+				</li>
+				<li>
 					<button onClick={() => window.location.href = 'https://github.com/tldmbruno'}>
 						Follow Bruno Peres on Github
 					</button>
-				</div>
-
-				<span></span>
-			</div>
+				</li>
+				<li>
+					<button onClick={() => window.location.href = 'https://www.pexels.com/@scottwebb/'}>
+						Background photo by @scottwebb
+					</button>
+				</li>
+			</ul>
 		</>
 	);
 }

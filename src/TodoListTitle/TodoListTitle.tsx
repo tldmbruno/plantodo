@@ -4,6 +4,6 @@ export default function TodoListTitle() {
 	const title = useLocation().state.title;
 	
 	return (
-		<h1>{title}</h1>
+		<h1 className='title'>{title}</h1>
 	);
 }

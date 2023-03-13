@@ -16,7 +16,7 @@ export function InputItem({buttonText = 'New Item', submitFunction, itemRef}: Pr
 	}
 
 	return (
-		<form id='newNoteForm' className='flex s-gap no-margin' onSubmit={onSubmit}>
+		<form id='newNoteForm' className='flex gap noMargin' onSubmit={onSubmit}>
 			<input type='text' ref={itemRef}></input>
 			<button type='submit'>{buttonText}</button>
 		</form>

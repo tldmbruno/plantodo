@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
 
 import './TodoList.css';
+import Divider from '../Divider/Divider';
 
 export default function App() {
   // LocalStorage identification
@@ -72,12 +73,12 @@ export default function App() {
           itemRef={itemRef}
           submitFunction={() => addItem(itemRef.current?.value ?? '')}/>
 
-        <div className='flex s-gap'>
+        <div className='flex gap'>
           <ButtonRandomizer itemState={list} setItemState={setList}></ButtonRandomizer>
         </div>
       </div>
 
-      <hr></hr>
+      <Divider />
 
       <RenderList
         editListItem={editListItem}
