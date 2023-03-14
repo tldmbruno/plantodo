@@ -41,7 +41,7 @@ export default function ListSelector() {
 		// Checks if the index is valid before deleting anything
     if (listsDataIndex !== -1) {
 			// Delete the list from the array
-      const newList = listsData.slice();
+      const newList = [...listsData];
       newList.splice(listsDataIndex, 1);
 
 			// Erase the content from Local Storage
