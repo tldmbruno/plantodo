@@ -23,7 +23,7 @@ export default function ListSelector() {
 	},[listsData])
 
 	// Creates a new list, defaulting to 'Unnammed list'
-	function createList() {
+	function createList(): void {
 		// Gets the new list's title
 		let newTitle = itemRef.current?.value.trim() ?? '';
 		newTitle = newTitle.length === 0 ? 'Unnammed List' : newTitle;
@@ -53,7 +53,7 @@ export default function ListSelector() {
 	}
 
 	// Deletes the list and also the content in it from Local Storage
-	function deleteList(list: ListData) {
+	function deleteList(list: ListData): void {
 		const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
 		const todoListFileData = 'todoListData' + listsData[listsDataIndex].fetchId;
   

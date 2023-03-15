@@ -5,7 +5,7 @@ export function saveData(value: any, dataName: string): void {
 }
 
 // Loads the data as a JSON file
-export function loadData<T extends any>(dataName: string) : T | null{
+export function loadData<T>(dataName: string) : T | null{
 	const data = localStorage.getItem(dataName);
 	
 	if (data) {
