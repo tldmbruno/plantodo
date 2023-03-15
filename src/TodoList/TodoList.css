@@ -1,17 +1,15 @@
 .list {
-	list-style: none;
 	padding: 0px;
-
 	}
 
-	.list > li {
+	.list li {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		flex-direction: row;
 		flex: auto;
-		padding: .2rem;
 
+		padding: .2rem;
 		margin-bottom: .2rem;
 
 		background-color: var(--color-middle);
@@ -28,7 +26,7 @@
 	.list div {
 		display: flex;
 		align-items: center;
-		gap: .5rem;
+		gap: .4rem;
 	}
 
 	.list button {
@@ -42,11 +40,6 @@
 
 	.list input {
 		box-shadow: none;
-}
-
-.danger:hover {
-	outline-color: var(--color-error);
-	color: var(--color-error);
 }
 
 .list > .highlighted {

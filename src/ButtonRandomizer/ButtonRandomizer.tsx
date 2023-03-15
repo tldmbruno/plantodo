@@ -1,26 +1,16 @@
-import { Item } from "../RenderList/RenderList"
-
 interface PropsButtonRandomizer {
-	itemState: Item[];
-	setItemState: Function;
+	onRandomize: (index: number) => void;
+	totalItems: number;
 }
 
-// Randomizes an array and returns the index of that selected item
-function randomizeHighlight(itemState: Item[], setItemState: Function): void {
-	const randomIndex = Math.floor(Math.random() * itemState.length);
+export default function ButtonRandomizer({onRandomize, totalItems}: PropsButtonRandomizer) {
+	// Randomizes an array and returns the index of that selected item
+	function randomizeHighlight() {
+		const randomIndex = Math.floor(Math.random() * totalItems);
+		onRandomize(randomIndex)
+	}
 
-	const newItemState = itemState.slice();
-
-	newItemState.map(item => item.highlighted = false);
-	newItemState[randomIndex].highlighted = true;
-
-	setItemState(newItemState);
-
-	
-}
-
-export default function ButtonRandomizer({itemState, setItemState}: PropsButtonRandomizer) {
 	return (
-		<button onClick={() => randomizeHighlight(itemState, setItemState)}>Choose randomly 🎲</button>
+		<button onClick={randomizeHighlight}>Choose randomly 🎲</button>
 	)
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { RenderList, Item } from '../RenderList/RenderList';
-import { loadData, saveData, SaveButton } from '../DataHandler/DataHandler';
+import { loadData, saveData } from '../DataHandler/DataHandler';
 import { InputItem } from '../InputItem/InputItem';
 import { useLocation } from 'react-router-dom';
 
@@ -46,7 +46,7 @@ export default function App() {
   function editListItem(item: Item) {
     const itemIndex = list.findIndex((i) => i.id === item.id);
   
-    let newList = list.slice();
+    let newList = [...list];
   
     newList[itemIndex].text = prompt('Enter the new text for the selected item', newList[itemIndex].text) ?? newList[itemIndex].text;
     setList(newList);
@@ -58,12 +58,29 @@ export default function App() {
     const itemIndex = list.findIndex((i) => i.id === item.id);
   
     if (itemIndex !== -1) {
-      const newList = list.slice();
+      const newList = [...list];
       newList.splice(itemIndex, 1);
   
       setList(newList);
       saveData(list, fileData);
     }
+  }
+
+  function onRandomize(index: number) {
+    const newList = [...list];
+
+    newList.map(item => item.highlighted = false);
+    newList[index].highlighted = true;
+
+    setList(newList);
+  }
+
+  function toggleHighlighted(item: Item) {
+    const itemIndex = list.findIndex((i) => i.id === item.id);
+
+    const newList = [...list];
+    newList[itemIndex].highlighted = !newList[itemIndex].highlighted;
+    setList(newList);
   }
 
   return (
@@ -74,13 +91,16 @@ export default function App() {
           submitFunction={() => addItem(itemRef.current?.value ?? '')}/>
 
         <div className='flex gap'>
-          <ButtonRandomizer itemState={list} setItemState={setList}></ButtonRandomizer>
+          <ButtonRandomizer 
+            onRandomize={onRandomize}
+            totalItems={list.length}/>
         </div>
       </div>
 
       <Divider />
 
       <RenderList
+        toggleHighlighted={toggleHighlighted}
         editListItem={editListItem}
         deleteListItem={deleteListItem}
         itemList={list}/>
