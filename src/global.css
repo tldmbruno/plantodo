@@ -40,7 +40,7 @@ body {
 }
 
 main {
-	margin-top: 3rem;
+	margin-top: 1rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -56,6 +56,8 @@ h1 {
 .button, button {
 	height: 2.5rem;
 	padding: 0 1rem 0 1rem;
+
+	white-space: nowrap;
 	
 	background-color: inherit;
 	color: inherit;
@@ -100,6 +102,17 @@ input {
 	color: var(--color-dark);
 	border-radius: var(--radius);
 	border: none;
+
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	}
+
+	input[type='text'] {
+		width: 100%;
+		padding-left: 1rem;
+	}
+
+	.dark input[type='text'] {
+		color: var(--color-light);
 }
 
 .round {
@@ -124,6 +137,14 @@ input {
 
 .gap {
 	gap: .2rem;
+}
+
+.fullWidth {
+	width: 100%
+}
+
+.halfWidth {
+	width: 50%;
 }
 
 .noMargin {
