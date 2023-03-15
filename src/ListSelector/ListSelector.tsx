@@ -24,9 +24,11 @@ export default function ListSelector() {
 
 	// Creates a new list, defaulting to 'Unnammed list'
 	function createList() {
+		const newTitle = itemRef.current?.value.trim() ?? '';
+
 		const newList: ListData = {
 			fetchId: Date.now(),
-			title: itemRef.current?.value ?? "Unnammed list"
+			title: newTitle.length === 0 ? 'Unnammed List' : newTitle
 		};
 
 		// Adds to the state array
@@ -54,7 +56,6 @@ export default function ListSelector() {
 
 	return (
 		<>
-			<h1>Select a list or create new one</h1>
 			<div className='flex gap'>
 				<InputItem
 					buttonText={'Create new list'}
