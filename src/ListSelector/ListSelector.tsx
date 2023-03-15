@@ -24,11 +24,28 @@ export default function ListSelector() {
 
 	// Creates a new list, defaulting to 'Unnammed list'
 	function createList() {
-		const newTitle = itemRef.current?.value.trim() ?? '';
+		// Gets the new list's title
+		let newTitle = itemRef.current?.value.trim() ?? '';
+		newTitle = newTitle.length === 0 ? 'Unnammed List' : newTitle;
 
+		// Verify if there's already a list with the same name
+		let occourences = 0;
+		listsData.forEach(list => {
+			if (list.title == newTitle ||
+					list.title == `${newTitle} (${occourences})`) {
+				occourences++;
+			}
+		});
+
+		// If so, renames it appropriately
+		if (occourences > 0) {
+			newTitle = `${newTitle} (${occourences})`;
+		}
+
+		// Creates the new list
 		const newList: ListData = {
 			fetchId: Date.now(),
-			title: newTitle.length === 0 ? 'Unnammed List' : newTitle
+			title: newTitle
 		};
 
 		// Adds to the state array
@@ -68,7 +85,7 @@ export default function ListSelector() {
 			<ul className='list'>
 				{listsData.map(list =>
 					<li key={list.fetchId}>
-						<Link to={'/edit/' + list.fetchId} state={list}>{list.title}</Link>
+						<Link to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						<div>
 							<button className='danger' onClick={() => deleteList(list)}>Delete</button>
 						</div>
