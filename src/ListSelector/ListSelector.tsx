@@ -4,6 +4,8 @@ import { loadData, SaveButton, saveData } from "../DataHandler/DataHandler";
 import Divider from "../Divider/Divider";
 import { InputItem } from "../InputItem/InputItem";
 
+import './ListSelector.css';
+
 interface ListData {
 	fetchId: number,
 	title: string,
@@ -85,7 +87,7 @@ export default function ListSelector() {
 			<ul className='list'>
 				{listsData.map(list =>
 					<li key={list.fetchId}>
-						<Link to={'/edit/' + list.title} state={list}>{list.title}</Link>
+						<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						<div>
 							<button className='danger' onClick={() => deleteList(list)}>Delete</button>
 						</div>

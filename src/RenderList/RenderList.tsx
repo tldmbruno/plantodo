@@ -1,4 +1,5 @@
 interface PropsRenderList {
+  toggleHighlighted: (item: Item) => void;
 	editListItem: (item: Item) => void;
   deleteListItem: (item: Item) => void;
   itemList: Item[];
@@ -11,13 +12,17 @@ export interface Item {
 }
 
 // Shows all items in a particular list
-export function RenderList({editListItem, deleteListItem, itemList}: PropsRenderList) {
+export function RenderList({toggleHighlighted, editListItem, deleteListItem, itemList}: PropsRenderList) {
+  function onToggle(item: Item) {
+    toggleHighlighted(item);
+  }
+
   return (
     <ul className='list'>
       {itemList.map(item =>
-      <li key={item.id} className={item.highlighted ? 'highlighted' : ''}>
+      <li key={item.id} onClick={() => onToggle(item)} className={item.highlighted ? 'highlighted' : ''}>
         <div>
-          <input type='checkbox' />
+          <input type='checkbox' checked={item.highlighted}/>
           <label>{item.text}</label>
         </div>
         <div>

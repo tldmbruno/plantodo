@@ -75,6 +75,14 @@ export default function App() {
     setList(newList);
   }
 
+  function toggleHighlighted(item: Item) {
+    const itemIndex = list.findIndex((i) => i.id === item.id);
+
+    const newList = [...list];
+    newList[itemIndex].highlighted = !newList[itemIndex].highlighted;
+    setList(newList);
+  }
+
   return (
     <>
       <div className='flex'>
@@ -92,6 +100,7 @@ export default function App() {
       <Divider />
 
       <RenderList
+        toggleHighlighted={toggleHighlighted}
         editListItem={editListItem}
         deleteListItem={deleteListItem}
         itemList={list}/>
