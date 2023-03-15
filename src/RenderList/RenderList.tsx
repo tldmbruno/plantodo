@@ -22,7 +22,7 @@ export function RenderList({toggleHighlighted, editListItem, deleteListItem, ite
       {itemList.map(item =>
       <li key={item.id} onClick={() => onToggle(item)} className={item.highlighted ? 'highlighted' : ''}>
         <div>
-          <input type='checkbox' checked={item.highlighted}/>
+          <input type='checkbox' checked={item.highlighted} onChange={() => null}/>
           <label>{item.text}</label>
         </div>
         <div>
