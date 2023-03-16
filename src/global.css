@@ -9,7 +9,10 @@ html {
 	--line-weight: 2px;
 	--radius: 4px;
 
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	--display-font: 'Pacifico', cursive;
+	--body-font: 'Rubik', sans-serif;
+
+	font-family: var(--body-font);
 }
 
 body {
@@ -22,9 +25,6 @@ body {
 	background-position: 50% 50%;
 	background-attachment: fixed;
 	background-size: cover;
-	
-	/* background-image: url('/plant.png');
-  background-position: max(10%, 110%) max(10% + 5rem, 110%); */
 	
   background-repeat: no-repeat;
 	
@@ -45,7 +45,7 @@ main {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: var(--display-font);
 	font-weight: bolder;
 }
 
@@ -63,7 +63,7 @@ h1 {
 	background-color: inherit;
 	color: inherit;
 
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: var(--body-font);
 	font-weight: bold;
 
 	border: var(--line-weight) solid var(--color-middle);
@@ -104,7 +104,7 @@ input {
 	border-radius: var(--radius);
 	border: none;
 
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: var(--body-font);
 	}
 
 	input[type='text'] {

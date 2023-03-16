@@ -11,17 +11,20 @@
 
 .categories {
 	width: 20rem;
+
+	font-weight: 500;
 }
 
 .logo {
 	display: flex;
 	align-items: center;
 
+	font-family: var(--display-font);
 	font-weight: bolder;
 	}
 
 	.logo:hover ::after{
-		content: ' 🌱';
+		content: ' 🪴';
 	}
 
 a,
