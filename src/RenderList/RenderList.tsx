@@ -1,8 +1,11 @@
 interface PropsRenderList {
+  itemList: Item[];
   toggleHighlighted: (item: Item) => void;
+  
+  moveListItem:(item: Item, toRelativeIndex: number) => void;
+
 	editListItem: (item: Item) => void;
   deleteListItem: (item: Item) => void;
-  itemList: Item[];
 }
 
 export interface Item {
@@ -12,20 +15,19 @@ export interface Item {
 }
 
 // Shows all items in a particular list
-export function RenderList({toggleHighlighted, editListItem, deleteListItem, itemList}: PropsRenderList) {
-  function onToggle(item: Item) {
-    toggleHighlighted(item);
-  }
-
+export function RenderList({toggleHighlighted, moveListItem, editListItem, deleteListItem, itemList}: PropsRenderList) {
   return (
     <ul className='list'>
       {itemList.map(item =>
-      <li key={item.id} onClick={() => onToggle(item)} className={item.highlighted ? 'highlighted' : ''}>
+      <li key={item.id} onClick={() => toggleHighlighted(item)} className={item.highlighted ? 'highlighted' : ''}>
         <div>
           <input type='checkbox' checked={item.highlighted} onChange={() => null}/>
           <label>{item.text}</label>
         </div>
         <div>
+          <button onClick={() => moveListItem(item, -1)}>Up</button>
+          <button onClick={() => moveListItem(item, +1)}>Down</button>
+
           <button onClick={() => editListItem(item)}>Edit</button>
           <button className='danger' onClick={() => deleteListItem(item)}>Delete</button>
         </div>

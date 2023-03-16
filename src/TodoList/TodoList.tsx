@@ -10,6 +10,17 @@ import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
 import './TodoList.css';
 import Divider from '../Divider/Divider';
 
+// Function that returns a new list after moving one item from it
+function moveListItem(list: Item[], fromIndex: number, toIndex: number): Item[] {
+  let selectedItem = list[fromIndex];
+
+  let newList = [...list];
+
+  newList.splice(toIndex, 0, selectedItem);
+
+  return newList;
+}
+
 export default function App() {
   // LocalStorage identification
   const listFile = useLocation();
@@ -22,12 +33,7 @@ export default function App() {
     const data = loadData<Item[]>(fileData);
 		return data ? data : [];
   });
-
-  // Auto save on every change
-	useEffect(() => {
-		saveData(list, fileData);
-	},[list])
-
+  
   // Creates a new list item with a particular description
   function addItem(description: string) {
     // Encapsulates the item object
@@ -39,31 +45,32 @@ export default function App() {
     
     // Adds the item to the end of the list
     setList([...list, item]);
-    saveData(list, fileData);
-  }
-  
-  // Edits an item's content
-  function editListItem(item: Item) {
-    const itemIndex = list.findIndex((i) => i.id === item.id);
-  
-    let newList = [...list];
-  
-    newList[itemIndex].text = prompt('Enter the new text for the selected item', newList[itemIndex].text) ?? newList[itemIndex].text;
-    setList(newList);
-    saveData(list, fileData);
   }
   
   // Deletes a particular list item
   function deleteListItem(item: Item) {
     const itemIndex = list.findIndex((i) => i.id === item.id);
-  
+    
     if (itemIndex !== -1) {
       const newList = [...list];
+
       newList.splice(itemIndex, 1);
-  
+      
+      console.log(list, newList);
+
       setList(newList);
-      saveData(list, fileData);
     }
+  }
+
+  // Edits an item's content
+  function editListItem(item: Item) {
+    const itemIndex = list.findIndex((i) => i.id === item.id);
+  
+    const newList = [...list];
+  
+    newList[itemIndex].text = prompt('Enter the new text for the selected item', newList[itemIndex].text) ?? newList[itemIndex].text;
+
+    setList(newList);
   }
 
   function onRandomize(index: number) {
@@ -83,6 +90,17 @@ export default function App() {
     setList(newList);
   }
 
+  function onMove(item: Item, toRelativeIndex: number) {
+    const itemIndex = list.findIndex((i) => i.id === item.id);
+    
+    setList(moveListItem(list, itemIndex, itemIndex + toRelativeIndex));
+  }
+
+  // Auto save on every change
+  useEffect(() => {
+    saveData(list, fileData);
+  },[list])
+  
   return (
     <>
       <div className='flex'>
@@ -101,6 +119,7 @@ export default function App() {
 
       <RenderList
         toggleHighlighted={toggleHighlighted}
+        moveListItem={onMove}
         editListItem={editListItem}
         deleteListItem={deleteListItem}
         itemList={list}/>
