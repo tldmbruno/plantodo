@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import { loadData, SaveButton, saveData } from "../DataHandler/DataHandler";
 import Divider from "../Divider/Divider";
 import { InputItem } from "../InputItem/InputItem";
@@ -54,6 +55,22 @@ export default function ListSelector() {
 		setListsData([...listsData, newList]);
 	}
 
+	function onDeleteRequest(list: ListData): JSX.Element | null {
+		const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
+
+		// Checks if the index is valid before asking for confirmation
+		if (listsDataIndex !== -1) {
+			<ConfirmationPopUp
+				dangerousConfirm={true}
+				onConfirm={() => deleteList(list)}
+				title={`Are you sure you want to delete ${list.title}?`}
+				description={`Once confirmed, this action can't be undone.`}
+				/>
+		}
+
+		return null;
+	}
+
 	// Deletes the list and also the content in it from Local Storage
 	function deleteList(list: ListData): void {
 		const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
@@ -91,11 +108,21 @@ export default function ListSelector() {
 					<li key={list.fetchId}>
 						<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						<div>
-							<button className='danger' onClick={() => deleteList(list)}>Delete</button>
+							<button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
 						</div>
 					</li>
 				)}
 			</ul>
+
+			{/* {listsData.length > 0 ?
+				<ConfirmationPopUp
+					dangerousConfirm={true}
+					onConfirm={() => deleteList(listsData[0])}
+					title={`Are you sure you want to delete ${listsData[0].title}?`}
+					description={`Once confirmed, this action can't be undone.`}
+					/>
+				: <></>
+			} */}
 		</>
 	);
 }

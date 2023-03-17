@@ -151,7 +151,16 @@ input {
 	z-index: 99;
 }
 
+.popUp {
+	display: block;
+	position: absolute;
+}
+
 .danger:hover {
 	border-color: var(--color-error);
 	color: var(--color-error);
+}
+
+.borderless {
+	border-color: transparent;
 }
