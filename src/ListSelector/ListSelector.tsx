@@ -75,6 +75,8 @@ export default function ListSelector() {
 
 	return (
 		<>
+			<h1>Select or create your list</h1>
+
 			<div className='flex gap'>
 				<InputItem
 					buttonText={'Create new list'}

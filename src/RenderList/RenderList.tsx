@@ -19,12 +19,12 @@ export function RenderList({toggleHighlighted, moveListItem, editListItem, delet
   return (
     <ul className='list'>
       {itemList.map(item =>
-      <li key={item.id} onClick={() => toggleHighlighted(item)} className={item.highlighted ? 'highlighted' : ''}>
-        <div>
+      <li key={item.id} className={item.highlighted ? 'highlighted' : ''}>
+        <div onClick={() => toggleHighlighted(item)}>
           <input type='checkbox' checked={item.highlighted} onChange={() => null}/>
           <label>{item.text}</label>
         </div>
-        <div>
+        <div className='clickable'>
           <button onClick={() => moveListItem(item, -1)}>Up</button>
           <button onClick={() => moveListItem(item, +1)}>Down</button>
 

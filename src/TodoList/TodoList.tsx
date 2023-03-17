@@ -12,10 +12,11 @@ import Divider from '../Divider/Divider';
 
 // Function that returns a new list after moving one item from it
 function moveListItem(list: Item[], fromIndex: number, toIndex: number): Item[] {
-  let selectedItem = list[fromIndex];
+  const selectedItem = list[fromIndex];
 
-  let newList = [...list];
+  const newList = [...list];
 
+  newList.splice(fromIndex, 1);
   newList.splice(toIndex, 0, selectedItem);
 
   return newList;
@@ -49,17 +50,8 @@ export default function App() {
   
   // Deletes a particular list item
   function deleteListItem(item: Item) {
-    const itemIndex = list.findIndex((i) => i.id === item.id);
-    
-    if (itemIndex !== -1) {
-      const newList = [...list];
-
-      newList.splice(itemIndex, 1);
-      
-      console.log(list, newList);
-
-      setList(newList);
-    }
+    const newList = list.filter((i) => i.id !== item.id);
+    setList(newList);
   }
 
   // Edits an item's content
@@ -83,11 +75,17 @@ export default function App() {
   }
 
   function toggleHighlighted(item: Item) {
-    const itemIndex = list.findIndex((i) => i.id === item.id);
-
-    const newList = [...list];
-    newList[itemIndex].highlighted = !newList[itemIndex].highlighted;
-    setList(newList);
+    setList(prevState => {
+      return prevState.map(i => {
+        if (i.id === item.id) {
+          return {
+            ...i,
+            highlighted: !i.highlighted
+          }
+        }
+        return i;
+      })
+    });
   }
 
   function onMove(item: Item, toRelativeIndex: number) {

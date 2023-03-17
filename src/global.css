@@ -143,6 +143,14 @@ input {
 	margin: 0;
 }
 
+.title {
+	margin-top: .6rem;
+}
+
+.clickable {
+	z-index: 99;
+}
+
 .danger:hover {
 	border-color: var(--color-error);
 	color: var(--color-error);
