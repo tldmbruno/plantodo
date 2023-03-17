@@ -24,10 +24,9 @@ export default function DarkToggle() {
 	}
 
 	return (
-		<button className='emojiButton' onClick={(() => toggleDarkMode())}>
+		<button className='emojiButton borderless' onClick={(() => toggleDarkMode())}>
 			{ isDarkTheme ? 
-				<span>🌙</span>
-				: <span>🌻</span>
+			  <>🌙</> : <>🌻</>
 			}
 		</button>
 	);
