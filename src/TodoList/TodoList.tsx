@@ -6,15 +6,20 @@ import { InputItem } from '../InputItem/InputItem';
 import { useLocation } from 'react-router-dom';
 
 import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
+import Divider from '../Divider/Divider';
 
 import './TodoList.css';
-import Divider from '../Divider/Divider';
 
 // Function that returns a new list after moving one item from it
 function moveListItem(list: Item[], fromIndex: number, toIndex: number): Item[] {
   const selectedItem = list[fromIndex];
 
   const newList = [...list];
+
+  // Aborts if the destination is outside the array's scope
+  if (toIndex < 0 || toIndex >= list.length) {
+    return newList;
+  }
 
   newList.splice(fromIndex, 1);
   newList.splice(toIndex, 0, selectedItem);
@@ -48,13 +53,12 @@ export default function App() {
     setList([...list, item]);
   }
   
-  // Deletes a particular list item
   function deleteListItem(item: Item) {
     const newList = list.filter((i) => i.id !== item.id);
     setList(newList);
   }
 
-  // Edits an item's content
+  // Edits an item's text property via browser's prompt
   function editListItem(item: Item) {
     const itemIndex = list.findIndex((i) => i.id === item.id);
   
