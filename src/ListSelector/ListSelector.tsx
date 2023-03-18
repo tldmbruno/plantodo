@@ -19,6 +19,10 @@ export default function ListSelector() {
 		const data = loadData<ListData[]>('selectorData');
 		return data ? data : [];
 	});
+
+	// Deletion state management
+	const [ askingForDeletion, setAskingForDeletion ] = useState(false);
+	const [ listIndexForDeletion, setListIndexForDeletion ] = useState(-1);
 	
 	// Auto save on every change
 	useEffect(() => {
@@ -60,12 +64,9 @@ export default function ListSelector() {
 
 		// Checks if the index is valid before asking for confirmation
 		if (listsDataIndex !== -1) {
-			<ConfirmationPopUp
-				dangerousConfirm={true}
-				onConfirm={() => deleteList(list)}
-				title={`Are you sure you want to delete ${list.title}?`}
-				description={`Once confirmed, this action can't be undone.`}
-				/>
+			// Evokes popUp for confirmation
+			setAskingForDeletion(true);
+			setListIndexForDeletion(listsDataIndex);
 		}
 
 		return null;
@@ -84,6 +85,9 @@ export default function ListSelector() {
 
 			// Erase the content from Local Storage
 			localStorage.removeItem(todoListFileData);
+
+			// Reset the index for deletion
+			setListIndexForDeletion(-1);
   
 			// Apply the modifications
       setListsData(newList);
@@ -113,16 +117,17 @@ export default function ListSelector() {
 					</li>
 				)}
 			</ul>
-
-			{/* {listsData.length > 0 ?
-				<ConfirmationPopUp
-					dangerousConfirm={true}
-					onConfirm={() => deleteList(listsData[0])}
-					title={`Are you sure you want to delete ${listsData[0].title}?`}
-					description={`Once confirmed, this action can't be undone.`}
-					/>
-				: <></>
-			} */}
+			
+			{listIndexForDeletion != -1 ?
+			<ConfirmationPopUp
+        title={`Delete ${listsData[listIndexForDeletion].title}?`}
+        description={`This action can't be undone.`}
+				visible={askingForDeletion}
+				setVisible={setAskingForDeletion}
+				onConfirm={() => {deleteList(listsData[listIndexForDeletion])}}
+				confirmLabel={'Delete'}
+				dangerousConfirm={true}/>
+			: <></>}
 		</>
 	);
 }

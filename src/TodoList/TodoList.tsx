@@ -9,6 +9,7 @@ import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
 import Divider from '../Divider/Divider';
 
 import './TodoList.css';
+import ConfirmationPopUp from '../ConfirmationPopUp/ConfirmationPopUp';
 
 // Function that returns a new list after moving one item from it
 function moveListItem(list: Item[], fromIndex: number, toIndex: number): Item[] {
