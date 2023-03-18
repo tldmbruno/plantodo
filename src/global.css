@@ -9,7 +9,10 @@ html {
 	--line-weight: 2px;
 	--radius: 4px;
 
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	--display-font: 'Fredoka One', sans-serif;
+	--body-font: 'Rubik', sans-serif;
+
+	font-family: var(--body-font);
 }
 
 body {
@@ -22,9 +25,6 @@ body {
 	background-position: 50% 50%;
 	background-attachment: fixed;
 	background-size: cover;
-	
-	/* background-image: url('/plant.png');
-  background-position: max(10%, 110%) max(10% + 5rem, 110%); */
 	
   background-repeat: no-repeat;
 	
@@ -44,14 +44,28 @@ main {
 	margin-top: 1rem;
 }
 
+p {
+	margin-bottom: 1rem;
+}
+
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	font-weight: bolder;
+	font-family: var(--display-font);
+	font-weight: 500;
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: 1.6rem;
 	margin-bottom: .4rem;
+}
+
+a,
+	a:visited {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: var(--color-primary);
 }
 
 .button, button {
@@ -63,7 +77,7 @@ h1 {
 	background-color: inherit;
 	color: inherit;
 
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: var(--body-font);
 	font-weight: bold;
 
 	border: var(--line-weight) solid var(--color-middle);
@@ -83,14 +97,14 @@ h1 {
 }
 
 .button:hover, button:hover {
-	border: var(--line-weight) solid var(--color-secondary);
-	color: var(--color-secondary)
+	border: var(--line-weight) solid var(--color-primary);
+	color: var(--color-primary)
 	}
 
 	.button:active, button:active {
-		border: var(--line-weight) solid var(--color-primary);
+		border: var(--line-weight) solid var(--color-secondary);
 		background-color: var(--color-light);
-		color: var(--color-primary);
+		color: var(--color-secondary);
 }
 
 input {
@@ -104,7 +118,7 @@ input {
 	border-radius: var(--radius);
 	border: none;
 
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: var(--body-font);
 	}
 
 	input[type='text'] {
@@ -143,7 +157,23 @@ input {
 	margin: 0;
 }
 
+.title {
+	margin-top: .6rem;
+}
+
+.clickable {
+	z-index: 99;
+}
+
 .danger:hover {
 	border-color: var(--color-error);
 	color: var(--color-error);
+}
+
+span .danger {
+	color: var(--color-error);
+}
+
+.borderless {
+	border-color: transparent;
 }

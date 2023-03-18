@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import { loadData, SaveButton, saveData } from "../DataHandler/DataHandler";
 import Divider from "../Divider/Divider";
 import { InputItem } from "../InputItem/InputItem";
@@ -18,6 +19,10 @@ export default function ListSelector() {
 		const data = loadData<ListData[]>('selectorData');
 		return data ? data : [];
 	});
+
+	// Deletion state management
+	const [ askingForDeletion, setAskingForDeletion ] = useState(false);
+	const [ listIndexForDeletion, setListIndexForDeletion ] = useState(-1);
 	
 	// Auto save on every change
 	useEffect(() => {
@@ -54,6 +59,19 @@ export default function ListSelector() {
 		setListsData([...listsData, newList]);
 	}
 
+	function onDeleteRequest(list: ListData): JSX.Element | null {
+		const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
+
+		// Checks if the index is valid before asking for confirmation
+		if (listsDataIndex !== -1) {
+			// Evokes popUp for confirmation
+			setAskingForDeletion(true);
+			setListIndexForDeletion(listsDataIndex);
+		}
+
+		return null;
+	}
+
 	// Deletes the list and also the content in it from Local Storage
 	function deleteList(list: ListData): void {
 		const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
@@ -67,6 +85,9 @@ export default function ListSelector() {
 
 			// Erase the content from Local Storage
 			localStorage.removeItem(todoListFileData);
+
+			// Reset the index for deletion
+			setListIndexForDeletion(-1);
   
 			// Apply the modifications
       setListsData(newList);
@@ -75,6 +96,8 @@ export default function ListSelector() {
 
 	return (
 		<>
+			<h1>Select or create your list</h1>
+
 			<div className='flex gap'>
 				<InputItem
 					buttonText={'Create new list'}
@@ -89,11 +112,22 @@ export default function ListSelector() {
 					<li key={list.fetchId}>
 						<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						<div>
-							<button className='danger' onClick={() => deleteList(list)}>Delete</button>
+							<button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
 						</div>
 					</li>
 				)}
 			</ul>
+			
+			{listIndexForDeletion != -1 ?
+			<ConfirmationPopUp
+        title={`Delete ${listsData[listIndexForDeletion].title}?`}
+        description={`This action can't be undone.`}
+				visible={askingForDeletion}
+				setVisible={setAskingForDeletion}
+				onConfirm={() => {deleteList(listsData[listIndexForDeletion])}}
+				confirmLabel={'Delete'}
+				dangerousConfirm={true}/>
+			: <></>}
 		</>
 	);
 }

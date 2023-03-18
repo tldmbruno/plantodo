@@ -11,25 +11,18 @@
 
 .categories {
 	width: 20rem;
+
+	font-weight: 500;
 }
 
 .logo {
 	display: flex;
 	align-items: center;
 
+	font-family: var(--display-font);
 	font-weight: bolder;
 	}
 
 	.logo:hover ::after{
-		content: ' 🌱';
+		content: ' 🪴';
 	}
-
-a,
-	a:visited {
-		color: inherit;
-		text-decoration: none;
-	}
-
-	a:hover {
-		color: var(--color-secondary);
-}

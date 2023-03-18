@@ -2,6 +2,6 @@ import { Link } from "react-router-dom";
 
 export default function ButtonBack() {
 	return (
-		<Link to='..'>← Back</Link>
+		<Link className='linkOverTitle' to='..'>← Back</Link>
 	)
 }

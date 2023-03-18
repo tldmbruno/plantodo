@@ -9,6 +9,8 @@
 		flex-direction: row;
 		flex: auto;
 
+		position: relative;
+
 		padding: .2rem;
 		margin-bottom: .2rem;
 
@@ -20,7 +22,7 @@
 		}
 
 		.list > li:hover {
-			outline: var(--line-weight) solid var(--color-secondary);
+			outline: var(--line-weight) solid var(--color-primary);
 	}
 
 	.list div {
@@ -44,5 +46,9 @@
 
 .list > .highlighted {
 	color: var(--color-white);
-	background-color: var(--color-primary);
+	background-color: var(--color-secondary);
+}
+
+.title {
+	user-select: none;
 }

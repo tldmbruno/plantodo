@@ -6,6 +6,7 @@ import './reset.css';
 import './global.css';
 
 import NavBar from './NavBar/NavBar';
+import ConfirmationPopUp from './ConfirmationPopUp/ConfirmationPopUp';
 
 import HomePage from './Pages/Home';
 import EditPage from './Pages/Edit';
@@ -15,9 +16,10 @@ import MissingPage from './Pages/Missing';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-
     <BrowserRouter>
+
       <div className='container'>
+
         <NavBar />
 
         <main>
@@ -30,7 +32,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </Routes>
         </main>
       </div>
-    </BrowserRouter>
 
+    </BrowserRouter>
   </React.StrictMode>
 )
