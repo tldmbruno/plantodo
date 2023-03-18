@@ -9,7 +9,7 @@ html {
 	--line-weight: 2px;
 	--radius: 4px;
 
-	--display-font: 'Pacifico', cursive;
+	--display-font: 'Fredoka One', sans-serif;
 	--body-font: 'Rubik', sans-serif;
 
 	font-family: var(--body-font);
@@ -44,14 +44,28 @@ main {
 	margin-top: 1rem;
 }
 
+p {
+	margin-bottom: 1rem;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--display-font);
-	font-weight: 600;
+	font-weight: 500;
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: 1.6rem;
 	margin-bottom: .4rem;
+}
+
+a,
+	a:visited {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: var(--color-primary);
 }
 
 .button, button {
@@ -83,14 +97,14 @@ h1 {
 }
 
 .button:hover, button:hover {
-	border: var(--line-weight) solid var(--color-secondary);
-	color: var(--color-secondary)
+	border: var(--line-weight) solid var(--color-primary);
+	color: var(--color-primary)
 	}
 
 	.button:active, button:active {
-		border: var(--line-weight) solid var(--color-primary);
+		border: var(--line-weight) solid var(--color-secondary);
 		background-color: var(--color-light);
-		color: var(--color-primary);
+		color: var(--color-secondary);
 }
 
 input {
@@ -151,13 +165,12 @@ input {
 	z-index: 99;
 }
 
-.popUp {
-	display: block;
-	position: absolute;
-}
-
 .danger:hover {
 	border-color: var(--color-error);
+	color: var(--color-error);
+}
+
+span .danger {
 	color: var(--color-error);
 }
 
