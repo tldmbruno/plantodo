@@ -7,17 +7,17 @@ export default function About() {
 			<Divider />
 			<ul>
 				<li>
-					<button onClick={() => window.location.href = 'https://github.com/tldmbruno/plantodo'}>
+					<button className='outsideLink' onClick={() => window.location.href = 'https://github.com/tldmbruno/plantodo'}>
 						Get the Source code
 					</button>
 				</li>
 				<li>
-					<button onClick={() => window.location.href = 'https://github.com/tldmbruno'}>
+					<button className='outsideLink' onClick={() => window.location.href = 'https://github.com/tldmbruno'}>
 						Follow Bruno Peres on Github
 					</button>
 				</li>
 				<li>
-					<button onClick={() => window.location.href = 'https://www.pexels.com/@scottwebb/'}>
+					<button className='outsideLink' onClick={() => window.location.href = 'https://www.pexels.com/@scottwebb/'}>
 						Background photo by @scottwebb
 					</button>
 				</li>

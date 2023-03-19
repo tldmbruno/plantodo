@@ -177,3 +177,7 @@ span .danger {
 .borderless {
 	border-color: transparent;
 }
+
+.outsideLink::after {
+	content:' ↗️';
+}
