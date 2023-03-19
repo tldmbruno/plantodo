@@ -18,7 +18,7 @@ export default function DarkToggle() {
 		setIsDarkTheme(!isDarkTheme);
 
 		// Saves data
-		//   ?: (Value keeps being inverted because setState only applies the new value
+		//   ?: (Value is being inverted because setState only applies the new value
 		// 	  on re-render.)
 		saveData(!isDarkTheme, 'darkToggleData');
 	}
