@@ -7,7 +7,7 @@ export default function ButtonRandomizer({onRandomize, totalItems}: PropsButtonR
 	// Randomizes an array and returns the index of that selected item
 	function randomizeHighlight() {
 		const randomIndex = Math.floor(Math.random() * totalItems);
-		onRandomize(randomIndex)
+		onRandomize(randomIndex);
 	}
 
 	return (
