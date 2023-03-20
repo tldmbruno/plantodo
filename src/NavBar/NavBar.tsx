@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 
 import DarkToggle from '../DarkToggle/DarkToggle';
+import Logo from '../Logo/Logo';
 
 import './NavBar.css';
 
 export default function NavBar() {
 	return (
 		<nav className='navBar gap'>
-			<div className='logo'>
-				<Link to='/'>PlanTODO</Link>
-			</div>
+			<Logo />
 			<div className='halfWidth'></div>
 			<div className='categories flex gap'>
 				<Link to='/'>Home</Link>
