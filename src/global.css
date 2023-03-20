@@ -135,6 +135,8 @@ input {
 	padding: 0px min(10rem, 10%);
 }
 
+/* Generic classes */
+
 .flex {
 	display: flex;
 	align-items: center;
