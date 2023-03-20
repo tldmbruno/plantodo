@@ -6,7 +6,7 @@ html {
 	--color-middle: #aaaab044;
 	--color-dark: #111318;
 
-	--line-weight: 2px;
+	--line-weight: .2rem;
 	--radius: 4px;
 
 	--display-font: 'Fredoka One', sans-serif;
@@ -41,21 +41,22 @@ body {
 }
 
 main {
-	margin-top: 1rem;
+	margin-top: 2rem;
 }
 
 p {
 	margin-bottom: 1rem;
+	line-height: normal;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--display-font);
-	font-weight: 500;
+	margin-bottom: .4rem;
+	user-select: none;
 }
 
 h1 {
 	font-size: 1.6rem;
-	margin-bottom: .4rem;
 }
 
 a,
@@ -66,6 +67,10 @@ a,
 
 	a:hover {
 		color: var(--color-primary);
+}
+
+li {
+	margin-bottom: .2rem;
 }
 
 .button, button {
@@ -132,7 +137,14 @@ input {
 
 .container {
 	margin: 0px;
-	padding: 0px min(10rem, 10%);
+	padding: 0px min(6rem, 10%);
+}
+
+div.wideCard {
+	width: 100%;
+	height: 80vh;
+
+	background-color: var(--color-light);
 }
 
 /* Generic classes */
@@ -181,5 +193,9 @@ span .danger {
 }
 
 .outsideLink::after {
-	content:' ↗️';
+	content:' 🌐';
+}
+
+.centered {
+	text-align: center;
 }
