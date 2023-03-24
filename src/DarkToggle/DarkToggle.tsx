@@ -18,13 +18,13 @@ export default function DarkToggle() {
 		setIsDarkTheme(!isDarkTheme);
 
 		// Saves data
-		//   ?: (Value keeps being inverted because setState only applies the new value
+		//   ?: (Value is being inverted because setState only applies the new value
 		// 	  on re-render.)
 		saveData(!isDarkTheme, 'darkToggleData');
 	}
 
 	return (
-		<button className='emojiButton borderless' onClick={(() => toggleDarkMode())}>
+		<button title='Toggle Light/Dark Mode' className='emojiButton borderless' onClick={(() => toggleDarkMode())}>
 			{ isDarkTheme ? 
 			  <>🌙</> : <>🌻</>
 			}

@@ -8,8 +8,23 @@ import { InputItem } from "../InputItem/InputItem";
 import './ListSelector.css';
 
 interface ListData {
-	fetchId: number,
-	title: string,
+	fetchId: number;
+	title: string;
+	lastModification: string;
+}
+
+export function updateModificationDate(fetchId: number): void {
+	const listsData = loadData<ListData[]>('selectorData') ?? [];
+	const listsDataIndex = listsData.findIndex((i) => i.fetchId === fetchId);
+
+	listsData[listsDataIndex].lastModification = getFormattedModificationDate();
+
+	saveData(listsData, 'selectorData');
+}
+
+function getFormattedModificationDate(): string {
+	const currentDate = new Date();
+	return currentDate.toLocaleString();
 }
 
 export default function ListSelector() {
@@ -52,7 +67,8 @@ export default function ListSelector() {
 		// Creates the new list
 		const newList: ListData = {
 			fetchId: Date.now(),
-			title: newTitle
+			title: newTitle,
+			lastModification: getFormattedModificationDate()
 		};
 
 		// Adds to the state array
@@ -96,7 +112,7 @@ export default function ListSelector() {
 
 	return (
 		<>
-			<h1>Select or create your list</h1>
+			<h1 className='title'>Select or create your list</h1>
 
 			<div className='flex gap'>
 				<InputItem
@@ -110,8 +126,11 @@ export default function ListSelector() {
 			<ul className='list'>
 				{listsData.map(list =>
 					<li key={list.fetchId}>
-						<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						<div>
+							<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
+						</div>
+						<div>
+							<span>Last modified {list.lastModification}</span>
 							<button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
 						</div>
 					</li>

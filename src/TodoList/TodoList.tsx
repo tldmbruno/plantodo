@@ -10,6 +10,7 @@ import Divider from '../Divider/Divider';
 
 import './TodoList.css';
 import ConfirmationPopUp from '../ConfirmationPopUp/ConfirmationPopUp';
+import { updateModificationDate } from '../ListSelector/ListSelector';
 
 // Function that returns a new list after moving one item from it
 function moveListItem(list: Item[], fromIndex: number, toIndex: number): Item[] {
@@ -101,6 +102,7 @@ export default function App() {
 
   // Auto save on every change
   useEffect(() => {
+    updateModificationDate(listFile.state.fetchId);
     saveData(list, fileData);
   },[list])
   
