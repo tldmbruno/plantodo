@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
-import { loadData, SaveButton, saveData } from "../DataHandler/DataHandler";
+import { loadData, saveData } from "../DataHandler/DataHandler";
 import Divider from "../Divider/Divider";
-import { InputItem } from "../InputItem/InputItem";
+import { InputItem } from "../ItemInput/ItemInput";
 
 import './ListSelector.css';
 
@@ -130,7 +130,7 @@ export default function ListSelector() {
 							<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						</div>
 						<div>
-							<span>Last modified {list.lastModification}</span>
+							<span className='mini'>Last modified {list.lastModification}</span>
 							<button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
 						</div>
 					</li>

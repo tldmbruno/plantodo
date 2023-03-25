@@ -1,4 +1,4 @@
-export default function About() {
+export default function MissingPage() {
 	return (
 		<>
 			<h1>404 - Page Not Found</h1>

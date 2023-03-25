@@ -4,7 +4,7 @@ import './Logo.css';
 export default function Logo() {
 	return (
 		<div className='logo'>
-			<Link to='/welcome'>PlanTODO</Link>
+			<Link to='/'>PlanTODO</Link>
 		</div>
 	);
 }

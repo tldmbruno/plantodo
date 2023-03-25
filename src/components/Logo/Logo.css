@@ -9,3 +9,7 @@
 	.logo:hover ::after{
 		content: ' 🪴';
 	}
+
+	.dark .logo {
+		color: var(--color-light);
+	}

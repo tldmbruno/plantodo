@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 
 import { RenderList, Item } from '../RenderList/RenderList';
 import { loadData, saveData } from '../DataHandler/DataHandler';
-import { InputItem } from '../InputItem/InputItem';
+import { InputItem } from '../ItemInput/ItemInput';
 import { useLocation } from 'react-router-dom';
 
-import ButtonRandomizer from '../ButtonRandomizer/ButtonRandomizer';
+import RandomizerButton from '../RandomizerButton/RandomizerButton';
 import Divider from '../Divider/Divider';
 
 import './TodoList.css';
-import ConfirmationPopUp from '../ConfirmationPopUp/ConfirmationPopUp';
 import { updateModificationDate } from '../ListSelector/ListSelector';
 
 // Function that returns a new list after moving one item from it
@@ -114,7 +113,7 @@ export default function App() {
           submitFunction={() => addItem(itemRef.current?.value ?? '')}/>
 
         <div className='flex gap'>
-          <ButtonRandomizer 
+          <RandomizerButton 
             onRandomize={onRandomize}
             totalItems={list.length}/>
         </div>
