@@ -71,15 +71,9 @@ export default function WelcomePage() {
 			</div>
 			
 			<div className='container centered gap darkBg'>
-				<button className='outsideLink' onClick={() => window.location.href = 'https://github.com/tldmbruno/plantodo'}>
-				Get the Source code
-				</button>
-				<button className='outsideLink' onClick={() => window.location.href = 'https://github.com/tldmbruno'}>
-					Follow Bruno Peres on Github
-				</button>
-				<button className='outsideLink' onClick={() => window.location.href = 'https://www.pexels.com/@scottwebb/'}>
-					Background photo by @scottwebb
-				</button>
+				<a className='outsideLink button' href='https://github.com/tldmbruno/plantodo'>Get the Source code</a>
+				<a className='outsideLink button' href='https://github.com/tldmbruno'>Follow Bruno Peres on Github</a>
+				<a className='outsideLink button' href='https://www.pexels.com/@scottwebb/'>Background photo by @scottwebb</a>
 			</div>
 		</div>
 	);
