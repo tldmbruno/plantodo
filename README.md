@@ -1,5 +1,5 @@
 # PlanTODO
-## An elegant notetaking application with unusual tools
+## The elegant notetaking application with randomizer support
 - [Visit plantodo-web.netlify.com](https://plantodo-web.netlify.com/)
 
 ![image](https://user-images.githubusercontent.com/118130235/224802116-f3845639-9f01-489e-8b7d-385f51de3677.png)
