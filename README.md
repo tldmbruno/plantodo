@@ -1,4 +1,4 @@
-# PlanTODO
+# PlanTODO 🪴
 ## The elegant notetaking application with randomizer support
 - [Visit plantodo-web.netlify.com](https://plantodo-web.netlify.app/)
 
