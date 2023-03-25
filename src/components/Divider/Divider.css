@@ -1,0 +1,10 @@
+.divider {
+	background-color: var(--color-middle);
+
+	border-radius: var(--radius);
+
+	width: 100%;
+	height: var(--line-weight);
+
+	margin: 1rem 0px;
+}

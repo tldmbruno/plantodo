@@ -1,0 +1,36 @@
+.navBar {
+	margin: 0px 0px;
+
+	padding: .4rem 0px;
+	
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+
+	/* transition: var(--trans); */
+}
+
+.categories {
+	width: 20rem;
+
+	font-weight: 500;
+}
+
+.navBar {
+	padding: .5rem 1.2rem;
+
+	border-bottom: var(--line-weight) solid var(--color-middle);
+
+	position: sticky;
+	top: 0px;
+	left: 0px;
+	width: auto;
+
+	background-color: var(--color-light);
+}
+
+.dark .navBar {
+	background-color: var(--color-dark);
+	color: var(--color-light);
+}
