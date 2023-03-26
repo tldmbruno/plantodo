@@ -127,7 +127,7 @@ export default function ListSelector() {
 				{listsData.map(list =>
 					<li key={list.fetchId}>
 						<div>
-							<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
+							<Link className='fileName breakableWord' to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						</div>
 						<div>
 							<span className='mini optional'>Last modified {list.lastModification}</span>
@@ -139,8 +139,8 @@ export default function ListSelector() {
 			
 			{listIndexForDeletion != -1 ?
 			<ConfirmationPopUp
-        title={`Delete ${listsData[listIndexForDeletion].title}?`}
-        description={`This action can't be undone.`}
+        title={`Delete "${listsData[listIndexForDeletion].title}"?`}
+        description={`This action cannot be undone.`}
 				visible={askingForDeletion}
 				setVisible={setAskingForDeletion}
 				onConfirm={() => {deleteList(listsData[listIndexForDeletion])}}

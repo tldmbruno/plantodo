@@ -31,13 +31,13 @@ export default function ConfirmationPopUp(
 	return (
 		visible ? <>
 			<div className='popUp'>
-				<div className='popUpInner'>
-					<h1>{title}</h1>
+				<div className='popUpInner notTooWide'>
+					<h2 className='breakableWord'>{title}</h2>
 					<Divider />
-					<p>{description}</p>
+					<p className='centered'>{description}</p>
 					<div className='flex gap'>
 						<button className='fullWidth' onClick={() => setVisible(false)}>Cancel</button>
-						<button className={`${dangerousConfirm? 'danger' : ''} fullWidth`}
+						<button className={`${dangerousConfirm? 'danger' : ''} fullWidth notTooWide`}
 							onClick={() => handleConfirm()}>{confirmLabel}</button>
 					</div>
 				</div>
