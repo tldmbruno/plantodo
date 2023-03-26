@@ -11,6 +11,9 @@ export default function ButtonRandomizer({onRandomize, totalItems}: PropsButtonR
 	}
 
 	return (
-		<button onClick={randomizeHighlight}>Choose randomly 🎲</button>
+		<>
+			<button className='optional' onClick={randomizeHighlight}>Choose randomly 🎲</button>
+			<button className='mobile' onClick={randomizeHighlight}>🎲</button>
+		</>
 	)
 }

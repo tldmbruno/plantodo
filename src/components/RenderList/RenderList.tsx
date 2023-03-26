@@ -25,8 +25,8 @@ export function RenderList({toggleHighlighted, moveListItem, editListItem, delet
           <label>{item.text}</label>
         </div>
         <div className='clickable'>
-          <button onClick={() => moveListItem(item, -1)}>Up</button>
-          <button onClick={() => moveListItem(item, +1)}>Down</button>
+          <button className='optional' onClick={() => moveListItem(item, -1)}>Up</button>
+          <button className='optional' onClick={() => moveListItem(item, +1)}>Down</button>
 
           <button onClick={() => editListItem(item)}>Edit</button>
           <button className='danger' onClick={() => deleteListItem(item)}>Delete</button>
