@@ -18,7 +18,8 @@ export function InputItem({buttonText = 'New Item', submitFunction, itemRef}: Pr
 	return (
 		<form id='newNoteForm' className='flex gap noMargin halfWidth' onSubmit={onSubmit}>
 			<input type='text' ref={itemRef}></input>
-			<button type='submit'>{buttonText}</button>
+			<button type='submit' className='optional'>{buttonText}</button>
+			<button type='submit' className='mobile'>{'+'}</button>
 		</form>
 	);
 }

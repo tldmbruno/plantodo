@@ -107,7 +107,7 @@ export default function App() {
   
   return (
     <>
-      <div className='flex'>
+      <div className='flex gap'>
         <InputItem
           itemRef={itemRef}
           submitFunction={() => addItem(itemRef.current?.value ?? '')}/>

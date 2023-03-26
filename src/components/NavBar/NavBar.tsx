@@ -5,7 +5,7 @@ import './NavBar.css';
 
 export default function NavBar() {
 	return (
-		<nav className='navBar gap'>
+		<nav className='navBar flex gap'>
 			<Logo />
 			<div className='halfWidth'></div>
 			<DarkToggle />

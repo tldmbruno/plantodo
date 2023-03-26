@@ -130,7 +130,7 @@ export default function ListSelector() {
 							<Link className='fileName' to={'/edit/' + list.title} state={list}>{list.title}</Link>
 						</div>
 						<div>
-							<span className='mini'>Last modified {list.lastModification}</span>
+							<span className='mini optional'>Last modified {list.lastModification}</span>
 							<button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
 						</div>
 					</li>
