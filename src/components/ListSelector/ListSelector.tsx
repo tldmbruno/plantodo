@@ -126,13 +126,15 @@ export default function ListSelector() {
 			<ul className='list'>
 				{listsData.map(list =>
 					<li key={list.fetchId}>
-						<div>
-							<Link className='fileName breakableWord' to={'/edit/' + list.title} state={list}>{list.title}</Link>
-						</div>
-						<div>
-							<span className='mini optional'>Last modified {list.lastModification}</span>
-							<button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
-						</div>
+						<Link className='fullWidth flex' to={'/edit/' + list.title} state={list}>
+							<div>
+								<span className='fileName breakableWord'>{list.title}</span>
+							</div>
+							<div>
+								<span className='mini optional'>Last modified {list.lastModification}</span>
+								<button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
+							</div>
+						</Link>
 					</li>
 				)}
 			</ul>
