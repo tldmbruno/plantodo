@@ -159,12 +159,16 @@ input {
 .primaryBg {
 	background-color: var(--color-primary);
 	color: var(--color-light);
-}
+	}
+
+	.primaryBg :is(button, .button):hover {
+		border-color: var(--color-secondary);
+	}
 
 .secondaryBg {
 	background-color: var(--color-secondary);
 	color: var(--color-light);
-	}
+}
 
 .darkBg {
 	background-color: var(--color-dark);
@@ -194,10 +198,12 @@ input {
 }
 
 .grid {
-	display: grid;
-	grid-gap: .2rem;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 2fr));
-}
+	display: flex;
+	flex-wrap: wrap;
+	}
+	.grid > * {
+		flex: 1 1 10rem;
+	}
 
 .gap {
 	gap: .2rem;
@@ -217,10 +223,6 @@ input {
 
 .title {
 	margin-top: .6rem;
-}
-
-.clickable {
-	z-index: 99;
 }
 
 .danger:hover {

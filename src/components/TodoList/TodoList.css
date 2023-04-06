@@ -21,11 +21,13 @@
 		}
 
 		.list > li:hover {
+			color: var(--color-primary);
 			outline: var(--line-weight) solid var(--color-primary);
-	}
+		}
 
-	.list a {
+	.list :is(a, label) {
 		padding: .8rem;
+		cursor: pointer;
 	}
 
 	.list div {
@@ -45,6 +47,7 @@
 
 	.list input {
 		box-shadow: none;
+		cursor: pointer;
 }
 
 .list > .highlighted {
