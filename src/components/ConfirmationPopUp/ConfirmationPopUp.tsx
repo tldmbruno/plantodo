@@ -36,9 +36,9 @@ export default function ConfirmationPopUp(
 					<Divider />
 					<p className='centered'>{description}</p>
 					<div className='flex gap'>
-						<button className='fullWidth' onClick={() => setVisible(false)}>Cancel</button>
 						<button className={`${dangerousConfirm? 'danger' : ''} fullWidth notTooWide`}
 							onClick={() => handleConfirm()}>{confirmLabel}</button>
+						<button className='fullWidth' onClick={() => setVisible(false)}>Cancel</button>
 					</div>
 				</div>
 			</div>
