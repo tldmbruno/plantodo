@@ -7,7 +7,7 @@
 	}
 
 	.logo:hover ::after{
-		content: ' 🪴';
+		content: ' 🌱';
 	}
 
 	.dark .logo {
