@@ -84,8 +84,8 @@ export default function WelcomePage() {
 			</div>
 			
 			<div className='container centered gap darkBg'>
-				<a className='outsideLink button' href='https://github.com/tldmbruno/plantodo'>Get the Source code</a>
-				<a className='outsideLink button' href='https://github.com/tldmbruno'>Follow Bruno Peres on Github</a>
+				<a className='outsideLink button' title='Visit the repo' href='https://github.com/tldmbruno/plantodo'>Get the Source code</a>
+				<a className='outsideLink button' title='Visit my Github' href='https://github.com/tldmbruno'>Follow Bruno Peres on Github</a>
 				<a className='outsideLink button' href='https://www.pexels.com/@scottwebb/'>Background photo by @scottwebb</a>
 			</div>
 		</div>
