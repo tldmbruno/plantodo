@@ -6,7 +6,7 @@ html {
 	--color-middle: #aaaab044;
 	--color-dark: #111318;
 
-	--line-weight: .2rem;
+	--line-weight: 2px;
 	--radius: 6px; /* 4px */
 
 	--display-font: 'Fredoka One', sans-serif;
