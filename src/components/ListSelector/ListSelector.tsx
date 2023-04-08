@@ -46,21 +46,7 @@ export default function ListSelector() {
   function createList(): void {
     // Gets the new list's title
     let newTitle = itemRef.current?.value.trim() ?? '';
-    newTitle = newTitle.length === 0 ? 'Unnammed List' : newTitle;
-
-    // Verify if there's already a list with the same name
-    let occourences = 0;
-    listsData.forEach(list => {
-      if (list.title == newTitle ||
-          list.title == `${newTitle} (${occourences})`) {
-        occourences++;
-      }
-    });
-
-    // If so, renames it appropriately
-    if (occourences > 0) {
-      newTitle = `${newTitle} (${occourences})`;
-    }
+    newTitle = validateTitle(newTitle.length === 0 ? 'Unnammed List' : newTitle, listsData);
 
     // Creates the new list
     const newList: ListData = {
@@ -71,6 +57,28 @@ export default function ListSelector() {
 
     // Adds to the state array
     setListsData([...listsData, newList]);
+  }
+
+  function validateTitle(title: string, otherNames: ListData[]): string {
+    let validatedTitle = title;
+    
+    // Verify if there's already a list with the same name
+    let occourences = 0;
+    otherNames.forEach(otherName => {
+      if (validatedTitle == otherName.title ||
+          validatedTitle == `${validatedTitle} (${occourences})`) {
+        occourences++;
+      }
+      console.log(validatedTitle, otherName.title);
+      console.count();
+    });
+
+    // If so, appends a counter after it
+    if (occourences > 0) {
+      validatedTitle = `${validatedTitle} (${occourences})`;
+    }
+    
+    return validatedTitle;
   }
 
   function onDeleteRequest(list: ListData): JSX.Element | null {
@@ -94,8 +102,8 @@ export default function ListSelector() {
     // Checks if the index is valid before deleting anything
     if (listsDataIndex !== -1) {
       // Delete the list from the array
-      const newList = [...listsData];
-      newList.splice(listsDataIndex, 1);
+      const newListsData = [...listsData];
+      newListsData.splice(listsDataIndex, 1);
 
       // Erase the content from Local Storage
       localStorage.removeItem(todoListFileData);
@@ -104,8 +112,22 @@ export default function ListSelector() {
       setListIndexForDeletion(-1);
   
       // Apply the modifications
-      setListsData(newList);
+      setListsData(newListsData);
     }
+  }
+
+  function renameList(list: ListData) {
+    const listIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
+    
+    let newTitle = prompt('Enter the new title for the selected list', 
+      listsData[listIndex].title) ?? listsData[listIndex].title;
+    if (newTitle != listsData[listIndex].title) {
+      newTitle = validateTitle(newTitle, listsData);
+    }
+    
+    let newListsData = [...listsData];
+    newListsData[listIndex].title = validateTitle(newListsData[listIndex].title, listsData);
+    setListsData(newListsData);
   }
 
   return (
@@ -131,6 +153,7 @@ export default function ListSelector() {
             </Link>
             <div className='visibleOnParentHover'>
                 <span className='mini optional borderless'>{list.lastModification}</span>
+                <button title={`Rename ${list.title}`} onClick={() => renameList(list)}>📝</button>
                 <button title={`Delete ${list.title}`} className='danger borderless' onClick={() => onDeleteRequest(list)}>❌</button>
             </div>
           </li>
