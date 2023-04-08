@@ -18,18 +18,18 @@ export interface Item {
 export function RenderList({toggleHighlighted, moveListItem, editListItem, deleteListItem, itemList}: PropsRenderList) {
   return (
     <ul className='list'>
-      {itemList.map(item =>
+      {itemList.map((item, index) =>
       <li key={item.id} className={item.highlighted ? 'highlighted' : ''}>
         <div className='fullWidth' onClick={() => toggleHighlighted(item)}>
-          <input type='checkbox' checked={item.highlighted} onChange={() => null}/>
+          <input title={`${item.highlighted?'Unmark':'Mark'} ${item.text} as done`} type='checkbox' checked={item.highlighted} onChange={() => null}/>
           <label>{item.text}</label>
         </div>
-        <div>
-          <button className='optional' onClick={() => moveListItem(item, -1)}>Up</button>
-          <button className='optional' onClick={() => moveListItem(item, +1)}>Down</button>
+        <div className='visibleOnParentHover'>
+          <button title='Move upwards' className='optional' onClick={() => moveListItem(item, -1)} hidden={index==0}>⬆</button>
+          <button title='Move downwards' className='optional' onClick={() => moveListItem(item, +1)} hidden={index+1 == itemList.length}>⬇</button>
 
-          <button onClick={() => editListItem(item)}>Edit</button>
-          <button className='danger' onClick={() => deleteListItem(item)}>Delete</button>
+          <button title={`Rename ${item.text}`} onClick={() => editListItem(item)}>📝</button>
+          <button title={`Delete ${item.text}`} className='danger' onClick={() => deleteListItem(item)}>❌</button>
         </div>
       </li>
       )}

@@ -129,9 +129,9 @@ export default function ListSelector() {
                 <span className='breakableWord'>{list.title}</span>
               </div>
             </Link>
-            <div>
-                <span className='mini optional'>{list.lastModification}</span>
-                <button className='danger' onClick={() => onDeleteRequest(list)}>Delete</button>
+            <div className='visibleOnParentHover'>
+                <span className='mini optional borderless'>{list.lastModification}</span>
+                <button title={`Delete ${list.title}`} className='danger borderless' onClick={() => onDeleteRequest(list)}>❌</button>
             </div>
           </li>
         )}

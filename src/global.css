@@ -79,7 +79,7 @@ li {
 	margin-bottom: .2rem;
 }
 
-label, span, .breakableWord {
+label, .breakableWord {
 	user-select: none;
 	word-wrap: break-word;
 	word-break: break-all;
@@ -178,6 +178,14 @@ input {
 .colorLight {
 	color: var(--color-light)
 }
+
+.visibleOnParentHover {
+	opacity: 0;
+	transition: opacity .2s;
+	}
+	*:hover > .visibleOnParentHover {
+		opacity: 100;
+	}
 
 /* --------------- */
 /* Generic classes */

@@ -20,12 +20,13 @@
 		cursor: pointer;
 		}
 
-		.list > li:hover {
-			color: var(--color-primary);
+		.list li:hover {
+			/* color: var(--color-primary); */
 			outline: var(--line-weight) solid var(--color-primary);
 		}
 
 	.list :is(a, label) {
+		color: inherit;
 		padding: .8rem;
 		cursor: pointer;
 	}
