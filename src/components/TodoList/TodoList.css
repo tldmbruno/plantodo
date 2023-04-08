@@ -7,7 +7,7 @@
 		justify-content: space-between;
 		align-items: center;
 		flex-direction: row;
-		flex: auto;
+		box-sizing: border-box;
 
 		position: relative;
 
@@ -15,14 +15,18 @@
 
 		background-color: var(--color-middle);
 
+		border: var(--line-weight) solid transparent;
 		border-radius: var(--radius);
 
 		cursor: pointer;
+
+		animation: .2s running slide-in;
+		transition: border .2s, background-color .2s;
 		}
 
 		.list li:hover {
 			/* color: var(--color-primary); */
-			outline: var(--line-weight) solid var(--color-primary);
+			border: var(--line-weight) solid var(--color-primary);
 		}
 
 	.list :is(a, label) {

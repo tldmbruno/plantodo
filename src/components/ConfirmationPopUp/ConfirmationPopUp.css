@@ -10,6 +10,8 @@
 	height: 100vh;
 
 	background-color: var(--color-middle);
+
+	animation: .4s running fade-in;
 }
 
 .popUpInner {
@@ -20,6 +22,8 @@
 	margin: 2rem;
 
 	background-color: var(--color-light);
+
+	animation: .4s running grow;
 	}
 
 	.dark .popUpInner {

@@ -1,6 +1,5 @@
 .categories {
 	width: 20rem;
-
 	font-weight: 500;
 }
 
@@ -11,10 +10,12 @@
 	border-bottom: var(--line-weight) solid var(--color-middle);
 
 	position: sticky;
-  top: 0;
-  z-index: 9999;
+	top: 0;
+	z-index: 9999;
 
 	background-color: var(--color-light);
+
+	transition: .4s background-color;
 }
 
 .dark .navBar {
