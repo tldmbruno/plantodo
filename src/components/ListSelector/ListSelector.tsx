@@ -65,12 +65,10 @@ export default function ListSelector() {
     // Verify if there's already a list with the same name
     let occourences = 0;
     otherNames.forEach(otherName => {
-      if (validatedTitle == otherName.title ||
-          validatedTitle == `${validatedTitle} (${occourences})`) {
+      if (validatedTitle == otherName.title
+        || `${validatedTitle} (${occourences})` == otherName.title) {
         occourences++;
       }
-      console.log(validatedTitle, otherName.title);
-      console.count();
     });
 
     // If so, appends a counter after it
