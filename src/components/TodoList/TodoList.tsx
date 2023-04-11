@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { RenderList, Task } from '../RenderList/RenderList';
+import { RenderTasks, Task } from '../RenderTasks/RenderTasks';
 import { loadData, saveData } from '../DataHandler/DataHandler';
 import { TaskInput } from '../TaskInput/TaskInput';
 import { useLocation } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 import RandomizerButton from '../RandomizerButton/RandomizerButton';
 import Divider from '../Divider/Divider';
 
-import './TodoList.css';
 import { updateModificationDate } from '../ListSelector/ListSelector';
 
 // Function that returns a new list after moving one item from it
@@ -121,7 +120,7 @@ export default function TodoList() {
 
       <Divider />
 
-      <RenderList
+      <RenderTasks
         toggleHighlighted={toggleHighlighted}
         moveTask={onMove}
         editTask={editTask}
