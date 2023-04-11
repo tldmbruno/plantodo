@@ -1,9 +1,9 @@
-import ListSelector from "../components/ListSelector/ListSelector"
+import TodoList from "../components/TodoList/TodoList";
 
 export default function CreatePage() {
 	return (
-		<div className='container'>
-			<ListSelector />
+		<div>
+			<TodoList />
 		</div>
 	);
 }

@@ -1,14 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-
-import { RenderTasks, Task } from '../RenderTasks/RenderTasks';
 import { loadData, saveData } from '../DataHandler/DataHandler';
-import { TaskInput } from '../TaskInput/TaskInput';
-import { useLocation } from 'react-router-dom';
 
+import TasksRenderer from '../TasksRenderer/TasksRenderer';
+import TaskInput from '../TaskInput/TaskInput';
 import RandomizerButton from '../RandomizerButton/RandomizerButton';
 import Divider from '../Divider/Divider';
 
-import { updateModificationDate } from '../ListSelector/ListSelector';
+import ListSelector, { updateModificationDate } from '../ListSelector/ListSelector';
+
+export interface ListData {
+  id: number;
+  title: string;
+  lastModification: string;
+  tasks: Task[];
+}
+
+export interface Task {
+  id: number;
+	text: string;
+  done: boolean;
+}
 
 // Function that returns a new list after moving one item from it
 function moveTask(tasks: Task[], fromIndex: number, toIndex: number): Task[] {
@@ -28,17 +39,11 @@ function moveTask(tasks: Task[], fromIndex: number, toIndex: number): Task[] {
 }
 
 export default function TodoList() {
-  // LocalStorage identification
-  const listFile = useLocation();
-  const fileId: number = listFile.state.fetchId;
-  const fileData: string = 'todoListData' + fileId;
-  
+  const [ currentList, setCurrentList ] = useState<ListData | undefined>(undefined);
+
   // Declares and loads state data
   const taskRef = useRef<HTMLInputElement>(null);
-  const [ tasks, setTasks ] = useState<Task[]>(() => {
-    const data = loadData<Task[]>(fileData);
-		return data ? data : [];
-  });
+  const [ tasks, setTasks ] = useState<Task[]>([]);
   
   // Creates a new tasks Task with a particular description
   function addTask(description: string) {
@@ -46,7 +51,8 @@ export default function TodoList() {
     const newTask = {
       id: Date.now(),
       text: description.trim().length === 0 ? 'Empty note' : description,
-      highlighted: false
+      done: false,
+      tasks: [],
     };
     
     // Adds the Task to the end of the tasks
@@ -61,30 +67,28 @@ export default function TodoList() {
   // Edits an Task's text property via browser's prompt
   function editTask(task: Task) {
     const TaskIndex = tasks.findIndex((i) => i.id === task.id);
-  
     const newtasks = [...tasks];
-  
-    newtasks[TaskIndex].text = prompt('Enter the new text for the selected Task', newtasks[TaskIndex].text) ?? newtasks[TaskIndex].text;
-
+    newtasks[TaskIndex].text = prompt('Enter the new text for the selected Task',
+      newtasks[TaskIndex].text) ?? newtasks[TaskIndex].text;
     setTasks(newtasks);
   }
 
   function onRandomize(index: number) {
     const newtasks = [...tasks];
 
-    newtasks.map(Task => Task.highlighted = false);
-    newtasks[index].highlighted = true;
+    newtasks.map(task => task.done = false);
+    newtasks[index].done = true;
 
     setTasks(newtasks);
   }
 
-  function toggleHighlighted(Task: Task) {
+  function toggleDone(Task: Task) {
     setTasks(prevState => {
       return prevState.map(i => {
         if (i.id === Task.id) {
           return {
             ...i,
-            highlighted: !i.highlighted
+            done: !i.done
           }
         }
         return i;
@@ -100,32 +104,51 @@ export default function TodoList() {
 
   // Auto save on every change
   useEffect(() => {
-    updateModificationDate(listFile.state.fetchId);
-    saveData(tasks, fileData);
+    if (currentList) {
+      updateModificationDate(currentList.id);
+      saveData(tasks, 'tasksData'+ currentList.id);
+    }
   },[tasks])
+
+  useEffect(() => {
+    if (currentList) {
+      console.log(currentList.title);
+      setTasks(loadData<Task[]>('tasksData' + currentList.id) ?? []);
+    }
+    else {
+      console.log('UNDEFINED');
+    }
+  },[currentList]);
   
   return (
-    <>
-      <div className='flex gap'>
-        <TaskInput
-          taskRef={taskRef}
-          submitFunction={() => addTask(taskRef.current?.value ?? '')}/>
+    <div className='sidebarAndContent'>
+      <ListSelector setCurrentList={setCurrentList}/>
 
-        <div className='flex gap'>
-          <RandomizerButton 
-            onRandomize={onRandomize}
-            totalTasks={tasks.length}/>
+      <div>
+        <div hidden={!currentList}>
+          <div className='flex gap'>
+            <h1>{currentList?.title ?? ''}</h1>
+            <TaskInput
+              taskRef={taskRef}
+              submitFunction={() => addTask(taskRef.current?.value ?? '')}/>
+
+            <div className='flex gap'>
+              <RandomizerButton 
+                onRandomize={onRandomize}
+                totalTasks={tasks.length}/>
+            </div>
+          </div>
+
+          <Divider />
+
+          <TasksRenderer
+            toggleDone={toggleDone}
+            moveTask={onMove}
+            editTask={editTask}
+            deleteTask={deleteTask}
+            tasks={tasks}/>
         </div>
       </div>
-
-      <Divider />
-
-      <RenderTasks
-        toggleHighlighted={toggleHighlighted}
-        moveTask={onMove}
-        editTask={editTask}
-        deleteTask={deleteTask}
-        tasks={tasks}/>
-    </>
+    </div>
   );
 }

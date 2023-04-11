@@ -222,6 +222,23 @@ input {
 	background-color: var(--color-secondary);
 }
 
+.sidebarAndContent {
+	display: grid;
+	grid-template-columns: 300px calc(100% - 300px);
+
+	box-sizing: border-box;
+
+	}
+	.sidebarAndContent > * {
+		border: 1px solid red;
+	}
+	.sidebarAndContent:nth-child(1) {
+		grid-column: 1;
+	}
+	.sidebarAndContent:nth-child(2) {
+		grid-column: 2;
+	}
+
 .primaryBg {
 	background-color: var(--color-primary);
 	color: var(--color-light);

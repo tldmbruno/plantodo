@@ -1,23 +1,22 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import { loadData, saveData } from "../DataHandler/DataHandler";
-import Divider from "../Divider/Divider";
-import { TaskInput } from "../TaskInput/TaskInput";
+import { ListData } from "../TodoList/TodoList";
 
-interface ListData {
-  fetchId: number;
-  title: string;
-  lastModification: string;
+import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
+import Divider from "../Divider/Divider";
+import TaskInput from "../TaskInput/TaskInput";
+
+interface ListSelectorProps {
+  setCurrentList: (listData: ListData | undefined) => void;
 }
 
 export function updateModificationDate(fetchId: number): void {
-  const listsData = loadData<ListData[]>('selectorData') ?? [];
-  const listsDataIndex = listsData.findIndex((i) => i.fetchId === fetchId);
+  const listData = loadData<ListData>('listData' + fetchId);
 
-  listsData[listsDataIndex].lastModification = getFormattedModificationDate();
-
-  saveData(listsData, 'selectorData');
+  if (listData) {
+    listData.lastModification = getFormattedModificationDate();
+    saveData(listData, 'listData' + fetchId);
+  }
 }
 
 function getFormattedModificationDate(): string {
@@ -25,11 +24,11 @@ function getFormattedModificationDate(): string {
   return currentDate.toLocaleString();
 }
 
-export default function ListSelector() {
+export default function ListSelector({setCurrentList}: ListSelectorProps) {
   // Declares and loads state data
   const itemRef = useRef<HTMLInputElement>(null);
   const [ listsData, setListsData ] = useState(() => {
-    const data = loadData<ListData[]>('selectorData');
+    const data = loadData<ListData[]>('allListsData');
     return data ? data : [];
   });
 
@@ -39,7 +38,7 @@ export default function ListSelector() {
   
   // Auto save on every change
   useEffect(() => {
-    saveData(listsData, 'selectorData');
+    saveData(listsData, 'listsData');
   },[listsData])
 
   // Creates a new list, defaulting to 'Unnammed list'
@@ -50,9 +49,10 @@ export default function ListSelector() {
 
     // Creates the new list
     const newList: ListData = {
-      fetchId: Date.now(),
+      id: Date.now(),
       title: newTitle,
-      lastModification: getFormattedModificationDate()
+      lastModification: getFormattedModificationDate(),
+      tasks: [],
     };
 
     // Adds to the state array
@@ -80,7 +80,7 @@ export default function ListSelector() {
   }
 
   function onDeleteRequest(list: ListData): JSX.Element | null {
-    const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
+    const listsDataIndex = listsData.findIndex((i) => i.id === list.id);
 
     // Checks if the index is valid before asking for confirmation
     if (listsDataIndex !== -1) {
@@ -94,11 +94,13 @@ export default function ListSelector() {
 
   // Deletes the list and also the content in it from Local Storage
   function deleteList(list: ListData): void {
-    const listsDataIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
-    const todoListFileData = 'todoListData' + listsData[listsDataIndex].fetchId;
+    const listsDataIndex = listsData.findIndex((i) => i.id === list.id);
+    const todoListFileData = 'listsData' + listsData[listsDataIndex].id;
   
     // Checks if the index is valid before deleting anything
     if (listsDataIndex !== -1) {
+      setCurrentList(undefined);
+
       // Delete the list from the array
       const newListsData = [...listsData];
       newListsData.splice(listsDataIndex, 1);
@@ -115,7 +117,7 @@ export default function ListSelector() {
   }
 
   function renameList(list: ListData) {
-    const listIndex = listsData.findIndex((i) => i.fetchId === list.fetchId);
+    const listIndex = listsData.findIndex((i) => i.id === list.id);
     
     let newTitle = prompt('Enter the new title for the selected list', 
       listsData[listIndex].title) ?? listsData[listIndex].title;
@@ -130,44 +132,34 @@ export default function ListSelector() {
 
   return (
     <>
-      <h1 className='title'>Select or create your list</h1>
-
-      <div className='flex gap'>
+      <div>
         <TaskInput
-          buttonText={'Create new list'}
+          buttonText={'New'}
           taskRef={itemRef}
           submitFunction={createList}/>
+
+        <ul>
+          {listsData.map(list =>
+            <li key={list.id}>
+              <button onClick={() => setCurrentList(list)}>{list.title}</button>
+              {/* <span className='mini'>{list.lastModification}</span>
+              <button title={`Rename ${list.title}`} onClick={() => renameList(list)}>📝</button> */}
+              <button title={`Delete ${list.title}`} className='danger' onClick={() => onDeleteRequest(list)}>❌</button>
+            </li>
+          )}
+        </ul>
       </div>
 
-      <Divider />
-
-      <ul className='list'>
-        {listsData.map(list =>
-          <li key={list.fetchId}>
-            <Link className='fullWidth flex' to={'/edit/' + list.title} state={list}>
-              <div>
-                <span className='breakableWord'>{list.title}</span>
-              </div>
-            </Link>
-            <div className='visibleOnParentHover'>
-                <span className='mini optional borderless'>{list.lastModification}</span>
-                <button title={`Rename ${list.title}`} onClick={() => renameList(list)}>📝</button>
-                <button title={`Delete ${list.title}`} className='danger borderless' onClick={() => onDeleteRequest(list)}>❌</button>
-            </div>
-          </li>
-        )}
-      </ul>
-      
       {listIndexForDeletion != -1 ?
-      <ConfirmationPopUp
-        title={`Delete "${listsData[listIndexForDeletion].title}"?`}
-        description={`This action cannot be undone.`}
-        visible={askingForDeletion}
-        setVisible={setAskingForDeletion}
-        onConfirm={() => {deleteList(listsData[listIndexForDeletion])}}
-        confirmLabel={'Delete'}
-        dangerousConfirm={true}/>
-      : <></>}
+        <ConfirmationPopUp
+          title={`Delete "${listsData[listIndexForDeletion].title}"?`}
+          description={`This action cannot be undone.`}
+          visible={askingForDeletion}
+          setVisible={setAskingForDeletion}
+          onConfirm={() => {deleteList(listsData[listIndexForDeletion])}}
+          confirmLabel={'Delete'}
+          dangerousConfirm={true}/>
+        : <></>}
     </>
   );
 }
