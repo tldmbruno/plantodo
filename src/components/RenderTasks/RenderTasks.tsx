@@ -15,7 +15,7 @@ export interface Task {
 }
 
 // Shows all items in a particular list
-export function RenderList({toggleHighlighted, moveTask, editTask, deleteTask, tasks}: PropsRenderList) {
+export function RenderTasks({toggleHighlighted, moveTask, editTask, deleteTask, tasks}: PropsRenderList) {
   return (
     <ul className='list'>
       {tasks.map((task, index) =>
