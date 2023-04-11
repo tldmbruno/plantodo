@@ -20,7 +20,7 @@ export function updateModificationDate(fetchId: number): void {
   saveData(listsData, 'selectorData');
 }
 
-function getFormattedModificationDate(): string {
+export function getFormattedModificationDate(): string {
   const currentDate = new Date();
   return currentDate.toLocaleString();
 }
