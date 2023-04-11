@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { RenderList, Item } from '../RenderList/RenderList';
+import { RenderList, Task } from '../RenderList/RenderList';
 import { loadData, saveData } from '../DataHandler/DataHandler';
-import { InputItem } from '../ItemInput/ItemInput';
+import { TaskInput } from '../TaskInput/TaskInput';
 import { useLocation } from 'react-router-dom';
 
 import RandomizerButton from '../RandomizerButton/RandomizerButton';
@@ -12,77 +12,77 @@ import './TodoList.css';
 import { updateModificationDate } from '../ListSelector/ListSelector';
 
 // Function that returns a new list after moving one item from it
-function moveListItem(list: Item[], fromIndex: number, toIndex: number): Item[] {
-  const selectedItem = list[fromIndex];
+function moveTask(tasks: Task[], fromIndex: number, toIndex: number): Task[] {
+  const selectedTask = tasks[fromIndex];
 
-  const newList = [...list];
+  const newList = [...tasks];
 
   // Aborts if the destination is outside the array's scope
-  if (toIndex < 0 || toIndex >= list.length) {
+  if (toIndex < 0 || toIndex >= tasks.length) {
     return newList;
   }
 
   newList.splice(fromIndex, 1);
-  newList.splice(toIndex, 0, selectedItem);
+  newList.splice(toIndex, 0, selectedTask);
 
   return newList;
 }
 
-export default function App() {
+export default function TodoList() {
   // LocalStorage identification
   const listFile = useLocation();
   const fileId: number = listFile.state.fetchId;
   const fileData: string = 'todoListData' + fileId;
   
   // Declares and loads state data
-  const itemRef = useRef<HTMLInputElement>(null);
-  const [ list, setList ] = useState<Item[]>(() => {
-    const data = loadData<Item[]>(fileData);
+  const taskRef = useRef<HTMLInputElement>(null);
+  const [ tasks, setTasks ] = useState<Task[]>(() => {
+    const data = loadData<Task[]>(fileData);
 		return data ? data : [];
   });
   
-  // Creates a new list item with a particular description
-  function addItem(description: string) {
-    // Encapsulates the item object
-    const item = {
+  // Creates a new tasks Task with a particular description
+  function addTask(description: string) {
+    // Encapsulates the Task object
+    const newTask = {
       id: Date.now(),
       text: description.trim().length === 0 ? 'Empty note' : description,
       highlighted: false
     };
     
-    // Adds the item to the end of the list
-    setList([...list, item]);
+    // Adds the Task to the end of the tasks
+    setTasks([...tasks, newTask]);
   }
   
-  function deleteListItem(item: Item) {
-    const newList = list.filter((i) => i.id !== item.id);
-    setList(newList);
+  function deleteTask(task: Task) {
+    const newtasks = tasks.filter((i) => i.id !== task.id);
+    setTasks(newtasks);
   }
 
-  // Edits an item's text property via browser's prompt
-  function editListItem(item: Item) {
-    const itemIndex = list.findIndex((i) => i.id === item.id);
+  // Edits an Task's text property via browser's prompt
+  function editTask(task: Task) {
+    const TaskIndex = tasks.findIndex((i) => i.id === task.id);
   
-    const newList = [...list];
+    const newtasks = [...tasks];
   
-    newList[itemIndex].text = prompt('Enter the new text for the selected item', newList[itemIndex].text) ?? newList[itemIndex].text;
+    newtasks[TaskIndex].text = prompt('Enter the new text for the selected Task', newtasks[TaskIndex].text) ?? newtasks[TaskIndex].text;
 
-    setList(newList);
+    setTasks(newtasks);
   }
 
   function onRandomize(index: number) {
-    const newList = [...list];
+    const newtasks = [...tasks];
 
-    newList.map(item => item.highlighted = false);
-    newList[index].highlighted = true;
+    newtasks.map(Task => Task.highlighted = false);
+    newtasks[index].highlighted = true;
 
-    setList(newList);
+    setTasks(newtasks);
   }
 
-  function toggleHighlighted(item: Item) {
-    setList(prevState => {
+  function toggleHighlighted(Task: Task) {
+    setTasks(prevState => {
       return prevState.map(i => {
-        if (i.id === item.id) {
+        if (i.id === Task.id) {
           return {
             ...i,
             highlighted: !i.highlighted
@@ -93,29 +93,29 @@ export default function App() {
     });
   }
 
-  function onMove(item: Item, toRelativeIndex: number) {
-    const itemIndex = list.findIndex((i) => i.id === item.id);
+  function onMove(Task: Task, toRelativeIndex: number) {
+    const TaskIndex = tasks.findIndex((i) => i.id === Task.id);
     
-    setList(moveListItem(list, itemIndex, itemIndex + toRelativeIndex));
+    setTasks(moveTask(tasks, TaskIndex, TaskIndex + toRelativeIndex));
   }
 
   // Auto save on every change
   useEffect(() => {
     updateModificationDate(listFile.state.fetchId);
-    saveData(list, fileData);
-  },[list])
+    saveData(tasks, fileData);
+  },[tasks])
   
   return (
     <>
       <div className='flex gap'>
-        <InputItem
-          itemRef={itemRef}
-          submitFunction={() => addItem(itemRef.current?.value ?? '')}/>
+        <TaskInput
+          taskRef={taskRef}
+          submitFunction={() => addTask(taskRef.current?.value ?? '')}/>
 
         <div className='flex gap'>
           <RandomizerButton 
             onRandomize={onRandomize}
-            totalItems={list.length}/>
+            totalTasks={tasks.length}/>
         </div>
       </div>
 
@@ -123,10 +123,10 @@ export default function App() {
 
       <RenderList
         toggleHighlighted={toggleHighlighted}
-        moveListItem={onMove}
-        editListItem={editListItem}
-        deleteListItem={deleteListItem}
-        itemList={list}/>
+        moveTask={onMove}
+        editTask={editTask}
+        deleteTask={deleteTask}
+        tasks={tasks}/>
     </>
   );
 }

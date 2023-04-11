@@ -1,35 +1,35 @@
 interface PropsRenderList {
-  itemList: Item[];
-  toggleHighlighted: (item: Item) => void;
+  tasks: Task[];
+  toggleHighlighted: (Task: Task) => void;
   
-  moveListItem:(item: Item, toRelativeIndex: number) => void;
+  moveTask:(Task: Task, toRelativeIndex: number) => void;
 
-	editListItem: (item: Item) => void;
-  deleteListItem: (item: Item) => void;
+	editTask: (Task: Task) => void;
+  deleteTask: (Task: Task) => void;
 }
 
-export interface Item {
+export interface Task {
 	id: number;
 	text: string;
   highlighted: boolean;
 }
 
 // Shows all items in a particular list
-export function RenderList({toggleHighlighted, moveListItem, editListItem, deleteListItem, itemList}: PropsRenderList) {
+export function RenderList({toggleHighlighted, moveTask, editTask, deleteTask, tasks}: PropsRenderList) {
   return (
     <ul className='list'>
-      {itemList.map((item, index) =>
-      <li key={item.id} className={item.highlighted ? 'highlighted' : ''}>
-        <div className='fullWidth' onClick={() => toggleHighlighted(item)}>
-          <input title={`${item.highlighted?'Unmark':'Mark'} ${item.text} as done`} type='checkbox' checked={item.highlighted} onChange={() => null}/>
-          <label>{item.text}</label>
+      {tasks.map((task, index) =>
+      <li key={task.id} className={task.highlighted ? 'highlighted' : ''}>
+        <div className='fullWidth' onClick={() => toggleHighlighted(task)}>
+          <input title={`${task.highlighted?'Unmark':'Mark'} ${task.text} as done`} type='checkbox' checked={task.highlighted} onChange={() => null}/>
+          <label>{task.text}</label>
         </div>
         <div className='visibleOnParentHover'>
-          <button title='Move upwards' className='optional' onClick={() => moveListItem(item, -1)} hidden={index==0}>⬆</button>
-          <button title='Move downwards' className='optional' onClick={() => moveListItem(item, +1)} hidden={index+1 == itemList.length}>⬇</button>
+          <button title='Move upwards' className='optional' onClick={() => moveTask(task, -1)} hidden={index==0}>⬆</button>
+          <button title='Move downwards' className='optional' onClick={() => moveTask(task, +1)} hidden={index+1 == tasks.length}>⬇</button>
 
-          <button title={`Rename ${item.text}`} onClick={() => editListItem(item)}>📝</button>
-          <button title={`Delete ${item.text}`} className='danger' onClick={() => deleteListItem(item)}>❌</button>
+          <button title={`Rename ${task.text}`} onClick={() => editTask(task)}>📝</button>
+          <button title={`Delete ${task.text}`} className='danger' onClick={() => deleteTask(task)}>❌</button>
         </div>
       </li>
       )}

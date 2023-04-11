@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import { loadData, saveData } from "../DataHandler/DataHandler";
 import Divider from "../Divider/Divider";
-import { InputItem } from "../ItemInput/ItemInput";
+import { TaskInput } from "../TaskInput/TaskInput";
 
 interface ListData {
   fetchId: number;
@@ -133,9 +133,9 @@ export default function ListSelector() {
       <h1 className='title'>Select or create your list</h1>
 
       <div className='flex gap'>
-        <InputItem
+        <TaskInput
           buttonText={'Create new list'}
-          itemRef={itemRef}
+          taskRef={itemRef}
           submitFunction={createList}/>
       </div>
 
