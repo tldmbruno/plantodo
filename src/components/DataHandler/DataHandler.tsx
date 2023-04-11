@@ -14,15 +14,3 @@ export function loadData<T>(dataName: string) : T | null{
 	
 	return null;
 }
-
-// Save Button to quickly allocate data through localStorage
-interface PropsSaveButton {
-	value: any;
-	dataName: string;
-}
-
-export function SaveButton({value, dataName}: PropsSaveButton) {
-	return (
-		<button type='button' onClick={() => saveData(value, dataName)}>Save</button>
-	);
-}
