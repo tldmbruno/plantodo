@@ -28,10 +28,10 @@ function moveListItem(list: Item[], fromIndex: number, toIndex: number): Item[] 
   return newList;
 }
 
-export default function App() {
+export default function TodoList() {
   // LocalStorage identification
   const listFile = useLocation();
-  const fileId: number = listFile.state.fetchId;
+  const fileId: number = listFile.state.id;
   const fileData: string = 'todoListData' + fileId;
   
   // Declares and loads state data

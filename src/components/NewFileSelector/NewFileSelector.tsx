@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { ReactEventHandler, useEffect, useState } from "react";
+import { loadData } from "../DataHandler/DataHandler";
 
 export interface FileData {
   fetchId: number;
@@ -12,6 +13,16 @@ export interface FileHandlerProps {
 
 export default function FileSelector({filesData}: FileHandlerProps) {
   const [ files, setFiles ] = useState(filesData);
+  const onFileSelectorDataChange = new CustomEvent('onFileSelectorDataChange');
+
+  useEffect(() => {
+    document.addEventListener('onFileControllerDataChange', () => setFiles(loadData<FileData[]>('filesData') ?? []));
+  }, []);
+
+  // useEffect(() => {
+  //   document.dispatchEvent(onFileSelectorDataChange);
+  //   console.log('FileSelector changed');
+  // }, [files])
 
   function onFileClick() {
     console.log('onFileClick');
