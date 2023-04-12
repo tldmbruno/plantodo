@@ -5,7 +5,7 @@ import Logo from '../components/Logo/Logo';
 export default function WelcomePage() {
 	return (
 		<div>
-			<div className='screenTall centered container'>
+			<div className='halfScreenTall centered container'>
 				<div>
 					<h1 className='giga'><Logo/></h1>
 					<p>The elegant note taking app</p>
