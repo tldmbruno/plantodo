@@ -121,11 +121,11 @@ export default function TodoList() {
   },[currentList]);
   
   return (
-    <div className='sidebarAndContent'>
+    <div className='grid'>
       <ListSelector setCurrentList={setCurrentList}/>
 
-      <div>
-        <div hidden={!currentList}>
+      <div className='content container overflow simpleFlex screenTall'>
+        <div className='content' hidden={!currentList}>
           <div className='flex gap'>
             <h1>{currentList?.title ?? ''}</h1>
             <TaskInput

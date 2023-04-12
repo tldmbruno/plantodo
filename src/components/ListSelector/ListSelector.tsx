@@ -132,7 +132,7 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
 
   return (
     <>
-      <div>
+      <div className='overflow sidebar screenTall'>
         <TaskInput
           buttonText={'New'}
           taskRef={itemRef}
@@ -140,12 +140,20 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
 
         <ul>
           {listsData.map(list =>
-            <li key={list.id}>
-              <button onClick={() => setCurrentList(list)}>{list.title}</button>
-              {/* <span className='mini'>{list.lastModification}</span>
-              <button title={`Rename ${list.title}`} onClick={() => renameList(list)}>📝</button> */}
-              <button title={`Delete ${list.title}`} className='danger' onClick={() => onDeleteRequest(list)}>❌</button>
-            </li>
+            <>
+              <li key={list.id}>
+                <div className='flex'>
+                  <a className='' onClick={() => setCurrentList(list)}>
+                    <label className=''>{list.title}</label><br></br>
+                  </a>
+                  <div className=''>
+                    <a title={`Rename ${list.title}`} className='borderless' onClick={() => renameList(list)}>📝</a>
+                    <a title={`Delete ${list.title}`} className='borderless danger' onClick={() => onDeleteRequest(list)}>❌</a>
+                  </div>
+                </div>
+                <span className='mini fullWidth'>{list.lastModification}</span>
+              </li>
+            </>
           )}
         </ul>
       </div>

@@ -222,22 +222,53 @@ input {
 	background-color: var(--color-secondary);
 }
 
-.sidebarAndContent {
-	display: grid;
-	grid-template-columns: 300px calc(100% - 300px);
+.container {
+	padding: 3rem;
+}
 
+.simpleFlex {
+	display: flex;
+}
+
+.sidebar {
+	max-width: 300px;
+	background-color: var(--color-light);
+
+	transition: background-color .4s;
+	}
+	.dark .sidebar {
+		background-color: var(--color-dark);
+	}
+	.sidebar label {
+		font-style: var(--display-font);
+		font-weight: 600;
+		font-size: 1.2em;
+		padding: .2rem 0rem;
+	}
+	.sidebar span {
+		text-align: right;
+		padding: .2rem 0rem;
+	}
+	.sidebar form {
+		padding: .4rem;
+	}
+	.sidebar li {
+		/* border: 1px dashed blue; */
+		padding: .4rem;
+	}
+
+.content {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.overflow {
+	height: initial;
 	box-sizing: border-box;
-
-	}
-	.sidebarAndContent > * {
-		border: 1px solid red;
-	}
-	.sidebarAndContent:nth-child(1) {
-		grid-column: 1;
-	}
-	.sidebarAndContent:nth-child(2) {
-		grid-column: 2;
-	}
+	overflow-y: scroll;
+	clip-path: fill-box;
+}
 
 .primaryBg {
 	background-color: var(--color-primary);
@@ -341,7 +372,7 @@ span .danger {
 }
 
 .screenTall {
-	min-height: 70vh;
+	height: calc(100vh - 3.6rem);
 }
 
 .halfScreenTall {
@@ -354,10 +385,6 @@ span .danger {
 	padding: clamp(.2rem, 3vw, 1rem);
 
 	background-color: var(--color-middle);
-}
-
-.container {
-	padding: min(2rem, 7%);
 }
 
 .giga {
