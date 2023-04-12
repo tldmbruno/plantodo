@@ -20,7 +20,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Routes>
           <Route path='/' element={<WelcomePage />} />
           <Route path='/create' element={<CreatePage />} />
-          <Route path='/edit/*' element={<EditPage />} />
           <Route path='*' element={<MissingPage />}/>
         </Routes>
       </main>
