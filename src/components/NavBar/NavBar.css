@@ -15,7 +15,7 @@
 
 	background-color: var(--color-light);
 
-	transition: .4s background-color;
+	transition: var(--bg-trans);
 }
 
 .dark .navBar {

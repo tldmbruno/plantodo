@@ -12,7 +12,7 @@ html {
 	--display-font: 'Fredoka One', sans-serif;
 	--body-font: 'Rubik', sans-serif;
 
-	--trans: background-color ease-in-out 3s, color ease-in-out 1s 1.5s;
+	--bg-trans: background-color 3s, color 3s;
 
 	font-family: var(--body-font);
 }
@@ -33,7 +33,7 @@ body {
 	/* This makes the magic happen */
 	background-color: #fff;
 	background-blend-mode: difference;
-	transition: background-color .4s;
+	transition: var(--bg-trans);
 	}
 	/* Dark mode */
 	.dark body {
@@ -234,7 +234,7 @@ input {
 	max-width: 300px;
 	background-color: var(--color-light);
 
-	transition: background-color .4s;
+	transition: var(--bg-trans) ;
 	}
 	.dark .sidebar {
 		background-color: var(--color-dark);
