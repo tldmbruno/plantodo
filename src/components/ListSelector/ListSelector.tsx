@@ -140,20 +140,18 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
 
         <ul>
           {listsData.map(list =>
-            <>
+            <a onClick={() => setCurrentList(list)}>
               <li key={list.id}>
                 <div className='flex'>
-                  <a className='' onClick={() => setCurrentList(list)}>
-                    <label className=''>{list.title}</label><br></br>
-                  </a>
+                  <label className=''>{list.title}</label><br></br>
                   <div className=''>
-                    <a title={`Rename ${list.title}`} className='borderless' onClick={() => renameList(list)}>📝</a>
-                    <a title={`Delete ${list.title}`} className='borderless danger' onClick={() => onDeleteRequest(list)}>❌</a>
+                    <a title={`Rename ${list.title}`} className='borderless' onClick={(e) => {renameList(list); e.stopPropagation()}}>📝</a>
+                    <a title={`Delete ${list.title}`} className='borderless danger' onClick={(e) => {onDeleteRequest(list); e.stopPropagation()}}>❌</a>
                   </div>
                 </div>
                 <span className='mini fullWidth'>{list.lastModification}</span>
               </li>
-            </>
+            </a>
           )}
         </ul>
       </div>

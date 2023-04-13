@@ -12,7 +12,7 @@ html {
 	--display-font: 'Fredoka One', sans-serif;
 	--body-font: 'Rubik', sans-serif;
 
-	--bg-trans: background-color 3s, color 3s;
+	--bg-trans: background-color .8s, color .4s;
 
 	font-family: var(--body-font);
 }
@@ -244,6 +244,7 @@ input {
 		font-weight: 600;
 		font-size: 1.2em;
 		padding: .2rem 0rem;
+		cursor: pointer;
 	}
 	.sidebar span {
 		text-align: right;
@@ -253,8 +254,20 @@ input {
 		padding: .4rem;
 	}
 	.sidebar li {
-		/* border: 1px dashed blue; */
-		padding: .4rem;
+		padding: 1rem;
+		border-left: 0rem solid var(--color-primary);
+		background-color: transparent;
+		transition: border .4s ease-in-out, background-color .2s;
+	}
+	.sidebar li:hover {
+		background-color: var(--color-middle);
+		border-left: 1rem solid var(--color-primary);
+	}
+	.sidebar a {
+		cursor: pointer;
+	}
+	.sidebar a:hover {
+		color: inherit;
 	}
 
 .content {
@@ -266,7 +279,7 @@ input {
 .overflow {
 	height: initial;
 	box-sizing: border-box;
-	overflow-y: scroll;
+	overflow-y: hidden;
 	clip-path: fill-box;
 }
 
