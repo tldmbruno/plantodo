@@ -279,7 +279,7 @@ input {
 .overflow {
 	height: initial;
 	box-sizing: border-box;
-	overflow-y: hidden;
+	overflow-y: auto;
 	clip-path: fill-box;
 }
 
