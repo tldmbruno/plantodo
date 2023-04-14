@@ -118,16 +118,15 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
 
   function renameList(list: ListData) {
     const listIndex = listsData.findIndex((i) => i.id === list.id);
+    const oldTitle: string = listsData[listIndex].title;
     
-    let newTitle = prompt('Enter the new title for the selected list', 
-      listsData[listIndex].title) ?? listsData[listIndex].title;
-    if (newTitle != listsData[listIndex].title) {
-      newTitle = validateTitle(newTitle, listsData);
+    let newTitle = prompt('Enter the new title for the selected list', oldTitle) ?? 'Unnammed List';
+    
+    if (newTitle != oldTitle) {
+      let newListsData = [...listsData];
+      newListsData[listIndex].title = validateTitle(newTitle, listsData);
+      setListsData(newListsData);
     }
-    
-    let newListsData = [...listsData];
-    newListsData[listIndex].title = validateTitle(newListsData[listIndex].title, listsData);
-    setListsData(newListsData);
   }
 
   return (
