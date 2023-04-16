@@ -418,9 +418,11 @@ span .danger {
 
 @keyframes grow {
 	0% {
+		opacity: 40;
 		transform: scale(0);
 	}
 	100% {
+		opacity: 100;
 		transform: scale(1);
 	}
 }
