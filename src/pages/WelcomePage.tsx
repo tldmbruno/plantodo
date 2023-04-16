@@ -4,7 +4,7 @@ import Logo from '../components/Logo/Logo';
 
 export default function WelcomePage() {
 	return (
-		<div>
+		<div className='screenTall overflow'>
 			<div className='halfScreenTall centered container'>
 				<div>
 					<h1 className='giga'><Logo/></h1>
