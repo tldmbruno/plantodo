@@ -15,14 +15,12 @@ import MissingPage from './pages/MissingPage';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <main>
-        <NavBar />
-        <Routes>
-          <Route path='/' element={<WelcomePage />} />
-          <Route path='/create' element={<CreatePage />} />
-          <Route path='*' element={<MissingPage />}/>
-        </Routes>
-      </main>
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<WelcomePage />} />
+        <Route path='/create' element={<CreatePage />} />
+        <Route path='*' element={<MissingPage />}/>
+      </Routes>
     </BrowserRouter>
   </React.StrictMode>
 )
