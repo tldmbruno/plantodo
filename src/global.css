@@ -46,8 +46,11 @@ body {
 
 ::-webkit-scrollbar {
 	width: .8rem;
-	background: var(--color-middle);
-}
+	background: var(--color-light);
+	}
+	.dark ::-webkit-scrollbar {
+		background: var(--color-dark);
+	}
 
 ::-webkit-scrollbar-thumb {
 	width: 0.6rem;
