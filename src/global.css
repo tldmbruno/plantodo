@@ -44,6 +44,17 @@ body {
 		--color-secondary: #282d6e;
 	}
 
+::-webkit-scrollbar {
+	width: .8rem;
+	background: var(--color-middle);
+}
+
+::-webkit-scrollbar-thumb {
+	width: 0.6rem;
+	padding: 0.1rem;
+	background: var(--color-primary);
+}
+
 p {
 	margin-bottom: 1rem;
 	line-height: normal;
