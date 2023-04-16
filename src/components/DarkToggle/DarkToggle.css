@@ -1,4 +1,38 @@
 .emojiButton {
-	background-color: inherit;
+	background-color: transparent;
 	font-size: 100%;
+}
+
+.moon {
+	animation: 1s spin running;
+}
+
+.flower {
+	animation: 1s reverse-spin running;
+}
+
+@keyframes reverse-spin {
+	0% {
+		opacity: 0;
+		rotate: 0deg;
+	}
+	50% {
+		opacity: 100;
+	}
+	100% {
+		rotate: -360deg;
+	}
+}
+
+@keyframes spin {
+	0% {
+		opacity: 0;
+		rotate: 0deg;
+	}
+	50% {
+		opacity: 100;
+	}
+	100% {
+		rotate: 360deg;
+	}
 }

@@ -6,11 +6,17 @@ import './DarkToggle.css';
 export default function DarkToggle() {
 	const [ isDarkTheme, setIsDarkTheme ] = useState(loadData<boolean>('darkToggleData') ?? false);
 
+	const id = Math.random().toString();
+
 	useEffect(() => {
 		if (isDarkTheme) {
 			document.documentElement.classList.add('dark');
+			document.getElementById(id)?.classList.add('moon');
+			document.getElementById(id)?.classList.remove('flower');
 		} else {
 			document.documentElement.classList.remove('dark');
+			document.getElementById(id)?.classList.add('flower');
+			document.getElementById(id)?.classList.remove('moon');
 		}
 	},[isDarkTheme]);
 	
@@ -25,9 +31,11 @@ export default function DarkToggle() {
 
 	return (
 		<button title='Toggle Light/Dark Mode' className='emojiButton borderless' onClick={(() => toggleDarkMode())}>
-			{ isDarkTheme ? 
-			  <>🌙</> : <>🌻</>
-			}
+			<div id={id}>
+				{ isDarkTheme ? 
+					<span>🌙</span> : <span>🌻</span>
+				}
+			</div>
 		</button>
 	);
 }
