@@ -139,7 +139,7 @@ label, .breakableWord {
 
 	.button:active, button:active {
 		border: var(--line-weight) solid var(--color-secondary);
-		background-color: var(--color-light);
+		background-color: var(--color-middle);
 		color: var(--color-secondary);
 }
 
