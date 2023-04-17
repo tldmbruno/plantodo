@@ -160,8 +160,21 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
                   <span className='mini'>{list.lastModification}</span>
                 </div>
                 <div className='flex pushRight'>
-                  <button title={`Rename ${list.title}`} className='compact borderless' onClick={(e) => {renameList(list); e.stopPropagation()}}>📝</button>
-                  <button title={`Delete ${list.title}`} className='compact borderless danger' onClick={(e) => {onDeleteRequest(list); e.stopPropagation()}}>❌</button>
+
+                  <button
+                    title={`Rename ${list.title}`}
+                    className='compact borderless'
+                    onClick={(e) => {renameList(list); e.stopPropagation()}}>
+                      📝
+                  </button>
+
+                  <button
+                    title={`Delete ${list.title}`}
+                    className='compact borderless danger'
+                    onClick={(e) => {onDeleteRequest(list); e.stopPropagation()}}>
+                      ❌
+                  </button>
+
                 </div>
               </li>
             </a>
