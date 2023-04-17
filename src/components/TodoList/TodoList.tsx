@@ -39,93 +39,134 @@ function moveTask(tasks: Task[], fromIndex: number, toIndex: number): Task[] {
 }
 
 export default function TodoList() {
-  const [ currentList, setCurrentList ] = useState<ListData | undefined>(undefined);
+  const [ currentList, setCurrentList ] = useState<ListData>();
 
   // Declares and loads state data
   const taskRef = useRef<HTMLInputElement>(null);
-  const [ tasks, setTasks ] = useState<Task[]>([]);
-  
+  const [ list, setList ] = useState<ListData>();
+
   // Creates a new tasks Task with a particular description
   function addTask(description: string) {
-    // Encapsulates the Task object
-    const newTask = {
-      id: Date.now(),
-      text: description.trim().length === 0 ? 'Empty note' : description,
-      done: false,
-      tasks: [],
-    };
-    
-    // Adds the Task to the end of the tasks
-    setTasks([...tasks, newTask]);
+    if (list) {
+      // Encapsulates the Task object
+      const newTask: Task = {
+        id: Date.now(),
+        text: description.trim().length === 0 ? 'Empty note' : description,
+        done: false,
+      };
+  
+      const newList: ListData = {
+        id: list.id,
+        lastModification: getFormattedModificationDate(),
+        title: list.title,
+        tasks: [...list.tasks, newTask],
+      }
+      setList(newList);
+    }
   }
   
   function deleteTask(task: Task) {
-    const newtasks = tasks.filter((i) => i.id !== task.id);
-    setTasks(newtasks);
+    if (list) {
+      const newTasks = list.tasks.filter((i) => i.id !== task.id);
+      
+      const newList: ListData = {
+        id: list.id,
+        lastModification: getFormattedModificationDate(),
+        title: list.title,
+        tasks: newTasks,
+      }
+      setList(newList);
+    }
   }
 
   // Edits an Task's text property via browser's prompt
   function editTask(task: Task) {
-    const TaskIndex = tasks.findIndex((i) => i.id === task.id);
-    const newtasks = [...tasks];
-    newtasks[TaskIndex].text = prompt('Enter the new text for the selected Task',
-      newtasks[TaskIndex].text) ?? newtasks[TaskIndex].text;
-    setTasks(newtasks);
+    if (list) {
+      const taskIndex = list.tasks.findIndex((i) => i.id === task.id);
+      const newTasks = [...list.tasks];
+      newTasks[taskIndex].text = prompt('Enter the new text for the selected Task', newTasks[taskIndex].text) ?? newTasks[taskIndex].text;
+  
+      const newList: ListData = {
+        id: list.id,
+        lastModification: getFormattedModificationDate(),
+        title: list.title,
+        tasks: newTasks,
+      }
+      setList(newList);
+    }
   }
 
   function onRandomize(index: number) {
-    const newtasks = [...tasks];
-
-    newtasks.map(task => task.done = false);
-    newtasks[index].done = true;
-
-    setTasks(newtasks);
+    if (list) {
+      const newTasks = [...list.tasks];
+  
+      newTasks.map(task => task.done = false);
+      newTasks[index].done = true;
+  
+      const newList: ListData = {
+        id: list.id,
+        lastModification: getFormattedModificationDate(),
+        title: list.title,
+        tasks: newTasks,
+      }
+      setList(newList);
+    }
   }
 
-  function toggleDone(Task: Task) {
-    setTasks(prevState => {
-      return prevState.map(i => {
-        if (i.id === Task.id) {
-          return {
-            ...i,
-            done: !i.done
-          }
-        }
-        return i;
-      })
-    });
+  function toggleDone(task: Task) {
+    if (list) {
+      const taskIndex = list.tasks.findIndex((i) => i.id === task.id);
+      const newTasks = [...list.tasks];
+  
+      newTasks[taskIndex].done = !newTasks[taskIndex].done;
+  
+      const newList: ListData = {
+        id: list.id,
+        lastModification: getFormattedModificationDate(),
+        title: list.title,
+        tasks: newTasks,
+      }
+      setList(newList);
+    }
   }
 
-  function onMove(Task: Task, toRelativeIndex: number) {
-    const TaskIndex = tasks.findIndex((i) => i.id === Task.id);
-    
-    setTasks(moveTask(tasks, TaskIndex, TaskIndex + toRelativeIndex));
+  function onMove(task: Task, toRelativeIndex: number) {
+    if (list) {
+      const taskIndex = list.tasks.findIndex((i) => i.id === task.id);
+  
+      const newList: ListData = {
+        id: list.id,
+        lastModification: getFormattedModificationDate(),
+        title: list.title,
+        tasks: moveTask(list.tasks, taskIndex, taskIndex + toRelativeIndex),
+      }
+      setList(newList);
+    }
+  }
+
+  function getFormattedModificationDate(): string {
+    const currentDate = new Date();
+    return currentDate.toLocaleString();
   }
 
   // Auto save on every change
   useEffect(() => {
-    if (currentList) {
-      updateModificationDate(currentList.id);
-      saveData(tasks, 'tasksData'+ currentList.id);
+    if (list) {
+      saveData(list, 'list-' + list.id);
     }
-  },[tasks])
+  },[list])
 
   useEffect(() => {
     if (currentList) {
-      console.log(currentList.title);
-      setTasks(loadData<Task[]>('tasksData' + currentList.id) ?? []);
-    }
-    else {
-      console.log('UNDEFINED');
+      setList(loadData<ListData>('list-' + currentList.id));
     }
   },[currentList]);
-  
+
   return (
     <div className='grid'>
       <ListSelector setCurrentList={setCurrentList}/>
-
       <div className='content container overflow simpleFlex screenTall'>
-        <div className='content' hidden={!currentList}>
+        {list && <div className='content'>
           <div className='flex gap'>
             <h1>{currentList?.title ?? ''}</h1>
             <TaskInput
@@ -135,7 +176,7 @@ export default function TodoList() {
             <div className='flex gap'>
               <RandomizerButton 
                 onRandomize={onRandomize}
-                totalTasks={tasks.length}/>
+                totalTasks={list.tasks.length}/>
             </div>
           </div>
 
@@ -146,8 +187,8 @@ export default function TodoList() {
             moveTask={onMove}
             editTask={editTask}
             deleteTask={deleteTask}
-            tasks={tasks}/>
-        </div>
+            tasks={list.tasks}/>
+        </div>}
       </div>
     </div>
   );
