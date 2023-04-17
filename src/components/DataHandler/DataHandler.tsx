@@ -5,12 +5,12 @@ export function saveData(value: any, dataName: string): void {
 }
 
 // Loads the data as a JSON file
-export function loadData<T>(dataName: string) : T | null{
+export function loadData<T>(dataName: string) : T | undefined{
 	const data = localStorage.getItem(dataName);
 	
 	if (data) {
 		return JSON.parse(data);
 	}
 	
-	return null;
+	return undefined;
 }
