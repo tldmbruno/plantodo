@@ -135,16 +135,21 @@ label, .breakableWord {
 	text-anchor: middle;
 }
 
-.button:hover, button:hover {
+.button:hover:not([disabled]), button:hover:not([disabled]) {
 	border: var(--line-weight) solid var(--color-primary);
 	color: var(--color-primary)
 	}
 
-	.button:active, button:active {
+	.button:active:not([disabled]), button:active:not([disabled]) {
 		border: var(--line-weight) solid var(--color-secondary);
 		background-color: var(--color-middle);
 		color: var(--color-secondary);
-}
+	}
+
+	.button[disabled], button[disabled] {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 
 input {
 	padding: 0px;
