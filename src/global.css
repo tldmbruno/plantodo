@@ -245,7 +245,7 @@ input {
 }
 
 .sidebar {
-	max-width: 300px;
+	max-width: 20rem;
 	background-color: var(--color-light);
 
 	transition: var(--bg-trans) ;
@@ -254,6 +254,7 @@ input {
 		background-color: var(--color-dark);
 	}
 	.sidebar label {
+		display: block;
 		font-style: var(--display-font);
 		font-weight: 600;
 		font-size: 1.2em;
@@ -326,7 +327,15 @@ input {
 	}
 	*:hover > .visibleOnParentHover {
 		opacity: 100;
-	}
+}
+
+:is(button, .button).compact {
+	padding: 0px 8px;
+}
+
+.pushRight {
+	margin-left: auto;
+}
 
 /* --------------- */
 /* Generic classes */
