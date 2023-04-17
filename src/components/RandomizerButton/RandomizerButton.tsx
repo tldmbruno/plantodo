@@ -12,8 +12,21 @@ export default function RandomizerButton({onRandomize, totalTasks}: PropsButtonR
 
 	return (
 		<>
-			<button className='optional' onClick={randomizeHighlight}>Choose randomly 🎲</button>
-			<button className='mobile' onClick={randomizeHighlight}>🎲</button>
+			<button
+				className='optional'
+				title={totalTasks == 0 ? 'You need to first add tasks to your list.' : 'Let the app decide for you!'}
+				onClick={randomizeHighlight}
+				disabled={totalTasks == 0}>
+					Choose randomly 🎲
+			</button>
+
+			<button
+				className='mobile'
+				title={totalTasks == 0 ? 'You need to first add tasks to your list.' : 'Let the app decide for you!'}
+				onClick={randomizeHighlight}
+				disabled={totalTasks == 0}>
+					🎲
+			</button>
 		</>
 	)
 }
