@@ -168,7 +168,7 @@ export default function TodoList() {
       <div className='content container overflow simpleFlex screenTall'>
         {list && <div className='content'>
           <div className='flex gap'>
-            <h1>{currentList?.title ?? ''}</h1>
+            <h1 className='breakableWord'>{currentList?.title ?? ''}</h1>
             <TaskInput
               taskRef={taskRef}
               submitFunction={() => addTask(taskRef.current?.value ?? '')}/>
