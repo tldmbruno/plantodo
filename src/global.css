@@ -135,9 +135,9 @@ label, .breakableWord {
 	text-anchor: middle;
 }
 
-.button:hover:not([disabled]), button:hover:not([disabled]) {
+.button:hover:not([disabled], .danger), button:hover:not([disabled], .danger) {
 	border: var(--line-weight) solid var(--color-primary);
-	color: var(--color-primary)
+	color: var(--color-primary);
 	}
 
 	.button:active:not([disabled]), button:active:not([disabled]) {
@@ -270,7 +270,7 @@ input {
 		text-align: right;
 		padding: .2rem 0rem;
 	}
-	.sidebar form {
+	.sidebar form:not(.noPadding) {
 		padding: .4rem;
 	}
 	.sidebar li {
@@ -288,6 +288,16 @@ input {
 	}
 	.sidebar a:hover {
 		color: inherit;
+	}
+	.sidebar .renameInput {
+		margin: 0px;
+		padding: 0px;
+		height: 1.6rem;
+		
+		font-weight: 600;
+		font-size: 1.2em;
+
+		background: none;
 	}
 
 .content {
@@ -382,6 +392,10 @@ input {
 
 .noMargin {
 	margin: 0;
+}
+
+.noPadding {
+	padding: 0;
 }
 
 .title {
