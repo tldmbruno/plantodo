@@ -4,6 +4,7 @@ import { ListData } from "../TodoList/TodoList";
 
 import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import TaskInput from "../TaskInput/TaskInput";
+import RenamerInput from "../RenamerInput/RenamerInput";
 
 interface ListSelectorProps {
   setCurrentList: (listData: ListData) => void;
@@ -31,6 +32,9 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
   // Deletion state management
   const [ askingForDeletion, setAskingForDeletion ] = useState(false);
   const [ listIndexForDeletion, setListIndexForDeletion ] = useState(-1);
+
+  // Rename state management
+  const [ listIndexForRenaming , setListIndexForRenaming ] = useState(-1);
 
   function loadStorageData(): ListData[] {
     const newLists: ListData[] = [];
@@ -64,6 +68,8 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
       lastModification: getFormattedModificationDate(),
       tasks: [],
     };
+
+    console.table(newList);
 
     // Adds to the state array and saves it to localstorage
     setLists([...lists, newList]);
@@ -124,18 +130,30 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
     }
   }
 
-  function renameList(list: ListData) {
-    const listIndex = lists.findIndex((i) => i.id === list.id);
+  function renameList(listId: number, newTitle: string) {
+    const listIndex = lists.findIndex((i) => i.id === listId);
     const oldTitle: string = lists[listIndex].title;
-    
-    let newTitle = prompt('Enter the new title for the selected list', oldTitle) ?? 'Unnammed List';
     
     if (newTitle != oldTitle) {
       let newLists = [...lists];
-      newLists[listIndex].title = validateTitle(newTitle, lists);
+
+      const listWithNewTitle: ListData = {
+        id: listId,
+        title: validateTitle(newTitle, lists),
+        lastModification: getFormattedModificationDate(),
+        tasks: lists[listIndex].tasks,
+      };
+
+      console.table(listWithNewTitle);
+
+      newLists[listIndex] = listWithNewTitle;
       setLists(newLists);
+      setCurrentList(listWithNewTitle);
       saveData(newLists[listIndex], 'list-' + newLists[listIndex].id);
     }
+
+    // Reset the index for renaming
+    setListIndexForRenaming(-1);
   }
 
   // Load data on start
@@ -156,15 +174,24 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
             <a key={list.id} onClick={() => setCurrentList(list)}>
               <li className='flex'>
                 <div>
-                  <label>{list.title}</label>
+                  {list.id === listIndexForRenaming ? 
+                  <RenamerInput
+                    setTitle={renameList}
+                    listId={list.id}
+                    currentTitle={list.title}
+                    visible={true}
+                    />
+                  : <label>{list.title}</label>
+                  }
                   <span className='mini'>{list.lastModification}</span>
                 </div>
-                <div className='flex pushRight'>
+                <div className='flex gap pushRight'>
 
                   <button
+                    hidden={list.id === listIndexForRenaming}
                     title={`Rename ${list.title}`}
                     className='compact borderless'
-                    onClick={(e) => {renameList(list); e.stopPropagation()}}>
+                    onClick={(e) => {setListIndexForRenaming(list.id); e.stopPropagation()}}>
                       📝
                   </button>
 
