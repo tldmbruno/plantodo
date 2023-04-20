@@ -1,22 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { loadData, saveData } from "../DataHandler/DataHandler";
-import { ListData } from "../TodoList/TodoList";
+import { ListData, loadStorageData } from "../TodoList/TodoList";
 
 import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import TaskInput from "../TaskInput/TaskInput";
 import RenamerInput from "../RenamerInput/RenamerInput";
 
 interface ListSelectorProps {
-  setCurrentList: (listData: ListData) => void;
-}
-
-export function updateModificationDate(fetchId: number): void {
-  const listData = loadData<ListData>('appData' + fetchId);
-
-  if (listData) {
-    listData.lastModification = getFormattedModificationDate();
-    saveData(listData, 'appData' + fetchId);
-  }
+  setCurrentListId: (newId: number) => void;
+  lists: ListData[];
+  setLists: (newValue: ListData[]) => void;
 }
 
 function getFormattedModificationDate(): string {
@@ -24,36 +17,16 @@ function getFormattedModificationDate(): string {
   return currentDate.toLocaleString();
 }
 
-export default function ListSelector({setCurrentList}: ListSelectorProps) {
+export default function ListSelector({setCurrentListId, lists, setLists}: ListSelectorProps) {
   // Declares and loads state data
   const itemRef = useRef<HTMLInputElement>(null);
-  const [ lists, setLists ] = useState<ListData[]>([]);
 
   // Deletion state management
   const [ askingForDeletion, setAskingForDeletion ] = useState(false);
-  const [ listIndexForDeletion, setListIndexForDeletion ] = useState(-1);
+  const [ listIdForDeletion, setListIdForDeletion ] = useState(-1);
 
   // Rename state management
   const [ listIndexForRenaming , setListIndexForRenaming ] = useState(-1);
-
-  function loadStorageData(): ListData[] {
-    const newLists: ListData[] = [];
-
-    // Loop through all keys in localStorage
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      
-      // Check if the key starts with 'list-'
-      if (key?.startsWith('list-')) {
-        const data = loadData<ListData>(key);
-        if (data) {
-          newLists.push(data);
-        }
-      }
-    }
-
-    return newLists;
-  }
 
   // Creates a new list, defaulting to 'Unnammed list'
   function createList(): void {
@@ -68,8 +41,6 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
       lastModification: getFormattedModificationDate(),
       tasks: [],
     };
-
-    console.table(newList);
 
     // Adds to the state array and saves it to localstorage
     setLists([...lists, newList]);
@@ -103,7 +74,7 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
     if (listIndex !== -1) {
       // Evokes popUp for confirmation
       setAskingForDeletion(true);
-      setListIndexForDeletion(listIndex);
+      setListIdForDeletion(listIndex);
     }
 
     return null;
@@ -115,14 +86,15 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
   
     // Checks if the index is valid before deleting anything
     if (listIndex !== -1) {
-      setCurrentList({id: 0, lastModification: '', tasks: [], title: ''});
-
+      // De-select current list
+      setCurrentListId(-1);
+      
       // Delete the list from the array
       const newListsData = [...lists];
       newListsData.splice(listIndex, 1);
-
+      
       // Reset the index for deletion
-      setListIndexForDeletion(-1);
+      setListIdForDeletion(-1);
   
       // Apply the modifications
       setLists(newListsData);
@@ -131,35 +103,20 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
   }
 
   function renameList(listId: number, newTitle: string) {
-    const listIndex = lists.findIndex((i) => i.id === listId);
-    const oldTitle: string = lists[listIndex].title;
-    
-    if (newTitle != oldTitle) {
-      let newLists = [...lists];
+    const updatedLists = loadStorageData();
 
-      const listWithNewTitle: ListData = {
-        id: listId,
-        title: validateTitle(newTitle, lists),
-        lastModification: getFormattedModificationDate(),
-        tasks: lists[listIndex].tasks,
-      };
+    const listIndex = updatedLists.findIndex((i) => i.id === listId);
+    const oldTitle: string = updatedLists[listIndex].title;
 
-      console.table(listWithNewTitle);
-
-      newLists[listIndex] = listWithNewTitle;
-      setLists(newLists);
-      setCurrentList(listWithNewTitle);
-      saveData(newLists[listIndex], 'list-' + newLists[listIndex].id);
+    if (newTitle !== oldTitle) {
+      updatedLists[listIndex].title = validateTitle(newTitle, updatedLists);
+      setLists(updatedLists);
+      saveData(updatedLists[listIndex], 'list-' + listId);
     }
 
     // Reset the index for renaming
     setListIndexForRenaming(-1);
   }
-
-  // Load data on start
-  useEffect(() => {
-    setLists(loadStorageData());
-  }, []);
 
   return (
     <>
@@ -171,7 +128,7 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
 
         <ul>
           {lists.map(list =>
-            <a key={list.id} onClick={() => setCurrentList(list)}>
+            <a key={list.id} onClick={() => setCurrentListId(list.id)}>
               <li className='flex'>
                 <div>
                   {list.id === listIndexForRenaming ? 
@@ -179,7 +136,6 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
                     setTitle={renameList}
                     listId={list.id}
                     currentTitle={list.title}
-                    visible={true}
                     />
                   : <label>{list.title}</label>
                   }
@@ -209,13 +165,13 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
         </ul>
       </div>
 
-      {listIndexForDeletion != -1 ?
+      {listIdForDeletion != -1 ?
         <ConfirmationPopUp
-          title={`Delete "${lists[listIndexForDeletion].title}"?`}
+          title={`Delete "${lists[listIdForDeletion].title}"?`}
           description={`This action cannot be undone.`}
           visible={askingForDeletion}
           setVisible={setAskingForDeletion}
-          onConfirm={() => {deleteList(lists[listIndexForDeletion])}}
+          onConfirm={() => {deleteList(lists[listIdForDeletion])}}
           confirmLabel={'Delete'}
           dangerousConfirm={true}/>
         : <></>}
