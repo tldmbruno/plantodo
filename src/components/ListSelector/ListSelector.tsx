@@ -120,7 +120,7 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
 
   return (
     <>
-      <div className='overflow sidebar screenTall'>
+      <div id='sidebar' className='overflow sidebar screenTall optional'>
         <TaskInput
           buttonText={'New'}
           taskRef={itemRef}

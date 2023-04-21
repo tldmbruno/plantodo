@@ -489,6 +489,15 @@ span .danger {
 	}
 }
 
+@keyframes full-slide-in {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
 /* ----------- */
 /* Media Query */
 /* ----------- */
@@ -505,5 +514,12 @@ span .danger {
 	}
 	.visibleOnParentHover {
 		opacity: 100;
+	}
+	.visibleOnMobile {
+		display: block;
+		position: absolute;
+		z-index: 9999;
+
+		animation: .4s full-slide-in ease-in-out running;
 	}
 }
