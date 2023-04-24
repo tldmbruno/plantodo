@@ -30,8 +30,8 @@ export default function ConfirmationPopUp(
 
 	return (
 		visible ? <>
-			<div className='popUp'>
-				<div className='popUpInner notTooWide'>
+			<div className='popUp' onClick={(e) => {setVisible(false); e.stopPropagation()}}>
+				<div className='popUpInner notTooWide' onClick={(e) => e.stopPropagation()}>
 					<h2 className='breakableWord'>{title}</h2>
 					<Divider />
 					<p className='centered'>{description}</p>

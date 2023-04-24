@@ -1,21 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { loadData, saveData } from "../DataHandler/DataHandler";
-import { ListData } from "../TodoList/TodoList";
+import { ListData, loadStorageData } from "../TodoList/TodoList";
 
 import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import TaskInput from "../TaskInput/TaskInput";
+import RenamerInput from "../RenamerInput/RenamerInput";
 
 interface ListSelectorProps {
-  setCurrentList: (listData: ListData) => void;
-}
-
-export function updateModificationDate(fetchId: number): void {
-  const listData = loadData<ListData>('appData' + fetchId);
-
-  if (listData) {
-    listData.lastModification = getFormattedModificationDate();
-    saveData(listData, 'appData' + fetchId);
-  }
+  setCurrentListId: (newId: number) => void;
+  lists: ListData[];
+  setLists: (newValue: ListData[]) => void;
 }
 
 function getFormattedModificationDate(): string {
@@ -23,33 +17,16 @@ function getFormattedModificationDate(): string {
   return currentDate.toLocaleString();
 }
 
-export default function ListSelector({setCurrentList}: ListSelectorProps) {
+export default function ListSelector({setCurrentListId, lists, setLists}: ListSelectorProps) {
   // Declares and loads state data
   const itemRef = useRef<HTMLInputElement>(null);
-  const [ lists, setLists ] = useState<ListData[]>([]);
 
   // Deletion state management
   const [ askingForDeletion, setAskingForDeletion ] = useState(false);
-  const [ listIndexForDeletion, setListIndexForDeletion ] = useState(-1);
+  const [ listIdForDeletion, setListIdForDeletion ] = useState(-1);
 
-  function loadStorageData(): ListData[] {
-    const newLists: ListData[] = [];
-
-    // Loop through all keys in localStorage
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      
-      // Check if the key starts with 'list-'
-      if (key?.startsWith('list-')) {
-        const data = loadData<ListData>(key);
-        if (data) {
-          newLists.push(data);
-        }
-      }
-    }
-
-    return newLists;
-  }
+  // Rename state management
+  const [ listIndexForRenaming , setListIndexForRenaming ] = useState(-1);
 
   // Creates a new list, defaulting to 'Unnammed list'
   function createList(): void {
@@ -97,7 +74,7 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
     if (listIndex !== -1) {
       // Evokes popUp for confirmation
       setAskingForDeletion(true);
-      setListIndexForDeletion(listIndex);
+      setListIdForDeletion(listIndex);
     }
 
     return null;
@@ -109,14 +86,15 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
   
     // Checks if the index is valid before deleting anything
     if (listIndex !== -1) {
-      setCurrentList({id: 0, lastModification: '', tasks: [], title: ''});
-
+      // De-select current list
+      setCurrentListId(-1);
+      
       // Delete the list from the array
       const newListsData = [...lists];
       newListsData.splice(listIndex, 1);
-
+      
       // Reset the index for deletion
-      setListIndexForDeletion(-1);
+      setListIdForDeletion(-1);
   
       // Apply the modifications
       setLists(newListsData);
@@ -124,28 +102,25 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
     }
   }
 
-  function renameList(list: ListData) {
-    const listIndex = lists.findIndex((i) => i.id === list.id);
-    const oldTitle: string = lists[listIndex].title;
-    
-    let newTitle = prompt('Enter the new title for the selected list', oldTitle) ?? 'Unnammed List';
-    
-    if (newTitle != oldTitle) {
-      let newLists = [...lists];
-      newLists[listIndex].title = validateTitle(newTitle, lists);
-      setLists(newLists);
-      saveData(newLists[listIndex], 'list-' + newLists[listIndex].id);
-    }
-  }
+  function renameList(listId: number, newTitle: string) {
+    const updatedLists = loadStorageData();
 
-  // Load data on start
-  useEffect(() => {
-    setLists(loadStorageData());
-  }, []);
+    const listIndex = updatedLists.findIndex((i) => i.id === listId);
+    const oldTitle: string = updatedLists[listIndex].title;
+
+    if (newTitle !== oldTitle) {
+      updatedLists[listIndex].title = validateTitle(newTitle, updatedLists);
+      setLists(updatedLists);
+      saveData(updatedLists[listIndex], 'list-' + listId);
+    }
+
+    // Reset the index for renaming
+    setListIndexForRenaming(-1);
+  }
 
   return (
     <>
-      <div className='overflow sidebar screenTall'>
+      <div id='sidebar' className='overflow sidebar screenTall optional'>
         <TaskInput
           buttonText={'New'}
           taskRef={itemRef}
@@ -153,18 +128,26 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
 
         <ul>
           {lists.map(list =>
-            <a key={list.id} onClick={() => setCurrentList(list)}>
+            <a key={list.id} onClick={() => setCurrentListId(list.id)}>
               <li className='flex'>
                 <div>
-                  <label>{list.title}</label>
+                  {list.id === listIndexForRenaming ? 
+                  <RenamerInput
+                    setTitle={renameList}
+                    listId={list.id}
+                    currentTitle={list.title}
+                    />
+                  : <label>{list.title}</label>
+                  }
                   <span className='mini'>{list.lastModification}</span>
                 </div>
-                <div className='flex pushRight'>
+                <div className='flex gap pushRight'>
 
                   <button
+                    hidden={list.id === listIndexForRenaming}
                     title={`Rename ${list.title}`}
                     className='compact borderless'
-                    onClick={(e) => {renameList(list); e.stopPropagation()}}>
+                    onClick={(e) => {setListIndexForRenaming(list.id); e.stopPropagation()}}>
                       📝
                   </button>
 
@@ -182,13 +165,13 @@ export default function ListSelector({setCurrentList}: ListSelectorProps) {
         </ul>
       </div>
 
-      {listIndexForDeletion != -1 ?
+      {listIdForDeletion != -1 ?
         <ConfirmationPopUp
-          title={`Delete "${lists[listIndexForDeletion].title}"?`}
+          title={`Delete "${lists[listIdForDeletion].title}"?`}
           description={`This action cannot be undone.`}
           visible={askingForDeletion}
           setVisible={setAskingForDeletion}
-          onConfirm={() => {deleteList(lists[listIndexForDeletion])}}
+          onConfirm={() => {deleteList(lists[listIdForDeletion])}}
           confirmLabel={'Delete'}
           dangerousConfirm={true}/>
         : <></>}

@@ -9,6 +9,8 @@
 	width: 100%;
 	height: 100vh;
 
+	z-index: 9999;
+
 	background-color: var(--color-middle);
 
 	animation: .4s running fade-in;
