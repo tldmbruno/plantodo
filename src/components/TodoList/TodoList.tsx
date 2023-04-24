@@ -82,7 +82,11 @@ export default function TodoList() {
         tasks: [...lists[listIndex].tasks, newTask],
       }
       lists[listIndex] = newList;
-      setLists(lists);
+      setLists(lists => {
+        const clone = [...lists];
+        clone[listIndex] = newList;
+        return clone;
+      });
     }
   }
   
@@ -97,7 +101,11 @@ export default function TodoList() {
         tasks: newTasks,
       }
       lists[listIndex] = newList;
-      setLists(lists);
+      setLists(lists => {
+        const clone = [...lists];
+        clone[listIndex] = newList;
+        return clone;
+      });
     }
   }
 
@@ -115,7 +123,11 @@ export default function TodoList() {
         tasks: newTasks,
       }
       lists[listIndex] = newList;
-      setLists(lists);
+      setLists(lists => {
+        const clone = [...lists];
+        clone[listIndex] = newList;
+        return clone;
+      });
     }
   }
 
@@ -133,7 +145,11 @@ export default function TodoList() {
         tasks: newTasks,
       }
       lists[listIndex] = newList;
-      setLists(lists);
+      setLists(lists => {
+        const clone = [...lists];
+        clone[listIndex] = newList;
+        return clone;
+      });
     }
   }
 
@@ -150,8 +166,12 @@ export default function TodoList() {
         title: lists[listIndex].title,
         tasks: newTasks,
       }
-      lists[listIndex] = newList;
-      setLists(lists);
+      
+      setLists(lists => {
+        const clone = [...lists];
+        clone[listIndex] = newList;
+        return clone;
+      });
     }
   }
 
@@ -166,7 +186,11 @@ export default function TodoList() {
         tasks: moveTask(lists[listIndex].tasks, taskIndex, taskIndex + toRelativeIndex),
       }
       lists[listIndex] = newList;
-      setLists(lists);
+      setLists(lists => {
+        const clone = [...lists];
+        clone[listIndex] = newList;
+        return clone;
+      });
     }
   }
 
