@@ -236,7 +236,7 @@ input {
 		cursor: pointer;
 }
 
-.list > .highlighted {
+.list > .done {
 	color: var(--color-white);
 	background-color: var(--color-secondary);
 }
