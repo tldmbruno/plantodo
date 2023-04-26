@@ -1,14 +1,15 @@
-import { FormEvent, useEffect } from "react";
+import { FormEvent } from "react";
 
 interface TaskInputProps {
 	formId?: string;
 	buttonText?: string;
 	submitFunction: () => void;
 	taskRef: React.RefObject<HTMLInputElement>;
+	highlighted?: boolean;
 }
 
 // Form for continuous add of useRef items in a input
-export default function TaskInput({formId = Math.random().toString(), buttonText = 'New Item', submitFunction, taskRef}: TaskInputProps) {
+export default function TaskInput({formId = Math.random().toString(), buttonText = 'Add', submitFunction, taskRef, highlighted = false}: TaskInputProps) {
 	
 	function onSubmit(e: FormEvent) {
 		e.preventDefault();
@@ -17,10 +18,10 @@ export default function TaskInput({formId = Math.random().toString(), buttonText
 	}
 
 	return (
-		<form id={formId} className='taskInput flex gap noMargin' onSubmit={onSubmit}>
+		<form id={formId} className='taskInput flex gap' onSubmit={onSubmit}>
 			<input type='text' ref={taskRef}></input>
-			<button type='submit' className='optional'>{buttonText}</button>
-			<button type='submit' className='mobile'>{'+'}</button>
+			<button type='submit' className={'optional ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{buttonText}</button>
+			<button type='submit' className={'mobile ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{'+'}</button>
 		</form>
 	);
 }
