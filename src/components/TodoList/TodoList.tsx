@@ -213,20 +213,21 @@ export default function TodoList() {
 
   return (
     <div className='grid'>
-      <ListSelector lists={lists} setLists={setLists} setCurrentListId={setCurrentListId}/>
+      <ListSelector 
+        lists={lists}
+        setLists={setLists}
+        setCurrentListId={setCurrentListId}/>
       <div className='content container overflow simpleFlex screenTall'>
-        {lists[listIndex] && <div className='content'>
-          <div className='grid gap'>
-            <h1 className='breakableWord'>{lists[listIndex].title ?? ''}</h1>
+        {lists[listIndex] && <div className='content slide-in'>
+          <h1 className='breakableWord'>{lists[listIndex].title ?? ''}</h1>
+          <div className='flex'>
             <TaskInput
               taskRef={taskRef}
-              submitFunction={() => addTask(taskRef.current?.value ?? '')}/>
-
-            <div className='flex gap'>
-              <RandomizerButton 
-                onRandomize={onRandomize}
-                totalTasks={lists[listIndex].tasks.length}/>
-            </div>
+              submitFunction={() => addTask(taskRef.current?.value ?? '')}
+              highlighted={lists[listIndex].tasks.length == 0}/>
+            <RandomizerButton 
+              onRandomize={onRandomize}
+              totalTasks={lists[listIndex].tasks.length}/>
           </div>
 
           <Divider />
