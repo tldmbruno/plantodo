@@ -8,7 +8,9 @@ export default function NavBar() {
 	function onMenuClick() {
 		const sidebar = document.getElementById('sidebar');
 
-		sidebar?.classList.toggle('visibleOnMobile');
+		if (sidebar) {
+			sidebar.classList.toggle('visibleOnMobile');
+		}
 	}
 
 	return (
