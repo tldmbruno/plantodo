@@ -118,54 +118,69 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
     setListIndexForRenaming(-1);
   }
 
+  function hideSidebarOnMobile() {
+    const sidebar = document.getElementById('sidebar');
+
+		if (sidebar) {
+			sidebar.classList.remove('visibleOnMobile');
+		}
+  }
+
   return (
     <>
-      <div id='sidebar' className='overflow sidebar screenTall optional'>
+      <div id='sidebar' className='overflow sidebar screenTall optional visibleOnMobile'>
         <TaskInput
           buttonText={'New'}
           taskRef={itemRef}
-          submitFunction={createList}/>
+          submitFunction={createList}
+          highlighted={lists.length == 0}/>
 
-        <ul>
-          {lists.map(list =>
-            <a key={list.id} onClick={() => setCurrentListId(list.id)}>
-              <li className='flex'>
-                <div>
-                  {list.id === listIndexForRenaming ? 
-                  <RenamerInput
-                    setTitle={renameList}
-                    listId={list.id}
-                    currentTitle={list.title}
-                    />
-                  : <label>{list.title}</label>
-                  }
-                  <span className='mini'>{list.lastModification}</span>
-                </div>
-                <div className='flex gap pushRight'>
+        {lists.length > 0 ?
+          <ul>
+            {lists.map(list =>
+              <a key={list.id} onClick={() => {setCurrentListId(list.id); hideSidebarOnMobile()}}>
+                <li className='flex'>
+                  <div>
+                    {list.id === listIndexForRenaming ? 
+                    <RenamerInput
+                      setTitle={renameList}
+                      listId={list.id}
+                      currentTitle={list.title}
+                      />
+                    : <label>{list.title}</label>
+                    }
+                    <span className='mini'>{list.lastModification}</span>
+                  </div>
+                  <div className='flex gap pushRight'>
 
-                  <button
-                    hidden={list.id === listIndexForRenaming}
-                    title={`Rename ${list.title}`}
-                    className='compact borderless'
-                    onClick={(e) => {setListIndexForRenaming(list.id); e.stopPropagation()}}>
-                      📝
-                  </button>
+                    <button
+                      hidden={list.id === listIndexForRenaming}
+                      title={`Rename ${list.title}`}
+                      className='compact borderless'
+                      onClick={(e) => {setListIndexForRenaming(list.id); e.stopPropagation()}}>
+                        📝
+                    </button>
 
-                  <button
-                    title={`Delete ${list.title}`}
-                    className='compact borderless danger'
-                    onClick={(e) => {onDeleteRequest(list); e.stopPropagation()}}>
-                      ❌
-                  </button>
+                    <button
+                      title={`Delete ${list.title}`}
+                      className='compact borderless danger'
+                      onClick={(e) => {onDeleteRequest(list); e.stopPropagation()}}>
+                        ❌
+                    </button>
 
-                </div>
-              </li>
-            </a>
-          )}
-        </ul>
+                  </div>
+                </li>
+              </a>
+            )}
+          </ul>
+        : <div className='container fade-in'>
+            <span className='optional'>💡 Get started and create your first list by clicking the 'New' button!</span>
+            <span className='mobile'>💡 Get started and create your first list by clicking the ➕ button!</span>
+          </div>
+        }
       </div>
 
-      {listIdForDeletion != -1 ?
+      {listIdForDeletion != -1 &&
         <ConfirmationPopUp
           title={`Delete "${lists[listIdForDeletion].title}"?`}
           description={`This action cannot be undone.`}
@@ -174,7 +189,7 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
           onConfirm={() => {deleteList(lists[listIdForDeletion])}}
           confirmLabel={'Delete'}
           dangerousConfirm={true}/>
-        : <></>}
+        }
     </>
   );
 }
