@@ -71,7 +71,7 @@ export default function TodoList() {
       // Encapsulates the Task object
       const newTask: Task = {
         id: Date.now(),
-        text: description.trim().length === 0 ? 'Empty note' : description,
+        text: description.trim().length === 0 ? 'Empty task' : description,
         done: false,
       };
   
