@@ -18,10 +18,10 @@ export default function TaskInput({formId = Math.random().toString(), buttonText
 	}
 
 	return (
-		<form id={formId} className='taskInput flex gap' onSubmit={onSubmit}>
-			<input type='text' ref={taskRef}></input>
-			<button type='submit' className={'optional ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{buttonText}</button>
-			<button type='submit' className={'mobile ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{'+'}</button>
+		<form id={formId} className='taskInput flex' onSubmit={onSubmit}>
+			<input type='text' className='mergeRight noMargin' ref={taskRef}></input>
+			<button type='submit' className={'mergeLeft optional ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{buttonText}</button>
+			<button type='submit' className={'mergeLeft mobile ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{'+'}</button>
 		</form>
 	);
 }
