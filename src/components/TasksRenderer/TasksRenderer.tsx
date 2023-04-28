@@ -21,11 +21,11 @@ export default function TasksRenderer({toggleDone, moveTask, editTask, deleteTas
               <label>{task.text}</label>
             </div>
             <div className='visibleOnParentHover'>
-              <button title='Move upwards' className='optional' onClick={() => moveTask(task, -1)} hidden={index==0}>⬆</button>
-              <button title='Move downwards' className='optional' onClick={() => moveTask(task, +1)} hidden={index+1 == tasks.length}>⬇</button>
+              <button title='Move upwards' className='optional compact borderless' onClick={() => moveTask(task, -1)} hidden={index==0}>⬆</button>
+              <button title='Move downwards' className='optional compact borderless' onClick={() => moveTask(task, +1)} hidden={index+1 == tasks.length}>⬇</button>
 
-              <button title={`Rename ${task.text}`} onClick={() => editTask(task)}>📝</button>
-              <button title={`Delete ${task.text}`} className='danger' onClick={() => deleteTask(task)}>❌</button>
+              <button title={`Rename ${task.text}`} className='compact borderless' onClick={() => editTask(task)}>📝</button>
+              <button title={`Delete ${task.text}`} className='danger compact borderless' onClick={() => deleteTask(task)}>❌</button>
             </div>
           </li>
           )}
