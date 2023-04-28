@@ -8,6 +8,7 @@
 
 	.logo:hover ::after{
 		content: ' 🌱';
+		white-space: nowrap;
 	}
 
 	.dark .logo {
