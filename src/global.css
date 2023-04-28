@@ -234,11 +234,11 @@ input {
 	.list input {
 		box-shadow: none;
 		cursor: pointer;
-}
+}	
 
 .list > .done {
-	color: var(--color-white);
-	background-color: var(--color-secondary);
+	color: var(--color-light);
+	background-color: var(--color-primary);
 }
 
 .container {
@@ -301,7 +301,17 @@ input {
 		font-size: 1.2em;
 
 		background: none;
-	}
+}
+
+.taskInput .mergeLeft {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.taskInput .mergeRight {
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
 
 .content {
 	width: 100%;
