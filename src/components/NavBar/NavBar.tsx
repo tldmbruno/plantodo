@@ -16,13 +16,25 @@ export default function NavBar() {
 	}
 
 	return (
-		<nav className='navBar flex gap'>
-			{location.pathname == '/create' &&
-			<button className='mobile compact' onClick={onMenuClick}>🍔</button>
-			}
-			<Logo />
-			<div className='halfWidth'></div>
-			<DarkToggle />
-		</nav>
+		<>
+			<nav className='navBar flex gap optional'>
+				<Logo />
+				<div className='halfWidth'></div>
+				<DarkToggle />
+			</nav>
+
+			<nav className='navBar flex gap mobile'>
+				{location.pathname == '/create' &&
+				<>
+				<button className='compact' onClick={onMenuClick}>🌱</button>
+				<br></br>
+				<div className='halfWidth'></div>
+				</>	
+				}
+				<Logo />
+				<div className='halfWidth'></div>
+				<DarkToggle />
+			</nav>
+		</>
 	);
 }
