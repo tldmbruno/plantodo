@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
-import { loadData, saveData } from "../DataHandler/DataHandler";
+import { saveData } from "../DataHandler/DataHandler";
 import { ListData, loadStorageData } from "../TodoList/TodoList";
+
+import style from './ListSelector.module.css';
 
 import ConfirmationPopUp from "../ConfirmationPopUp/ConfirmationPopUp";
 import TaskInput from "../TaskInput/TaskInput";
@@ -128,7 +130,7 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
 
   return (
     <>
-      <div id='sidebar' className='overflow sidebar screenTall optional visibleOnMobile'>
+      <div id='sidebar' className={style.sidebar + ' overflow screenTall optional visibleOnMobile'}>
         <TaskInput
           buttonText={'New'}
           taskRef={itemRef}

@@ -1,0 +1,53 @@
+.sidebar {
+	max-width: 20rem;
+	min-width: min(100%, 20rem);
+	background-color: var(--color-light);
+
+	transition: var(--bg-trans) ;
+	}
+	.dark .sidebar {
+		background-color: var(--color-dark);
+	}
+	.sidebar label {
+		display: block;
+		font-style: var(--display-font);
+		font-weight: 600;
+		font-size: 1.2em;
+		padding: .2rem 0rem;
+		cursor: pointer;
+	}
+	.sidebar span {
+		text-align: right;
+		padding: .2rem 0rem;
+	}
+	.sidebar form:not(.noPadding) {
+		padding: .4rem;
+	}
+	.sidebar li {
+		padding: 1rem;
+		border-left: 0rem solid var(--color-primary);
+		background-color: transparent;
+		transition: border .4s ease-in-out, background-color .2s;
+
+		animation: .4s grow running;
+	}
+	.sidebar li:hover {
+		background-color: var(--color-middle);
+		border-left: 1rem solid var(--color-primary);
+	}
+	.sidebar a {
+		cursor: pointer;
+	}
+	.sidebar a:hover {
+		color: inherit;
+	}
+	.sidebar .renameInput {
+		margin: 0px;
+		padding: 0px;
+		height: 1.6rem;
+		
+		font-weight: 600;
+		font-size: 1.2em;
+
+		background: none;
+}
