@@ -135,7 +135,7 @@ label, .breakableWord {
 	text-anchor: middle;
 }
 
-.button:hover:not([disabled], .danger), button:hover:not([disabled], .danger) {
+:is(.button, button):hover:not([disabled], .danger) {
 	border: var(--line-weight) solid var(--color-primary);
 	color: var(--color-primary);
 	}
@@ -149,6 +149,10 @@ label, .breakableWord {
 	.button[disabled], button[disabled] {
 		opacity: 0.5;
 		cursor: not-allowed;
+	}
+
+	:is(button, .button):hover {
+
 	}
 
 input {
@@ -249,60 +253,6 @@ input {
 	display: flex;
 }
 
-.sidebar {
-	max-width: 20rem;
-	min-width: min(100%, 20rem);
-	background-color: var(--color-light);
-
-	transition: var(--bg-trans) ;
-	}
-	.dark .sidebar {
-		background-color: var(--color-dark);
-	}
-	.sidebar label {
-		display: block;
-		font-style: var(--display-font);
-		font-weight: 600;
-		font-size: 1.2em;
-		padding: .2rem 0rem;
-		cursor: pointer;
-	}
-	.sidebar span {
-		text-align: right;
-		padding: .2rem 0rem;
-	}
-	.sidebar form:not(.noPadding) {
-		padding: .4rem;
-	}
-	.sidebar li {
-		padding: 1rem;
-		border-left: 0rem solid var(--color-primary);
-		background-color: transparent;
-		transition: border .4s ease-in-out, background-color .2s;
-
-		animation: .4s grow running;
-	}
-	.sidebar li:hover {
-		background-color: var(--color-middle);
-		border-left: 1rem solid var(--color-primary);
-	}
-	.sidebar a {
-		cursor: pointer;
-	}
-	.sidebar a:hover {
-		color: inherit;
-	}
-	.sidebar .renameInput {
-		margin: 0px;
-		padding: 0px;
-		height: 1.6rem;
-		
-		font-weight: 600;
-		font-size: 1.2em;
-
-		background: none;
-}
-
 .taskInput .mergeLeft {
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
@@ -354,6 +304,22 @@ input {
 .darkBg {
 	background-color: var(--color-dark);
 	color: var(--color-light);
+}
+
+.tutorialCard {
+	background-color: var(--color-middle);
+	}
+
+	.tutorialCard .card {
+		user-select: none;
+	}
+
+	.tutorialCard .card:hover {
+		color: var(--color-light);
+		background-color: var(--color-secondary);
+		scale: 1.08;
+
+		transition: .2s all;
 }
 
 .colorLight {
@@ -489,11 +455,14 @@ span .danger {
 }
 
 .card {
-	border: var(--line-weight) solid var(--color-middle);
 	border-radius: var(--radius);
-	padding: clamp(.2rem, 3vw, 1rem);
+	padding: 1rem;
 
 	background-color: var(--color-middle);
+}
+
+.bigGap {
+	gap: .8rem;
 }
 
 .giga {
@@ -572,6 +541,7 @@ span .danger {
 	.mobile {
 		display: none;
 	}
+	
 }
 
 @media (width <= 800px) {
