@@ -20,7 +20,7 @@ export default function WelcomePage() {
 				<div className='notTooWide'>
 					<p>PlanTODO is a note taking application that is designed to be fast and easy to use, with a focus on simplicity. It has the added feature of being able to randomize tasks to help users prioritize their to-do list. Here's a breakdown of the key features:</p>
 
-					<div className='grid gap'>
+					<div className='grid bigGap'>
 						<div className='card centered'>
 							<h2>🚀 Fast and easy to use</h2>
 							<Divider />
@@ -42,13 +42,13 @@ export default function WelcomePage() {
 				</div>				
 			</div>
 
-			<div className='centered container'>
+			<div className='centered container tutorialCard'>
 
 				<h1>How to stay organized</h1>
 				<Divider />
 
 				<div className='notTooWide'>
-					<div className='grid gap'>
+					<div className='grid bigGap'>
 						<div className='card'>
 							<h2>1. Create a new list</h2>
 							<Divider />
