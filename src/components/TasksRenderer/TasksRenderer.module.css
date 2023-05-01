@@ -20,12 +20,14 @@
 
 		cursor: pointer;
 
-		animation: .2s running slide-in;
 		transition: border .2s, background-color .2s;
 		}
 
+		.list li :global {
+			animation: .2s running slide-in;
+		}
+
 		.list li:hover {
-			/* color: var(--color-primary); */
 			border: var(--line-weight) solid var(--color-primary);
 		}
 
