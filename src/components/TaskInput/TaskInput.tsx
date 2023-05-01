@@ -18,7 +18,7 @@ export default function TaskInput({formId = Math.random().toString(), buttonText
 	}
 
 	return (
-		<form id={formId} className='taskInput flex' onSubmit={onSubmit}>
+		<form id={formId} className='flex' onSubmit={onSubmit}>
 			<input type='text' className='mergeRight noMargin' ref={taskRef}></input>
 			<button type='submit' className={'mergeLeft optional ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{buttonText}</button>
 			<button type='submit' className={'mergeLeft mobile ' + (highlighted ? 'primaryBg pulseGlow' : '')}>{'+'}</button>
