@@ -1,5 +1,7 @@
 import { Task } from "../TodoList/TodoList";
 
+import style from './TasksRenderer.module.css';
+
 interface PropsRenderList {
   tasks: Task[];
   toggleDone: (Task: Task) => void;
@@ -13,9 +15,9 @@ export default function TasksRenderer({toggleDone, moveTask, editTask, deleteTas
   return (
     <>
       {tasks.length > 0 ?
-        <ul className='list'>
+        <ul className={style.list}>
           {tasks.map((task, index) =>
-          <li key={task.id} className={task.done ? 'done' : ''}>
+          <li key={task.id} className={task.done ? style.done : ''}>
             <div className='fullWidth' onClick={() => toggleDone(task)}>
               <input title={`${task.done?'Unmark':'Mark'} ${task.text} as done`} type='checkbox' checked={task.done} onChange={() => null}/>
               <label>{task.text}</label>

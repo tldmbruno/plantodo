@@ -183,68 +183,6 @@ input {
 		height: 1.6rem;
 }
 
-.list {
-	padding: 0px;
-	}
-
-	.list li {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		flex-direction: row;
-		box-sizing: border-box;
-
-		position: relative;
-
-		padding: .2rem;
-
-		background-color: var(--color-middle);
-
-		border: var(--line-weight) solid transparent;
-		border-radius: var(--radius);
-
-		cursor: pointer;
-
-		animation: .2s running slide-in;
-		transition: border .2s, background-color .2s;
-		}
-
-		.list li:hover {
-			/* color: var(--color-primary); */
-			border: var(--line-weight) solid var(--color-primary);
-		}
-
-	.list :is(a, label) {
-		color: inherit;
-		padding: .8rem;
-		cursor: pointer;
-	}
-
-	.list div {
-		display: flex;
-		align-items: center;
-		gap: .4rem;
-	}
-
-	.list button {
-		margin: 0px;
-		}
-
-		.list button:active {
-			background-color: var(--color-middle);
-			color: var(--color-light);
-		}
-
-	.list input {
-		box-shadow: none;
-		cursor: pointer;
-}	
-
-.list > .done {
-	color: var(--color-light);
-	background-color: var(--color-primary);
-}
-
 .container {
 	padding: 2rem;
 }
