@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { loadData, saveData } from '../DataHandler/DataHandler';
 
-import './DarkToggle.css';
+import style from './DarkToggle.module.css';
 
 export default function DarkToggle() {
 	const [ isDarkTheme, setIsDarkTheme ] = useState(loadData<boolean>('darkToggleData') ?? false);
@@ -11,12 +11,12 @@ export default function DarkToggle() {
 	useEffect(() => {
 		if (isDarkTheme) {
 			document.documentElement.classList.add('dark');
-			document.getElementById(id)?.classList.add('moon');
-			document.getElementById(id)?.classList.remove('flower');
+			document.getElementById(id)?.classList.add('spin');
+			document.getElementById(id)?.classList.remove('reverse-spin');
 		} else {
 			document.documentElement.classList.remove('dark');
-			document.getElementById(id)?.classList.add('flower');
-			document.getElementById(id)?.classList.remove('moon');
+			document.getElementById(id)?.classList.add('reverse-spin');
+			document.getElementById(id)?.classList.remove('spin');
 		}
 	},[isDarkTheme]);
 	
@@ -30,9 +30,9 @@ export default function DarkToggle() {
 	}
 
 	return (
-		<button title='Toggle Light/Dark Mode' className='emojiButton borderless compact' onClick={(() => toggleDarkMode())}>
+		<button title='Toggle Light/Dark Mode' className={style.darkToggle + ' borderless compact'} onClick={(() => toggleDarkMode())}>
 			<div id={id}>
-				{ isDarkTheme ? 
+				{ isDarkTheme ? 	
 					<span>🌙</span> : <span>🌻</span>
 				}
 			</div>

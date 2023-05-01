@@ -45,18 +45,19 @@ body {
 	}
 
 ::-webkit-scrollbar {
-	width: .8rem;
-	background: var(--color-light);
-	}
+	width: .6rem;
+	background-color: var(--color-light);
+	}	
 	.dark ::-webkit-scrollbar {
 		background: var(--color-dark);
 	}
 
 ::-webkit-scrollbar-thumb {
-	width: 0.6rem;
-	padding: 0.1rem;
-	background: var(--color-primary);
-}
+	background-color: var(--color-primary);
+	}	
+	::-webkit-scrollbar-thumb:hover {
+		background-color: var(--color-secondary);
+	}
 
 p {
 	margin-bottom: 1rem;
@@ -135,7 +136,7 @@ label, .breakableWord {
 	text-anchor: middle;
 }
 
-:is(.button, button):hover:not([disabled], .danger) {
+:is(.button, button):hover:not([disabled], .danger, .lightButton) {
 	border: var(--line-weight) solid var(--color-primary);
 	color: var(--color-primary);
 	}
@@ -151,9 +152,15 @@ label, .breakableWord {
 		cursor: not-allowed;
 	}
 
-	:is(button, .button):hover {
-
+	.button.lightButton:not([disabled]) {
+		color: var(--color-light);
+		border: var(--line-weight) solid var(--color-light);
 	}
+		.button.lightButton:not([disabled]):hover {
+			color: var(--color-primary);
+			border: var(--line-weight) solid var(--color-light);
+			background: var(--color-light);
+		}
 
 input {
 	padding: 0px;
@@ -191,12 +198,12 @@ input {
 	display: flex;
 }
 
-.taskInput .mergeLeft {
+.mergeLeft {
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
 }
 
-.taskInput .mergeRight {
+.mergeRight {
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
@@ -415,6 +422,14 @@ span .danger {
 	max-width: 1024px;
 }
 
+.spin {
+	animation: 1s spin running;
+}
+
+.reverse-spin {
+	animation: 1s reverse-spin running;
+}
+
 /* ---------- */
 /* Animations */
 /* ---------- */
@@ -468,6 +483,32 @@ span .danger {
 	}
 	100% {
 		box-shadow: 0px 0px 0px var(--color-primary);
+	}
+}
+
+@keyframes reverse-spin {
+	0% {
+		opacity: 0;
+		rotate: 0deg;
+	}
+	50% {
+		opacity: 100;
+	}
+	100% {
+		rotate: -360deg;
+	}
+}
+
+@keyframes spin {
+	0% {
+		opacity: 0;
+		rotate: 0deg;
+	}
+	50% {
+		opacity: 100;
+	}
+	100% {
+		rotate: 360deg;
 	}
 }
 
