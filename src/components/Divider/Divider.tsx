@@ -1,7 +1,7 @@
-import './Divider.css';
+import style from './Divider.module.css';
 
 export default function Divider() {
 	return (
-		<div className='divider'></div>
+		<div className={style.divider}></div>
 	);
 }
