@@ -80,7 +80,7 @@ export default function WelcomePage() {
 
 			<div className='container primaryBg centered'>
 				<h1>Ready to take notes?</h1>
-				<Link to='/create' className='button'>Start now</Link>
+				<Link to='/create' className='button lightButton'>Start now</Link>
 			</div>
 			
 			<div className='container centered gap darkBg'>
