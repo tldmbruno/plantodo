@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import DarkToggle from '../DarkToggle/DarkToggle';
 import Logo from '../Logo/Logo';
 
-import './NavBar.css';
+import style from './NavBar.module.css';
 
 export default function NavBar() {
 	const location = useLocation();
@@ -17,13 +17,13 @@ export default function NavBar() {
 
 	return (
 		<>
-			<nav className='navBar flex gap optional'>
+			<nav className={style.navBar + ' flex gap optional'}>
 				<Logo />
 				<div className='halfWidth'></div>
 				<DarkToggle />
 			</nav>
 
-			<nav className='navBar flex gap mobile'>
+			<nav className={style.navBar + ' flex gap mobile'}>
 				{location.pathname == '/create' &&
 				<>
 				<button className='compact' onClick={onMenuClick}>🌱</button>
