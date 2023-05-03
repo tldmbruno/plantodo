@@ -418,10 +418,6 @@ span .danger {
 	font-size: clamp(.6em, 1vw, .8em);
 }
 
-.notTooWide {
-	max-width: 1024px;
-}
-
 .spin {
 	animation: 1s spin running;
 }
