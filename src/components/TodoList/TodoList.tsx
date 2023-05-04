@@ -61,9 +61,13 @@ export default function TodoList() {
   // Declares and loads state data
   const taskRef = useRef<HTMLInputElement>(null);
   const [ lists, setLists ] = useState<ListData[]>(loadStorageData());
-  
-  const [ currentListId, setCurrentListId ] = useState(-1);
+
+  const NO_TASK_SELECTED = -1;
+
+  const [ currentListId, setCurrentListId ] = useState(NO_TASK_SELECTED);
   const [ listIndex, setListIndex ] = useState(0);
+
+  const [ taskIndexForRenaming, setTaskIndexForRenaming ] = useState(NO_TASK_SELECTED);
   
   // Creates a new tasks Task with a particular description
   function addTask(description: string) {
@@ -110,11 +114,11 @@ export default function TodoList() {
   }
 
   // Edits an Task's text property via browser's prompt
-  function editTask(task: Task) {
+  function renameTask(taskId: number, newText: string) {
     if (lists[listIndex]) {
-      const taskIndex = lists[listIndex].tasks.findIndex((i) => i.id === task.id);
+      const taskIndex = lists[listIndex].tasks.findIndex((i) => i.id === taskId);
       const newTasks = [...lists[listIndex].tasks];
-      newTasks[taskIndex].text = prompt('Enter the new text for the selected Task', newTasks[taskIndex].text) ?? newTasks[taskIndex].text;
+      newTasks[taskIndex].text = newText;
   
       const newList: ListData = {
         id: lists[listIndex].id,
@@ -128,6 +132,8 @@ export default function TodoList() {
         clone[listIndex] = newList;
         return clone;
       });
+
+      setTaskIndexForRenaming(NO_TASK_SELECTED);
     }
   }
 
@@ -235,9 +241,11 @@ export default function TodoList() {
           <TasksRenderer
             toggleDone={toggleDone}
             moveTask={onMove}
-            editTask={editTask}
+            renameTask={renameTask}
             deleteTask={deleteTask}
-            tasks={lists[listIndex].tasks}/>
+            tasks={lists[listIndex].tasks}
+            setTaskIndexForRenaming={setTaskIndexForRenaming}
+            taskIndexForRenaming={taskIndexForRenaming}/>
         </div>}
       </div>
     </div>
