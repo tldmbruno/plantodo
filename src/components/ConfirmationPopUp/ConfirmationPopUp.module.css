@@ -4,16 +4,14 @@
 	border-radius: var(--radius);
 	max-width: 1024px;
 	margin: 2rem;
-	background-color: var(--color-light);
+
+	color: var(--module-font-color);
+	background-color: var(--module-bg-color);
 	}
 
 	.popUpInner :global {
 		animation: .4s running grow;
 	}
-
-	.dark .popUpInner {
-		background-color: var(--color-dark);
-}
 
 .confirmationButton {
 	max-width: 1024px;
