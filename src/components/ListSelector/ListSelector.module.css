@@ -1,12 +1,11 @@
 .sidebar {
 	max-width: 20rem;
 	min-width: min(100%, 20rem);
-	background-color: var(--color-light);
+
+	color: var(--module-font-color);
+	background-color: var(--module-bg-color);
 
 	transition: var(--bg-trans) ;
-	}
-	.dark .sidebar {
-		background-color: var(--color-dark);
 	}
 	.sidebar label {
 		display: block;

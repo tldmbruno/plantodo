@@ -14,6 +14,9 @@ html {
 
 	--bg-trans: background-color .8s, color .4s;
 
+	--module-bg-color: var(--color-light);
+	--module-font-color: var(--color-dark);
+
 	font-family: var(--body-font);
 }
 
@@ -42,6 +45,9 @@ body {
 
 		--color-primary: #774aca;
 		--color-secondary: #282d6e;
+
+		--module-bg-color: var(--color-dark);
+		--module-font-color: var(--color-light);
 	}
 
 ::-webkit-scrollbar {

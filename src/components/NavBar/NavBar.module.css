@@ -8,12 +8,7 @@
 	top: 0;
 	z-index: 9999;
 
-	background-color: var(--color-light);
-
+	background-color: var(--module-bg-color);
+	color: var(--module-font-color);
 	transition: var(--bg-trans);
-}
-
-.dark .navBar {
-	background-color: var(--color-dark);
-	color: var(--color-light);
 }
