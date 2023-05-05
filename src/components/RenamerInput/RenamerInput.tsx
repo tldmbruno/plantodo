@@ -16,8 +16,8 @@ export default function RenamerInput({formId = Math.random().toString(), listId,
   }
 
   return (
-    <form id={formId} method='POST' onSubmit={handleSubmit} className='flex noPadding'>
-      <input className='renameInput' type='text' ref={titleRef} defaultValue={currentTitle} autoFocus onBlur={handleSubmit}/>
+    <form id={formId} method='POST' onSubmit={handleSubmit} className='flex noPadding noMargin'>
+      <input className='compact' type='text' ref={titleRef} defaultValue={currentTitle} autoFocus onBlur={handleSubmit}/>
     </form>
   );
 }

@@ -23,12 +23,15 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
   // Declares and loads state data
   const itemRef = useRef<HTMLInputElement>(null);
 
+  // Selection management
+  const NO_LIST_SELECTED = -1;
+
   // Deletion state management
   const [ askingForDeletion, setAskingForDeletion ] = useState(false);
-  const [ listIdForDeletion, setListIdForDeletion ] = useState(-1);
+  const [ listIdForDeletion, setListIdForDeletion ] = useState(NO_LIST_SELECTED);
 
   // Rename state management
-  const [ listIndexForRenaming , setListIndexForRenaming ] = useState(-1);
+  const [ listIndexForRenaming , setListIndexForRenaming ] = useState(NO_LIST_SELECTED);
 
   // Creates a new list, defaulting to 'Unnammed list'
   function createList(): void {
@@ -73,7 +76,7 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
     const listIndex = lists.findIndex((i) => i.id === list.id);
 
     // Checks if the index is valid before asking for confirmation
-    if (listIndex !== -1) {
+    if (listIndex !== NO_LIST_SELECTED) {
       // Evokes popUp for confirmation
       setAskingForDeletion(true);
       setListIdForDeletion(listIndex);
@@ -87,16 +90,16 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
     const listIndex = lists.findIndex((i) => i.id === list.id);
   
     // Checks if the index is valid before deleting anything
-    if (listIndex !== -1) {
+    if (listIndex !== NO_LIST_SELECTED) {
       // De-select current list
-      setCurrentListId(-1);
+      setCurrentListId(NO_LIST_SELECTED);
       
       // Delete the list from the array
       const newListsData = [...lists];
       newListsData.splice(listIndex, 1);
       
       // Reset the index for deletion
-      setListIdForDeletion(-1);
+      setListIdForDeletion(NO_LIST_SELECTED);
   
       // Apply the modifications
       setLists(newListsData);
@@ -117,7 +120,7 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
     }
 
     // Reset the index for renaming
-    setListIndexForRenaming(-1);
+    setListIndexForRenaming(NO_LIST_SELECTED);
   }
 
   function hideSidebarOnMobile() {
@@ -131,11 +134,13 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
   return (
     <>
       <div id='sidebar' className={style.sidebar + ' overflow screenTall optional visibleOnMobile'}>
-        <TaskInput
-          buttonText={'New'}
-          taskRef={itemRef}
-          submitFunction={createList}
-          highlighted={lists.length == 0}/>
+        <div className={style.newListInput}>
+          <TaskInput
+            buttonText={'New'}
+            taskRef={itemRef}
+            submitFunction={createList}
+            highlighted={lists.length == 0}/>
+        </div>
 
         {lists.length > 0 ?
           <ul>
@@ -144,11 +149,13 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
                 <li className='flex'>
                   <div>
                     {list.id === listIndexForRenaming ? 
-                    <RenamerInput
-                      setTitle={renameList}
-                      listId={list.id}
-                      currentTitle={list.title}
-                      />
+                    <div className={style.renameInput}>
+                      <RenamerInput
+                        setTitle={renameList}
+                        listId={list.id}
+                        currentTitle={list.title}
+                        />
+                    </div>
                     : <label>{list.title}</label>
                     }
                     <span className='mini'>{list.lastModification}</span>
@@ -182,7 +189,7 @@ export default function ListSelector({setCurrentListId, lists, setLists}: ListSe
         }
       </div>
 
-      {listIdForDeletion != -1 &&
+      {listIdForDeletion != NO_LIST_SELECTED &&
         <ConfirmationPopUp
           title={`Delete "${lists[listIdForDeletion].title}"?`}
           description={`This action cannot be undone.`}

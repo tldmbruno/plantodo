@@ -14,9 +14,7 @@ interface PropsRenderList {
 }
 
 // Shows all items in a particular list
-export default function TasksRenderer({toggleDone, moveTask, renameTask, deleteTask, tasks, taskIndexForRenaming, setTaskIndexForRenaming}: PropsRenderList) {
-  const NO_TASK_SELECTED = -1;
-  
+export default function TasksRenderer({toggleDone, moveTask, renameTask, deleteTask, tasks, taskIndexForRenaming, setTaskIndexForRenaming}: PropsRenderList) {    
   return (
     <>
       {tasks.length > 0 ?
@@ -25,9 +23,12 @@ export default function TasksRenderer({toggleDone, moveTask, renameTask, deleteT
           <li key={task.id} className={task.done ? style.done : ''}>
             <div className='fullWidth' onClick={() => toggleDone(task)}>
               <input title={`${task.done?'Unmark':'Mark'} ${task.text} as done`} type='checkbox' checked={task.done} onChange={() => null}/>
-              {taskIndexForRenaming === NO_TASK_SELECTED ?
-              <label>{task.text}</label>
-              : <RenamerInput currentTitle={task.text} listId={task.id} setTitle={renameTask} />}
+              {tasks.findIndex((i) => i.id === task.id) == taskIndexForRenaming ?
+                <div className={style.renameTask}>
+                  <RenamerInput currentTitle={task.text} listId={task.id} setTitle={renameTask} />
+                </div>
+                : <label>{task.text}</label>
+              }
             </div>
             <div className='visibleOnParentHover'>
               <button title='Move upwards' className='optional compact borderless' onClick={() => moveTask(task, -1)} hidden={index==0}>⬆</button>

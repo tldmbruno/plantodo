@@ -182,7 +182,7 @@ input {
 	font-family: var(--body-font);
 	}
 
-	input[type='text'] {
+	input[type='text']:not(.compact) {
 		width: 100%;
 		padding-left: 1rem;
 	}

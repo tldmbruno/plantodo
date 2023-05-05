@@ -19,7 +19,7 @@
 		text-align: right;
 		padding: .2rem 0rem;
 	}
-	.sidebar form:not(.noPadding) {
+	.sidebar .newListInput {
 		padding: .4rem;
 	}
 	.sidebar li {
@@ -40,7 +40,7 @@
 	.sidebar a:hover {
 		color: inherit;
 	}
-	.sidebar .renameInput {
+	.sidebar .renameInput input[type='text'] {
 		margin: 0px;
 		padding: 0px;
 		height: 1.6rem;
