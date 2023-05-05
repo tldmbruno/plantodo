@@ -34,7 +34,7 @@ export default function TasksRenderer({toggleDone, moveTask, renameTask, deleteT
               <button title='Move upwards' className='optional compact borderless' onClick={() => moveTask(task, -1)} hidden={index==0}>⬆</button>
               <button title='Move downwards' className='optional compact borderless' onClick={() => moveTask(task, +1)} hidden={index+1 == tasks.length}>⬇</button>
 
-              <button title={`Rename ${task.text}`} className='compact borderless' onClick={() => setTaskIndexForRenaming(tasks.findIndex((i) => i.id === task.id))}>📝</button>
+              <button hidden={tasks.findIndex((i) => i.id === task.id) == taskIndexForRenaming} title={`Rename ${task.text}`} className='compact borderless' onClick={() => setTaskIndexForRenaming(tasks.findIndex((i) => i.id === task.id))}>📝</button>
               <button title={`Delete ${task.text}`} className='danger compact borderless' onClick={() => deleteTask(task)}>❌</button>
             </div>
           </li>
